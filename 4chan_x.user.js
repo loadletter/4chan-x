@@ -3699,7 +3699,7 @@
       return Main.callbacks.push(this.node);
     },
     node: function(post) {
-      var alt, filename, node, _ref;
+      var alt, filename, node, _ref, nameNode;
       if (post.isInlined && !post.isCrosspost || !post.fileInfo) {
         return;
       }
