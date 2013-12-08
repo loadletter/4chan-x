@@ -3716,7 +3716,7 @@
         shortname: Build.shortFilename(filename, post.ID === post.threadID)
       };
       node.setAttribute('data-filename', filename);
-      return node.innerHTML = FileInfo.funk(FileInfo);
+      return post.fileInfo.innerHTML = FileInfo.funk(FileInfo);
     },
     setFormats: function() {
       var code;
@@ -4118,8 +4118,8 @@
         a.textContent = filename;
         filename = a.innerHTML.replace(/'/g, '&apos;');
         fileDims = ext === 'pdf' ? 'PDF' : "" + file.width + "x" + file.height;
-        fileInfo = ("<span class=fileText id=fT" + postID + (file.isSpoiler ? " title='" + filename + "'" : '') + ">File: <a href='" + file.url + "' target=_blank>" + file.timestamp + "</a>") + ("-(" + fileSize + ", " + fileDims + (file.isSpoiler ? '' : ", <span title='" + filename + "'>" + shortFilename + "</span>")) + ")</span>";
-        fileHTML = "<div id=f" + postID + " class=file><div class=fileInfo>" + fileInfo + "</div>" + imgSrc + "</div>";
+        fileInfo = ("<div class=fileText id=fT" + postID + (file.isSpoiler ? " title='" + filename + "'" : '') + ">File: <a href='" + file.url + "' target=_blank>" + file.timestamp + "</a>") + ("-(" + fileSize + ", " + fileDims + (file.isSpoiler ? '' : ", <span" + (filename !== shortFilename ? " title='" + filename + "'" : '') + ">" + shortFilename + "</span>")) + ")</div>";
+        fileHTML = "<div class=file id=f" + postID + ">" + fileInfo + imgSrc + "</div>";
       } else {
         fileHTML = '';
       }
