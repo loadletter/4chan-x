@@ -6206,6 +6206,10 @@ h1 {\
 .fileText:not(:hover) .fnfull {\
   display: none;\
 }\
+.reply > .file > .fileText {\
+  margin: 0 20px;\
+}\
+\
 .fitwidth img[data-md5] + img {\
   max-width: 100%;\
 }\
