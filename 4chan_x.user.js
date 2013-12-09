@@ -6,12 +6,10 @@
 // @copyright      2009-2011 James Campos <james.r.campos@gmail.com>
 // @copyright      2012-2013 Nicolas Stepien <stepien.nicolas@gmail.com>
 // @license        MIT; http://en.wikipedia.org/wiki/Mit_license
-// @include        http://boards.4chan.org/*
-// @include        https://boards.4chan.org/*
-// @include        http://images.4chan.org/*
-// @include        https://images.4chan.org/*
-// @include        http://sys.4chan.org/*
-// @include        https://sys.4chan.org/*
+// @match          *://boards.4chan.org/*
+// @match          *://sys.4chan.org/*
+// @match          *://a.4cdn.org/*
+// @match          *://i.4cdn.org/*
 // @grant          GM_getValue
 // @grant          GM_setValue
 // @grant          GM_deleteValue
@@ -900,7 +898,7 @@
       _ref = this.href.match(/(\d+)#p(\d+)/), _ = _ref[0], threadID = _ref[1], replyID = _ref[2];
       this.textContent = "Loading No." + replyID + "...";
       a = this;
-      return $.cache("//api.4chan.org" + this.pathname + ".json", function() {
+      return $.cache("//a.4cdn.org" + this.pathname + ".json", function() {
         return ExpandComment.parse(this, a, threadID, replyID);
       });
     },
@@ -984,7 +982,7 @@
     },
     toggle: function(thread) {
       var a, num, replies, reply, url, _i, _len;
-      url = "//api.4chan.org/" + g.BOARD + "/res/" + thread.id.slice(1) + ".json";
+      url = "//a.4cdn.org/" + g.BOARD + "/res/" + thread.id.slice(1) + ".json";
       a = $('.summary', thread);
       switch (a.textContent[0]) {
         case '+':
@@ -2707,8 +2705,8 @@
           $.prepend(setting, [$.tn('['), a, $.tn('] ')]);
         }
         notice = $.el('a', {
-          textContent: 'v2 is outdated.',
-          href: 'https://4chan-x.just-believe.in/',
+          textContent: 'v2 is never outdated.',
+          href: 'https://github.com/loadletter/4chan-x',
           target: '_blank'
         });
         notice.style.color = 'red';
@@ -2996,7 +2994,7 @@
     },
     fileInfo: function() {
       FileInfo.data = {
-        link: '//images.4chan.org/g/src/1334437723720.jpg',
+        link: '//i.4cdn.org/g/src/1334437723720.jpg',
         spoiler: true,
         size: '276',
         unit: 'KB',
@@ -3306,7 +3304,7 @@
         request.onloadend = null;
         request.abort();
       }
-      url = "//api.4chan.org/" + g.BOARD + "/res/" + g.THREAD_ID + ".json";
+      url = "//a.4cdn.org/" + g.BOARD + "/res/" + g.THREAD_ID + ".json";
       return Updater.request = $.ajax(url, {
         onloadend: Updater.cb.load
       }, {
@@ -3475,7 +3473,7 @@
       link = link.replace(/(\$\d)/g, function(parameter) {
         switch (parameter) {
           case '$1':
-            return "' + (isArchived ? img.firstChild.src : 'http://thumbs.4chan.org' + img.pathname.replace(/src(\\/\\d+).+$/, 'thumb$1s.jpg')) + '";
+            return "' + (isArchived ? img.firstChild.src : 'http://t.4cdn.org' + img.pathname.replace(/src(\\/\\d+).+$/, 'thumb$1s.jpg')) + '";
           case '$2':
             return "' + img.href + '";
           case '$3':
@@ -3530,7 +3528,7 @@
       img.removeAttribute('style');
       s = img.style;
       s.maxHeight = s.maxWidth = /\bop\b/.test(post["class"]) ? '250px' : '125px';
-      return img.src = "//thumbs.4chan.org" + (img.parentNode.pathname.replace(/src(\/\d+).+$/, 'thumb$1s.jpg'));
+      return img.src = "//t.4cdn.org" + (img.parentNode.pathname.replace(/src(\/\d+).+$/, 'thumb$1s.jpg'));
     }
   };
 
@@ -3811,7 +3809,7 @@
       }
       root.textContent = "Loading post No." + postID + "...";
       if (threadID) {
-        return $.cache("//api.4chan.org/" + board + "/res/" + threadID + ".json", function() {
+        return $.cache("//a.4cdn.org/" + board + "/res/" + threadID + ".json", function() {
           return Get.parsePost(this, board, threadID, postID, root, cb);
         });
       } else if (url = Redirect.post(board, postID)) {
@@ -3934,7 +3932,7 @@
           width: data.media.media_w,
           MD5: data.media.media_hash,
           size: data.media.media_size,
-          turl: data.media.thumb_link || ("//thumbs.4chan.org/" + board + "/thumb/" + data.media.preview_orig),
+          turl: data.media.thumb_link || ("//t.4cdn.org/" + board + "/thumb/" + data.media.preview_orig),
           theight: data.media.preview_h,
           twidth: data.media.preview_w,
           isSpoiler: data.media.spoiler === '1'
@@ -4031,12 +4029,12 @@
         o.file = {
           name: data.filename + data.ext,
           timestamp: "" + data.tim + data.ext,
-          url: "//images.4chan.org/" + board + "/src/" + data.tim + data.ext,
+          url: "//i.4cdn.org/" + board + "/src/" + data.tim + data.ext,
           height: data.h,
           width: data.w,
           MD5: data.md5,
           size: data.fsize,
-          turl: "//thumbs.4chan.org/" + board + "/thumb/" + data.tim + "s.jpg",
+          turl: "//t.4cdn.org/" + board + "/thumb/" + data.tim + "s.jpg",
           theight: data.tn_h,
           twidth: data.tn_w,
           isSpoiler: !!data.spoiler,
@@ -4054,7 +4052,7 @@
       var a, board, capcode, capcodeClass, capcodeStart, closed, comment, container, date, dateUTC, email, emailEnd, emailStart, ext, file, fileDims, fileHTML, fileInfo, fileSize, fileThumb, filename, flag, flagCode, flagName, href, imgSrc, isClosed, isOP, isSticky, name, postID, quote, shortFilename, spoilerRange, staticPath, sticky, subject, threadID, tripcode, uniqueID, userID, _i, _len, _ref;
       postID = o.postID, threadID = o.threadID, board = o.board, name = o.name, capcode = o.capcode, tripcode = o.tripcode, uniqueID = o.uniqueID, email = o.email, subject = o.subject, flagCode = o.flagCode, flagName = o.flagName, date = o.date, dateUTC = o.dateUTC, isSticky = o.isSticky, isClosed = o.isClosed, comment = o.comment, file = o.file;
       isOP = postID === threadID;
-      staticPath = '//static.4chan.org';
+      staticPath = '//s.4cdn.org';
       if (email) {
         emailStart = '<a href="mailto:' + email + '" class="useremail">';
         emailEnd = '</a>';
@@ -4100,7 +4098,7 @@
         if (file.isSpoiler) {
           fileSize = "Spoiler Image, " + fileSize;
           if (!isArchived) {
-            fileThumb = '//static.4chan.org/image/spoiler';
+            fileThumb = '//s.4cdn.org/image/spoiler';
             if (spoilerRange = Build.spoilerRange[board]) {
               fileThumb += ("-" + board) + Math.floor(1 + spoilerRange * Math.random());
             }
@@ -4124,8 +4122,8 @@
         fileHTML = '';
       }
       tripcode = tripcode ? " <span class=postertrip>" + tripcode + "</span>" : '';
-      sticky = isSticky ? ' <img src=//static.4chan.org/image/sticky.gif alt=Sticky title=Sticky style="height:16px;width:16px">' : '';
-      closed = isClosed ? ' <img src=//static.4chan.org/image/closed.gif alt=Closed title=Closed style="height:16px;width:16px">' : '';
+      sticky = isSticky ? ' <img src=//s.4cdn.org/image/sticky.gif alt=Sticky title=Sticky style="height:16px;width:16px">' : '';
+      closed = isClosed ? ' <img src=//s.4cdn.org/image/closed.gif alt=Closed title=Closed style="height:16px;width:16px">' : '';
       container = $.el('div', {
         id: "pc" + postID,
         className: "postContainer " + (isOP ? 'op' : 'reply') + "Container",
@@ -5200,19 +5198,19 @@
       var src, timeoutID, url,
         _this = this;
       src = this.src.split('/');
-      if (!(src[2] === 'images.4chan.org' && (url = Redirect.image(src[3], src[5])))) {
+      if (!(src[2] === 'i.4cdn.org' && (url = Redirect.image(src[3], src[5])))) {
         if (g.dead) {
           return;
         }
-        url = "//images.4chan.org/" + src[3] + "/src/" + src[5];
+        url = "//i.4cdn.org/" + src[3] + "/src/" + src[5];
       }
-      if ($.engine !== 'webkit' && url.split('/')[2] === 'images.4chan.org') {
+      if ($.engine !== 'webkit' && url.split('/')[2] === 'i.4cdn.org') {
         return;
       }
       timeoutID = setTimeout((function() {
         return _this.src = url;
       }), 3000);
-      if ($.engine !== 'webkit' || url.split('/')[2] !== 'images.4chan.org') {
+      if ($.engine !== 'webkit' || url.split('/')[2] !== 'i.4cdn.org') {
         return;
       }
       return $.ajax(url, {
@@ -5394,17 +5392,17 @@
       ImageExpand.contract(thumb);
       $.rm(this);
       src = this.src.split('/');
-      if (!(src[2] === 'images.4chan.org' && (url = Redirect.image(src[3], src[5])))) {
+      if (!(src[2] === 'i.4cdn.org' && (url = Redirect.image(src[3], src[5])))) {
         if (g.dead) {
           return;
         }
-        url = "//images.4chan.org/" + src[3] + "/src/" + src[5];
+        url = "//i.4cdn.org/" + src[3] + "/src/" + src[5];
       }
-      if ($.engine !== 'webkit' && url.split('/')[2] === 'images.4chan.org') {
+      if ($.engine !== 'webkit' && url.split('/')[2] === 'i.4cdn.org') {
         return;
       }
       timeoutID = setTimeout(ImageExpand.expand, 10000, thumb, url);
-      if ($.engine !== 'webkit' || url.split('/')[2] !== 'images.4chan.org') {
+      if ($.engine !== 'webkit' || url.split('/')[2] !== 'i.4cdn.org') {
         return;
       }
       return $.ajax(url, {
@@ -5529,7 +5527,7 @@
             asap();
           }
           return;
-        case 'images.4chan.org':
+        case 'i.4cdn.org':
           $.ready(function() {
             var url;
             if (/^4chan - 404/.test(d.title) && Conf['404 Redirect']) {
