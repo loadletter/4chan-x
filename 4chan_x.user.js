@@ -15,8 +15,8 @@
 // @grant          GM_deleteValue
 // @grant          GM_openInTab
 // @run-at         document-start
-// @updateURL      https://github.com/MayhemYDG/4chan-x/raw/stable/4chan_x.user.js
-// @downloadURL    https://github.com/MayhemYDG/4chan-x/raw/stable/4chan_x.user.js
+// @updateURL      https://github.com/loadletter/4chan-x/raw/master/4chan_x.meta.js
+// @downloadURL    https://github.com/loadletter/4chan-x/raw/master/4chan_x.user.js
 // @icon           data:image/gif;base64,R0lGODlhEAAQAKECAAAAAGbMM////////yH5BAEKAAIALAAAAAAQABAAAAIxlI+pq+D9DAgUoFkPDlbs7lGiI2bSVnKglnJMOL6omczxVZK3dH/41AG6Lh7i6qUoAAA7
 // ==/UserScript==
 
@@ -2727,9 +2727,9 @@
         className: 'reply dialog',
         innerHTML: '<div id=optionsbar>\
   <div id=credits>\
-    <a target=_blank href=http://mayhemydg.github.io/4chan-x/>4chan X</a>\
-    | <a target=_blank href=https://raw.github.com/mayhemydg/4chan-x/master/changelog>' + Main.version + '</a>\
-    | <a target=_blank href=http://mayhemydg.github.io/4chan-x/#bug-report>Issues</a>\
+    <a target=_blank href=https://github.com/loadletter/4chan-x>4chan X</a>\
+    | <a target=_blank href=https://github.com/loadletter/4chan-x/commits/master>' + Main.version + '</a>\
+    | <a target=_blank href=https://github.com/loadletter/4chan-x/issues>Issues</a>\
   </div>\
   <div>\
     <label for=main_tab>Main</label>\
@@ -5588,7 +5588,7 @@
           $.on(window, 'message', Main.message);
           $.set('lastUpdate', now);
           return $.add(d.head, $.el('script', {
-            src: 'https://github.com/MayhemYDG/4chan-x/raw/master/latest.js'
+            src: 'https://github.com/loadletter/4chan-x/raw/master/latest.js'
           }));
         });
       }
@@ -5804,7 +5804,7 @@
       var version;
       version = e.data.version;
       if (version && version !== Main.version && confirm('An updated version of 4chan X is available, would you like to install it now?')) {
-        return window.location = "https://raw.github.com/mayhemydg/4chan-x/" + version + "/4chan_x.user.js";
+        return window.location = "https://raw.github.com/loadletter/4chan-x/" + version + "/4chan_x.user.js";
       }
     },
     preParse: function(node) {
@@ -5848,7 +5848,7 @@
         } catch (_error) {
           err = _error;
           if (notify) {
-            alert("4chan X (" + Main.version + ") error: " + err.message + "\nReport the bug at mayhemydg.github.io/4chan-x/#bug-report\n\nURL: " + window.location + "\n" + err.stack);
+            alert("4chan X (" + Main.version + ") error: " + err.message + "\nReport the bug at github.com/loadletter/4chan-x/issues\n\nURL: " + window.location + "\n" + err.stack);
           }
         }
       }
