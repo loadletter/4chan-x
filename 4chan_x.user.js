@@ -5776,7 +5776,7 @@
         nodes.push(Main.preParse(node));
       }
       Main.node(nodes, true);
-      Main.hasCodeTags = !!$('script[src^="//static.4chan.org/js/prettify/prettify"]');
+      Main.hasCodeTags = !!$('script[src^="//s.4cdn.org/js/prettify/prettify"]');
       if (MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.OMutationObserver) {
         observer = new MutationObserver(Main.observer);
         observer.observe(board, {
