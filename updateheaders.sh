@@ -1,4 +1,5 @@
-#!/bin/sh
+#!/bin/bash
+echo -e "\e[0;31mREMEMBER TO CHANGE version: @ LINE 5896 (before CSS)\e[0m"
 echo "======meta.js======="
 head -22 4chan_x.user.js | tee 4chan_x.meta.js
 
