@@ -2391,7 +2391,7 @@
 <form>\
   <div><input id=dump type=button title="Dump list" value=+ class=field><input name=name title=Name placeholder=Name class=field size=1><input name=email title=E-mail placeholder=E-mail class=field size=1><input name=sub title=Subject placeholder=Subject class=field size=1></div>\
   <div id=replies><div><a id=addReply href=javascript:; title="Add a reply">+</a></div></div>\
-  <div class=textarea><textarea name=com title=Comment placeholder=Comment class=field></textarea><span id=charCount></span></div>\
+  <div class=textarea><textarea name=com title=Comment placeholder=Comment class=field onFocus="loadRecaptcha()"></textarea><span id=charCount></span></div>\
   <div><input type=file title="Shift+Click to remove the selected file." multiple size=16><input type=submit></div>\
   <label id=spoilerLabel><input type=checkbox id=spoiler> Spoiler Image</label>\
   <div class=warning></div>\
