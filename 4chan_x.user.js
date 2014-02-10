@@ -3087,7 +3087,6 @@
       this.count = $('#count', dialog);
       this.timer = $('#timer', dialog);
       this.thread = $.id("t" + g.THREAD_ID);
-      this.unsuccessfulFetchCount = 0;
       this.lastModified = '0';
       _ref = $$('input', dialog);
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -3134,16 +3133,14 @@
         if (!Conf['Auto Update This']) {
           return;
         }
-        Updater.unsuccessfulFetchCount = 0;
         return setTimeout(Updater.update, 500);
       },
       visibility: function() {
         if (d.hidden) {
           return;
         }
-        Updater.unsuccessfulFetchCount = 0;
         if (Updater.timer.textContent < -Conf['Interval']) {
-          return Updater.set('timer', -Updater.getInterval());
+          return Updater.set('timer', -Conf['Interval']);
         }
       },
       interval: function() {
@@ -3151,7 +3148,7 @@
         val = parseInt(this.value, 10);
         this.value = val > 5 ? val : 5;
         $.cb.value.call(this);
-        return Updater.set('timer', -Updater.getInterval());
+        return Updater.set('timer', -Conf['Interval']);
       },
       verbose: function() {
         if (Conf['Verbose']) {
@@ -3201,8 +3198,7 @@
             This saves bandwidth for both the user and the servers and avoid unnecessary computation.
             */
 
-            Updater.unsuccessfulFetchCount++;
-            Updater.set('timer', -Updater.getInterval());
+            Updater.set('timer', -Conf['Interval']);
             if (Conf['Verbose']) {
               Updater.set('count', '+0');
               Updater.count.className = null;
@@ -3211,11 +3207,10 @@
           case 200:
             Updater.lastModified = this.getResponseHeader('Last-Modified');
             Updater.cb.update(JSON.parse(this.response).posts);
-            Updater.set('timer', -Updater.getInterval());
+            Updater.set('timer', -Conf['Interval']);
             break;
           default:
-            Updater.unsuccessfulFetchCount++;
-            Updater.set('timer', -Updater.getInterval());
+            Updater.set('timer', -Conf['Interval']);
             if (Conf['Verbose']) {
               Updater.set('count', this.statusText);
               Updater.count.className = 'warning';
@@ -3244,13 +3239,9 @@
           Updater.set('count', "+" + count);
           Updater.count.className = count ? 'new' : null;
         }
-        if (count) {
-          if (Conf['Beep'] && d.hidden && (Unread.replies.length === 0)) {
-            Updater.audio.play();
-          }
-          Updater.unsuccessfulFetchCount = 0;
-        } else {
-          Updater.unsuccessfulFetchCount++;
+        
+        if (count && Conf['Beep'] && d.hidden && (Unread.replies.length === 0)) {
+          Updater.audio.play();
           return;
         }
         scroll = Conf['Scrolling'] && Updater.scrollBG() && lastPost.getBoundingClientRect().bottom - d.documentElement.clientHeight < 25;
@@ -3269,23 +3260,13 @@
         return el.textContent = text;
       }
     },
-    getInterval: function() {
-      var i, j;
-      i = +Conf['Interval'];
-      j = Math.min(this.unsuccessfulFetchCount, 9);
-      if (!d.hidden) {
-        j = Math.min(j, 6);
-      }
-      return Math.max(i, [5, 10, 15, 20, 30, 60, 90, 120, 240, 300][j]);
-    },
     timeout: function() {
       var n;
       Updater.timeoutID = setTimeout(Updater.timeout, 1000);
       n = 1 + Number(Updater.timer.firstChild.data);
       if (n === 0) {
         return Updater.update();
-      } else if (n >= Updater.getInterval()) {
-        Updater.unsuccessfulFetchCount++;
+      } else if (n >= Conf['Interval']) {
         Updater.set('count', 'Retry');
         Updater.count.className = null;
         return Updater.update();
