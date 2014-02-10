@@ -1001,7 +1001,6 @@
             switch (g.BOARD) {
               case 'b':
               case 'vg':
-              case 'q':
                 return 3;
               case 't':
                 return 1;
@@ -1885,8 +1884,6 @@
         QR.cooldown.types = {
           thread: (function() {
             switch (g.BOARD) {
-              case 'q':
-                return 86400;
               case 'b':
               case 'soc':
               case 'r9k':
