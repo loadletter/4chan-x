@@ -1897,7 +1897,7 @@
           })(),
           sage: g.BOARD === 'q' ? 600 : 60,
           file: g.BOARD === 'q' ? 300 : 30,
-          post: g.BOARD === 'q' ? 60 : 30
+          post: g.BOARD === 60
         };
         QR.cooldown.cooldowns = $.get("" + g.BOARD + ".cooldown", {});
         QR.cooldown.start();
