@@ -1895,7 +1895,7 @@
                 return 300;
             }
           })(),
-          sage: g.BOARD === 'q' ? 600 : 60,
+          sage: g.BOARD === 60,
           file: g.BOARD === 60,
           post: g.BOARD === 60
         };
