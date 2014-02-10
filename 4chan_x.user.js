@@ -4610,7 +4610,7 @@
     cooldown: {
       start: function(e) {
         var seconds;
-        seconds = g.BOARD === 'q' ? 600 : 30;
+        seconds = g.BOARD === 60;
         return DeleteLink.cooldown.count(e.detail.postID, seconds, seconds);
       },
       count: function(postID, seconds, length) {
