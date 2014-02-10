@@ -1895,9 +1895,9 @@
                 return 300;
             }
           })(),
-          sage: g.BOARD === 60,
-          file: g.BOARD === 60,
-          post: g.BOARD === 60
+          sage: 60,
+          file: 60,
+          post: 60
         };
         QR.cooldown.cooldowns = $.get("" + g.BOARD + ".cooldown", {});
         QR.cooldown.start();
@@ -4610,7 +4610,7 @@
     cooldown: {
       start: function(e) {
         var seconds;
-        seconds = g.BOARD === 60;
+        seconds = 60;
         return DeleteLink.cooldown.count(e.detail.postID, seconds, seconds);
       },
       count: function(postID, seconds, length) {
