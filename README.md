@@ -17,7 +17,9 @@ Install tampermonkey or equivalent and then just click on the previuos link.
 
 
 ##Changelog
+- 2.40.4: Fix QR load again, this time because of mimetype stuff (from a diff of MayhemYDG)
 - 2.40.3: Replace the thread updater with a normal one that doesn't increment the delay for inactive threads (from ahodesuka fork)
 - 2.40.2: Fixed to support new captcha loading function in the Quick Response
 - 2.40.1: Fixed code tags
 - 2.40.0: Fixed a change in the html that caused errors with the file info and updated to support 4cdn
+- 2.39.7: Latest 2.x version from MayhemYDG
