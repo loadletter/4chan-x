@@ -10,8 +10,6 @@
 // @match          *://sys.4chan.org/*
 // @match          *://a.4cdn.org/*
 // @match          *://i.4cdn.org/*
-// @exclude        http://boards.4chan.org/*/catalog
-// @exclude        https://boards.4chan.org/*/catalog
 // @grant          GM_getValue
 // @grant          GM_setValue
 // @grant          GM_deleteValue
