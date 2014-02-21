@@ -4888,6 +4888,7 @@
     image: function(board, filename) {
       switch (board) {
         case 'a':
+        case 'biz':
         case 'gd':
         case 'jp':
         case 'm':
@@ -4948,6 +4949,7 @@
     post: function(board, postID) {
       switch (board) {
         case 'a':
+        case 'biz':
         case 'co':
         case 'gd':
         case 'jp':
@@ -5004,6 +5006,7 @@
       board = data.board;
       switch (board) {
         case 'a':
+        case 'biz':
         case 'co':
         case 'gd':
         case 'jp':
