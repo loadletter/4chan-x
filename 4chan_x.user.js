@@ -1885,6 +1885,8 @@
         QR.cooldown.types = {
           thread: (function() {
             switch (g.BOARD) {
+              case 'jp':
+                return 3600;
               case 'b':
               case 'soc':
               case 'r9k':
@@ -4732,6 +4734,8 @@
           case 'co':
           case 'mlp':
             return 251;
+          case 'jp':
+            return 301;
           case 'vg':
             return 376;
           default:
