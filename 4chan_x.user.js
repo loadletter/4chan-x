@@ -5064,11 +5064,6 @@
         case 'y':
           url = Redirect.path('//archive.foolzashit.com', 'foolfuuka', data);
           break;
-        case 'diy':
-        case 'g':
-        case 'sci':
-          url = Redirect.path('//archive.installgentoo.net', 'fuuka', data);
-          break;
         case 'cgl':
         case 'mu':
           url = Redirect.path('//rbt.asia', 'fuuka', data);
@@ -5086,6 +5081,9 @@
         case 'fa':
         case 'ic':
         case 'lit':
+        case 'diy':
+        case 'g':
+        case 'sci':
           url = Redirect.path('//fuuka.warosu.org', 'fuuka', data);
           break;
         default:
