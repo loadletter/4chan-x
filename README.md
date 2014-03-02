@@ -17,6 +17,7 @@ Install tampermonkey or equivalent and then just click on the previuos link.
 
 
 ##Changelog
+- 2.40.7: Fix #4 (/jp/ cooldown and image limit) and switched boards that used installgentoo.net to warosu.org
 - 2.40.6: Remove exclude rule for catalog, add /biz/
 - 2.40.5: Add exclude rule for catalog
 - 2.40.4: Fix QR load again, this time because of mimetype stuff (from a diff of MayhemYDG's 3.x)
