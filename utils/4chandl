@@ -1,0 +1,42 @@
+#!/usr/bin/env python
+
+import os
+import re
+import sys
+import urllib
+import urllib2
+import urlparse
+import multiprocessing
+
+IMAGE_URL_REGEX = r'"(\/\/i\.4cdn\.org\/.+?\/src\/\d+\..+?)"'
+PROCESSES = 8
+
+
+def download(url, path):
+    if os.path.exists(path):
+        return
+    urllib.urlretrieve(url, path)
+    print "Downloaded: ",url
+
+
+def main(argument):
+    pool = multiprocessing.Pool(PROCESSES)
+    source = urllib2.urlopen(argument).read()
+    tokens = argument.split('/')
+
+    path = '%s#%d' % (tokens[3], int(tokens[5]))
+    if not os.path.exists(path):
+        os.mkdir(path)
+
+    for image_url in set(re.findall(IMAGE_URL_REGEX, source)):
+        url = urlparse.urljoin(argument, image_url).replace('https', 'http')
+        filename = url.split('/')[-1]
+        path_ = os.path.join(path, filename)
+        pool.apply_async(download, [url, path_])
+    pool.close()
+    pool.join()
+
+
+if __name__ == '__main__':
+    map(main, sys.argv[1:])
+
