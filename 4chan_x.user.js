@@ -2321,6 +2321,11 @@
           return _this.count(arr.length);
         });
         this.count($.get('captchas', []).length);
+        new MutationObserver(QR.captcha.load.bind(QR.captcha)).observe(this.challenge, {
+          childList: true,
+          subtree: true,
+          attributes: true
+        });
         return this.reload();
       },
       save: function() {
