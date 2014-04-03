@@ -2317,10 +2317,7 @@
         $.on(this.challenge, 'DOMNodeInserted', function() {
           return _this.load();
         });
-        $.sync('captchas', function(arr) {
-          return _this.count(arr.length);
-        });
-        this.count($.get('captchas', []).length);
+        this.input.placeholder = 'Verification';
         new MutationObserver(QR.captcha.load.bind(QR.captcha)).observe(this.challenge, {
           childList: true,
           subtree: true,
@@ -2328,44 +2325,12 @@
         });
         return this.reload();
       },
-      save: function() {
-        var captcha, captchas, response;
-        if (!(response = this.input.value)) {
-          return;
-        }
-        captchas = $.get('captchas', []);
-        while ((captcha = captchas[0]) && captcha.time < Date.now()) {
-          captchas.shift();
-        }
-        captchas.push({
-          challenge: this.challenge.firstChild.value,
-          response: response,
-          time: this.timeout
-        });
-        $.set('captchas', captchas);
-        this.count(captchas.length);
-        return this.reload();
-      },
       load: function() {
         var challenge;
-        this.timeout = Date.now() + 4 * $.MINUTE;
         challenge = this.challenge.firstChild.value;
         this.img.alt = challenge;
         this.img.src = "//www.google.com/recaptcha/api/image?c=" + challenge;
         return this.input.value = null;
-      },
-      count: function(count) {
-        this.input.placeholder = (function() {
-          switch (count) {
-            case 0:
-              return 'Verification (Shift + Enter to cache)';
-            case 1:
-              return 'Verification (1 cached captcha)';
-            default:
-              return "Verification (" + count + " cached captchas)";
-          }
-        })();
-        return this.input.alt = count;
       },
       reload: function(focus) {
         $.globalEval('javascript:Recaptcha.reload("t")');
@@ -2373,13 +2338,15 @@
           return QR.captcha.input.focus();
         }
       },
+      destroy: function() {
+        $.globalEval('Recaptcha.destroy()');
+        return;
+      },
       keydown: function(e) {
         var c;
         c = QR.captcha;
         if (e.keyCode === 8 && !c.input.value) {
           c.reload();
-        } else if (e.keyCode === 13 && e.shiftKey) {
-          c.save();
         } else {
           return;
         }
@@ -2479,7 +2446,7 @@
       }));
     },
     submit: function(e) {
-      var callbacks, captcha, captchas, challenge, err, filetag, m, opts, post, reply, response, textOnly, threadID, _ref;
+      var callbacks, challenge, err, filetag, m, opts, post, reply, response, textOnly, threadID, _ref;
       if (e != null) {
         e.preventDefault();
       }
@@ -2509,21 +2476,10 @@
         err = 'No file selected.';
       }
       if (QR.captcha.isEnabled && !err) {
-        captchas = $.get('captchas', []);
-        while ((captcha = captchas[0]) && captcha.time < Date.now()) {
-          captchas.shift();
+        challenge = QR.captcha.img.alt;
+        if (response = QR.captcha.input.value) {
+          QR.captcha.reload();
         }
-        if (captcha = captchas.shift()) {
-          challenge = captcha.challenge;
-          response = captcha.response;
-        } else {
-          challenge = QR.captcha.img.alt;
-          if (response = QR.captcha.input.value) {
-            QR.captcha.reload();
-          }
-        }
-        $.set('captchas', captchas);
-        QR.captcha.count(captchas.length);
         if (!response) {
           err = 'No valid captcha.';
         } else {
@@ -2570,6 +2526,10 @@
           return QR.response(this.response);
         },
         onerror: function() {
+          if (QR.captcha.isEnabled) {
+            QR.captcha.destroy();
+            QR.captcha.setup();
+          }
           QR.cooldown.auto = false;
           QR.status();
           return QR.error($.el('a', {
@@ -2600,6 +2560,9 @@
       var ban, board, doc, err, persona, postID, reply, threadID, _, _ref, _ref1;
       doc = d.implementation.createHTMLDocument('');
       doc.documentElement.innerHTML = html;
+      if (QR.captcha.isEnabled) {
+        QR.captcha.destroy();
+      }
       if (ban = $('.banType', doc)) {
         board = $('.board', doc).innerHTML;
         err = $.el('span', {
@@ -2617,7 +2580,7 @@
           if (/mistyped/i.test(err.textContent)) {
             err = 'Error: You seem to have mistyped the CAPTCHA.';
           }
-          QR.cooldown.auto = QR.captcha.isEnabled ? !!$.get('captchas', []).length : err === 'Connection error with sys.4chan.org.' ? true : false;
+          QR.cooldown.auto = false;
           QR.cooldown.set({
             delay: 2
           });
