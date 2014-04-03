@@ -2526,7 +2526,6 @@
         onerror: function() {
           if (QR.captcha.isEnabled) {
             QR.captcha.destroy();
-            QR.captcha.setup();
           }
           QR.cooldown.auto = false;
           QR.status();
