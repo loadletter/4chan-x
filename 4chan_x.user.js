@@ -2477,9 +2477,7 @@
       }
       if (QR.captcha.isEnabled && !err) {
         challenge = QR.captcha.img.alt;
-        if (response = QR.captcha.input.value) {
-          QR.captcha.reload();
-        }
+        response = QR.captcha.input.value;
         if (!response) {
           err = 'No valid captcha.';
         } else {
@@ -2558,11 +2556,11 @@
     },
     response: function(html) {
       var ban, board, doc, err, persona, postID, reply, threadID, _, _ref, _ref1;
-      doc = d.implementation.createHTMLDocument('');
-      doc.documentElement.innerHTML = html;
       if (QR.captcha.isEnabled) {
         QR.captcha.destroy();
       }
+      doc = d.implementation.createHTMLDocument('');
+      doc.documentElement.innerHTML = html;
       if (ban = $('.banType', doc)) {
         board = $('.board', doc).innerHTML;
         err = $.el('span', {
