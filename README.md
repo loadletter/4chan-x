@@ -17,7 +17,7 @@ Install tampermonkey or equivalent and then just click on the previuos link.
 
 
 ##Changelog
-- 2.40.10: The final captcha fix (Thanks to WhatIsThisImNotGoodWithComputers)
+- 2.40.10/11: The final captcha fix (Thanks to WhatIsThisImNotGoodWithComputers)
 - 2.40.9: Temporary fix to get the captcha working at least once (doesn't refresh)
 - 2.40.8: Fix QR captcha load again again, fuck it
 - 2.40.7: Fix #4 (/jp/ cooldown and image limit) and switched boards that used installgentoo.net to warosu.org
