@@ -79,8 +79,9 @@
  */
 
 (function() {
-  var $, $$, Anonymize, ArchiveLink, AutoGif, Build, CatalogLinks, Conf, Config, DeleteLink, DownloadLink, ExpandComment, ExpandThread, Favicon, FileInfo, Filter, Get, ImageExpand, ImageHover, Keybinds, Main, Menu, Nav, Options, QR, QuoteBacklink, QuoteCT, QuoteInline, QuoteOP, QuotePreview, Quotify, Redirect, RelativeDates, ReplyHiding, ReportLink, RevealSpoilers, Sauce, StrikethroughQuotes, ThreadHiding, ThreadStats, Time, TitlePost, UI, Unread, Updater, Watcher, d, g, _base;
-
+  var $, $$, Anonymize, ArchiveLink, AutoGif, Build, CatalogLinks, Conf, Config, DeleteLink, DownloadLink, ExpandComment, ExpandThread, Favicon, FileInfo, Filter, Get, ImageExpand, ImageHover, Keybinds, Main, Menu, Nav, Options, QR, QuoteBacklink, QuoteCT, QuoteInline, QuoteOP, QuotePreview, Quotify, Redirect, RelativeDates, ReplyHiding, ReportLink, RevealSpoilers, Sauce, StrikethroughQuotes, ThreadHiding, ThreadStats, Time, TitlePost, UI, Unread, Updater, Watcher, d, g, _base, CaptchaImg, CaptchaInput, CaptchaObserver, CaptchaIsSetup;
+  CaptchaIsSetup = false;
+  
   Config = {
     main: {
       Enhancing: {
@@ -2276,6 +2277,7 @@
     })(),
     captcha: {
       init: function() {
+        $.globalEval('loadRecaptcha()');
         var _this = this;
         if (-1 !== d.cookie.indexOf('pass_enabled=')) {
           return;
@@ -2300,42 +2302,51 @@
         } else {
           return;
         }
-        $.addClass(QR.el, 'captcha');
-        $.after($('.textarea', QR.el), $.el('div', {
-          className: 'captchaimg',
-          title: 'Reload',
-          innerHTML: '<img>'
-        }));
-        $.after($('.captchaimg', QR.el), $.el('div', {
-          className: 'captchainput',
-          innerHTML: '<input title=Verification class=field autocomplete=off size=1>'
-        }));
-        this.img = $('.captchaimg > img', QR.el);
-        this.input = $('.captchainput > input', QR.el);
-        $.on(this.img.parentNode, 'click', this.reload);
-        $.on(this.input, 'keydown', this.keydown);
+        if(!CaptchaIsSetup) {
+          $.addClass(QR.el, 'captcha');
+          $.after($('.textarea', QR.el), $.el('div', {
+            className: 'captchaimg',
+            title: 'Reload',
+            innerHTML: '<img>'
+          }));
+          $.after($('.captchaimg', QR.el), $.el('div', {
+            className: 'captchainput',
+            innerHTML: '<input title=Verification class=field autocomplete=off size=1>'
+          }));
+          CaptchaIsSetup = true;
+        }
+        CaptchaImg = $('.captchaimg > img', QR.el);
+        CaptchaInput = $('.captchainput > input', QR.el);
+        $.on(CaptchaImg, 'click', this.reload);
+        $.on(CaptchaInput, 'keydown', this.keydown);
         $.on(this.challenge, 'DOMNodeInserted', function() {
           return _this.load();
         });
-        this.input.placeholder = 'Verification';
-        new MutationObserver(QR.captcha.load.bind(QR.captcha)).observe(this.challenge, {
+        CaptchaInput.placeholder = 'Verification';
+        try {
+          CaptchaObserver.disconnect();
+        } catch(e) {
+          /* do nothing */
+        }
+        CaptchaObserver = new MutationObserver(QR.captcha.load.bind(QR.captcha)).observe(this.challenge, {
           childList: true,
           subtree: true,
           attributes: true
         });
-        return this.reload();
+        /* always load to update image */
+        return _this.load();
       },
       load: function() {
         var challenge;
         challenge = this.challenge.firstChild.value;
-        this.img.alt = challenge;
-        this.img.src = "//www.google.com/recaptcha/api/image?c=" + challenge;
-        return this.input.value = null;
+        CaptchaImg.alt = challenge;
+        CaptchaImg.src = "//www.google.com/recaptcha/api/image?c=" + challenge;
+        return CaptchaInput.value = null;
       },
       reload: function(focus) {
         $.globalEval('javascript:Recaptcha.reload("t")');
         if (focus) {
-          return QR.captcha.input.focus();
+          return CaptchaInput.focus();
         }
       },
       destroy: function() {
@@ -2345,8 +2356,8 @@
       keydown: function(e) {
         var c;
         c = QR.captcha;
-        if (e.keyCode === 8 && !c.input.value) {
-          c.reload();
+        if (e.keyCode === 8 && !CaptchaInput.value) {
+          c.init();
         } else {
           return;
         }
@@ -2476,8 +2487,8 @@
         err = 'No file selected.';
       }
       if (QR.captcha.isEnabled && !err) {
-        challenge = QR.captcha.img.alt;
-        response = QR.captcha.input.value;
+        challenge = CaptchaImg.alt;
+        response = CaptchaInput.value;
         if (!response) {
           err = 'No valid captcha.';
         } else {
@@ -2526,6 +2537,7 @@
         onerror: function() {
           if (QR.captcha.isEnabled) {
             QR.captcha.destroy();
+            QR.captcha.init();
           }
           QR.cooldown.auto = false;
           QR.status();
@@ -2557,6 +2569,7 @@
       var ban, board, doc, err, persona, postID, reply, threadID, _, _ref, _ref1;
       if (QR.captcha.isEnabled) {
         QR.captcha.destroy();
+        QR.captcha.init();
       }
       doc = d.implementation.createHTMLDocument('');
       doc.documentElement.innerHTML = html;
