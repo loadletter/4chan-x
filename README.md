@@ -29,3 +29,10 @@ Install tampermonkey or equivalent and then just click on the previuos link.
 - 2.40.1: Fixed code tags
 - 2.40.0: Fixed a change in the html that caused errors with the file info and updated to support 4cdn
 - 2.39.7: Latest 2.x version from MayhemYDG
+
+
+### My setup:
+- Linkify: http://userscripts.org/scripts/show/87750
+- Youtube link title: http://userscripts.org/scripts/show/83584
+- Highlight sage: https://github.com/loadletter/resage-ext
+- Inverted /a/: https://github.com/loadletter/4chan-x/raw/master/utils/inverted_a.user.js
