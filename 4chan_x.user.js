@@ -5331,9 +5331,20 @@
         img.hidden = false;
         return;
       }
-      img = $.el('img', {
-        src: src
-      });
+      
+      /* a video in your img? it's more likely than you think */
+      if (/\.webm$/.test(src)) {
+        img = $.el('video', {
+          src: src,
+          type: 'video/webm',
+          autoplay: true,
+          loop: true
+        });
+      } else {
+        img = $.el('img', {
+          src: src
+        });
+      }
       $.on(img, 'error', ImageExpand.error);
       return $.after(thumb, img);
     },
