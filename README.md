@@ -17,6 +17,7 @@ Install tampermonkey or equivalent and then just click on the previuos link.
 
 
 ##Changelog
+- 2.40.12: Implemented support for inline webm video expansion and uploading
 - 2.40.10/11: The final captcha fix (Thanks to WhatIsThisImNotGoodWithComputers)
 - 2.40.9: Temporary fix to get the captcha working at least once (doesn't refresh)
 - 2.40.8: Fix QR captcha load again again, fuck it
