@@ -5313,6 +5313,10 @@
     contract: function(thumb) {
       thumb.hidden = false;
       thumb.nextSibling.hidden = true;
+      if (thumb.nextSibling.nodeName === 'VIDEO') {
+        thumb.nextSibling.pause();
+        delete thumb.nextSibling;
+      }
       return $.rmClass(thumb.parentNode.parentNode.parentNode, 'image_expanded');
     },
     expand: function(thumb, src) {
