@@ -2357,7 +2357,7 @@
         var c;
         c = QR.captcha;
         if (e.keyCode === 8 && !CaptchaInput.value) {
-          c.init();
+          c.reload();
         } else {
           return;
         }
