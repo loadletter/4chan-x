@@ -5326,7 +5326,6 @@
       if (thumb.nextSibling.nodeName === 'VIDEO') {
         thumb.nextSibling.pause();
         thumb.nextSibling.remove();
-        delete thumb.nextSibling;
       }
       return $.rmClass(thumb.parentNode.parentNode.parentNode, 'image_expanded');
     },
