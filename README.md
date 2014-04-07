@@ -17,6 +17,7 @@ Install tampermonkey or equivalent and then just click on the previuos link.
 
 
 ##Changelog
+- 2.40.15: Add webm support to image hover
 - 2.40.13/14: Remove the video from memory when closed
 - 2.40.12: Implemented support for inline webm video expansion and uploading
 - 2.40.10/11: The final captcha fix (Thanks to WhatIsThisImNotGoodWithComputers)
