@@ -5124,10 +5124,20 @@
       if (UI.el) {
         return;
       }
-      el = UI.el = $.el('img', {
-        id: 'ihover',
-        src: this.parentNode.href
-      });
+      if (/\.webm$/.test(this.parentNode.href)) {
+        el = UI.el = $.el('video', {
+          id: 'ihover',
+          src: this.parentNode.href,
+          type: 'video/webm',
+          autoplay: true,
+          loop: true
+        });
+      } else {
+        el = UI.el = $.el('img', {
+          id: 'ihover',
+          src: this.parentNode.href
+        });
+      }
       $.add(d.body, el);
       $.on(el, 'load', ImageHover.load);
       $.on(el, 'error', ImageHover.error);
