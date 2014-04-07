@@ -82,6 +82,9 @@
   var $, $$, Anonymize, ArchiveLink, AutoGif, Build, CatalogLinks, Conf, Config, DeleteLink, DownloadLink, ExpandComment, ExpandThread, Favicon, FileInfo, Filter, Get, ImageExpand, ImageHover, Keybinds, Main, Menu, Nav, Options, QR, QuoteBacklink, QuoteCT, QuoteInline, QuoteOP, QuotePreview, Quotify, Redirect, RelativeDates, ReplyHiding, ReportLink, RevealSpoilers, Sauce, StrikethroughQuotes, ThreadHiding, ThreadStats, Time, TitlePost, UI, Unread, Updater, Watcher, d, g, _base, CaptchaImg, CaptchaInput, CaptchaObserver, CaptchaIsSetup;
   CaptchaIsSetup = false;
   
+  //Your posts to add (You) backlinks to
+  var yourPosts = new Array();
+  
   Config = {
     main: {
       Enhancing: {
@@ -144,7 +147,8 @@
       },
       Quoting: {
         'Quote Backlinks': [true, 'Add quote backlinks'],
-        'OP Backlinks': [false, 'Add backlinks to the OP'],
+        //Add (You) to OP feature (this edits the text in the settings only)
+        'OP Backlinks': [false, 'Add backlinks to the OP and enable You posts'],
         'Quote Highlighting': [true, 'Highlight the previewed post'],
         'Quote Inline': [true, 'Show quoted post inline on quote click'],
         'Quote Preview': [true, 'Show quote content on hover'],
@@ -953,6 +957,8 @@
       }
       if (Conf['Indicate OP quote']) {
         QuoteOP.node(post);
+        // Also add (You) links to posts
+        QuoteYou.node(post);
       }
       if (Conf['Indicate Cross-thread Quotes']) {
         QuoteCT.node(post);
@@ -2620,6 +2626,12 @@
           postID: postID
         }
       }));
+      
+      //Add your postID to yourPosts list
+      yourPosts.push(postID);
+      //Add to session storage
+      sessionStorage.setItem('yourPosts', JSON.stringify(yourPosts));
+      
       QR.cooldown.set({
         post: reply,
         isReply: threadID !== '0'
@@ -4357,6 +4369,34 @@
       return $.off(this, 'mouseout click', QuotePreview.mouseout);
     }
   };
+  
+  //Add (You) to posts function
+  QuoteYou = {
+    init: function() {
+      return Main.callbacks.push(this.node);
+    },
+    node: function(post) {
+      var quote, _i, _len, _ref;
+      if (post.isInlined && !post.isCrosspost) {
+        return;
+      }
+      _ref = post.quotes;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        quote = _ref[_i];
+        //Loop through locally stored post numbers
+        yourPostsFromStorage = JSON.parse(sessionStorage.getItem('yourPosts'));
+        //Check not null
+        if (yourPostsFromStorage) {
+			var yourPostsFromStorageLength = yourPostsFromStorage.length;
+			for (var tempI = 0; tempI < yourPostsFromStorageLength; tempI++) {
+				if (quote.hash.slice(2) === yourPostsFromStorage[tempI]) {
+					$.add(quote, $.tn('\u00A0(You)'));
+				}
+			}
+		}
+	  }
+    }
+  };
 
   QuoteOP = {
     init: function() {
@@ -5655,6 +5695,8 @@
       }
       if (Conf['Indicate OP quote']) {
         QuoteOP.init();
+        //(You) init
+        QuoteYou.init();
       }
       if (Conf['Indicate Cross-thread Quotes']) {
         QuoteCT.init();
