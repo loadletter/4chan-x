@@ -79,10 +79,10 @@
  */
 
 (function() {
-  var $, $$, Anonymize, ArchiveLink, AutoGif, Build, CatalogLinks, Conf, Config, DeleteLink, DownloadLink, ExpandComment, ExpandThread, Favicon, FileInfo, Filter, Get, ImageExpand, ImageHover, Keybinds, Main, Menu, Nav, Options, QR, QuoteBacklink, QuoteCT, QuoteInline, QuoteOP, QuotePreview, Quotify, Redirect, RelativeDates, ReplyHiding, ReportLink, RevealSpoilers, Sauce, StrikethroughQuotes, ThreadHiding, ThreadStats, Time, TitlePost, UI, Unread, Updater, Watcher, d, g, _base, CaptchaImg, CaptchaInput, CaptchaObserver, CaptchaIsSetup;
+  var $, $$, Anonymize, ArchiveLink, AutoGif, Build, CatalogLinks, Conf, Config, DeleteLink, DownloadLink, ExpandComment, ExpandThread, Favicon, FileInfo, Filter, Get, ImageExpand, ImageHover, Keybinds, Main, Menu, Nav, Options, QR, QuoteBacklink, QuoteCT, QuoteInline, QuoteOP, QuoteYou, QuotePreview, Quotify, Redirect, RelativeDates, ReplyHiding, ReportLink, RevealSpoilers, Sauce, StrikethroughQuotes, ThreadHiding, ThreadStats, Time, TitlePost, UI, Unread, Updater, Watcher, d, g, _base, CaptchaImg, CaptchaInput, CaptchaObserver, CaptchaIsSetup;
   CaptchaIsSetup = false;
   
-  //Your posts to add (You) backlinks to
+  /* Your posts to add (You) backlinks to */
   var yourPosts = new Array();
   
   Config = {
@@ -147,13 +147,14 @@
       },
       Quoting: {
         'Quote Backlinks': [true, 'Add quote backlinks'],
-        //Add (You) to OP feature (this edits the text in the settings only)
-        'OP Backlinks': [false, 'Add backlinks to the OP and enable You posts'],
+        'OP Backlinks': [false, 'Add backlinks to the OP'],
         'Quote Highlighting': [true, 'Highlight the previewed post'],
         'Quote Inline': [true, 'Show quoted post inline on quote click'],
         'Quote Preview': [true, 'Show quote content on hover'],
         'Resurrect Quotes': [true, 'Linkify dead quotes to archives'],
         'Indicate OP quote': [true, 'Add \'(OP)\' to OP quotes'],
+        /* Add (You) feature */
+        'Indicate You quote': [true, 'Add \'(You)\' to your quoted posts'],
         'Indicate Cross-thread Quotes': [true, 'Add \'(Cross-thread)\' to cross-threads quotes'],
         'Forward Hiding': [true, 'Hide original posts of inlined backlinks']
       }
@@ -957,7 +958,8 @@
       }
       if (Conf['Indicate OP quote']) {
         QuoteOP.node(post);
-        // Also add (You) links to posts
+      }
+      if (Conf['Indicate You quote']) {
         QuoteYou.node(post);
       }
       if (Conf['Indicate Cross-thread Quotes']) {
@@ -2627,10 +2629,11 @@
         }
       }));
       
-      //Add your postID to yourPosts list
-      yourPosts.push(postID);
-      //Add to session storage
-      sessionStorage.setItem('yourPosts', JSON.stringify(yourPosts));
+      /* Add your own replies to yourPosts and storage to watch for replies */
+      if (Conf['Indicate You quote']) {
+        yourPosts.push(postID);
+        sessionStorage.setItem('yourPosts', JSON.stringify(yourPosts));
+      }
       
       QR.cooldown.set({
         post: reply,
@@ -4370,7 +4373,7 @@
     }
   };
   
-  //Add (You) to posts function
+  /* Add (You) to posts function */
   QuoteYou = {
     init: function() {
       return Main.callbacks.push(this.node);
@@ -4383,9 +4386,7 @@
       _ref = post.quotes;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         quote = _ref[_i];
-        //Loop through locally stored post numbers
         yourPostsFromStorage = JSON.parse(sessionStorage.getItem('yourPosts'));
-        //Check not null
         if (yourPostsFromStorage) {
 			var yourPostsFromStorageLength = yourPostsFromStorage.length;
 			for (var tempI = 0; tempI < yourPostsFromStorageLength; tempI++) {
@@ -5695,7 +5696,8 @@
       }
       if (Conf['Indicate OP quote']) {
         QuoteOP.init();
-        //(You) init
+      }
+      if (Conf['Indicate You quote']) {
         QuoteYou.init();
       }
       if (Conf['Indicate Cross-thread Quotes']) {
