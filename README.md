@@ -14,6 +14,7 @@ Make sure you have greasemonkey installed and just click on the previous link.
 ### Chrome/Chromium/Opera:
 
 Install tampermonkey or equivalent and then just click on the previuos link.
+Not working on Opera 12.16 because of issue #11
 
 
 ##Changelog
