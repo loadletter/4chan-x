@@ -23,7 +23,7 @@ Not working on Opera 12.16 because of issue #11
 - 2.40.13/14: Remove the video from memory when closed
 - 2.40.12: Implemented support for inline webm video expansion and uploading
 - 2.40.10/11: The final captcha fix (Thanks to WhatIsThisImNotGoodWithComputers)
-- 2.40.9: Temporary fix to get the captcha working at least once (doesn't refresh)
+- 2.40.9: Temporary fix to get the captcha working at least once (doesn't refresh, captcha caching dead and removed)
 - 2.40.8: Fix QR captcha load again again, fuck it
 - 2.40.7: Fix #4 (/jp/ cooldown and image limit) and switched boards that used installgentoo.net to warosu.org
 - 2.40.6: Remove exclude rule for catalog, add /biz/
