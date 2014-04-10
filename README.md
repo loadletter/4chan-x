@@ -18,6 +18,7 @@ Not working on Opera 12.16 because of issue #11
 
 
 ##Changelog
+- 2.40.17: Apply fit to screen rules to webm too
 - 2.40.16: By popular demand added (You) indication (Thanks to WhatIsThisImNotGoodWithComputers) and fixed a webm bug on chrome
 - 2.40.15: Add webm support to image hover
 - 2.40.13/14: Remove the video from memory when closed
