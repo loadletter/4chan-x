@@ -5448,7 +5448,7 @@
       return $.prepend($.id('delform'), controls);
     },
     resize: function() {
-      return ImageExpand.style.textContent = ".fitheight img[data-md5] + img {max-height:" + d.documentElement.clientHeight + "px;}";
+      return ImageExpand.style.textContent = ".fitheight img[data-md5] + img {max-height:" + d.documentElement.clientHeight + "px;} .fitheight img[data-md5] + video {max-height:" + d.documentElement.clientHeight + "px;}";
     }
   };
 
@@ -6233,6 +6233,14 @@ h1 {\
 }\
 .gecko  .fitwidth img[data-md5] + img,\
 .presto .fitwidth img[data-md5] + img {\
+  width: 100%;\
+}\
+\
+.fitwidth img[data-md5] + video {\
+  max-width: 100%;\
+}\
+.gecko  .fitwidth img[data-md5] + video,\
+.presto .fitwidth img[data-md5] + video {\
   width: 100%;\
 }\
 \
