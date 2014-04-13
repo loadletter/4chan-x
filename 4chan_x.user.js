@@ -939,7 +939,7 @@
         if (href[0] === '/') {
           continue;
         }
-        quote.href = "res/" + href;
+        quote.href = "thread/" + href;
       }
       post = {
         blockquote: clone,
@@ -991,7 +991,7 @@
     },
     toggle: function(thread) {
       var a, num, replies, reply, url, _i, _len;
-      url = "//a.4cdn.org/" + g.BOARD + "/res/" + thread.id.slice(1) + ".json";
+      url = "//a.4cdn.org/" + g.BOARD + "/thread/" + thread.id.slice(1) + ".json";
       a = $('.summary', thread);
       switch (a.textContent[0]) {
         case '+':
@@ -1045,8 +1045,8 @@
         post = Build.postFromObject(reply, g.BOARD);
         id = reply.no;
         link = $('a[title="Highlight this post"]', post);
-        link.href = "res/" + threadID + "#p" + id;
-        link.nextSibling.href = "res/" + threadID + "#q" + id;
+        link.href = "thread/" + threadID + "#p" + id;
+        link.nextSibling.href = "thread/" + threadID + "#q" + id;
         nodes.push(post);
       }
       _ref = $$('.summary ~ .replyContainer', a.parentNode);
@@ -1660,7 +1660,7 @@
         return;
       }
       id = thread.id.slice(1);
-      url = "//boards.4chan.org/" + g.BOARD + "/res/" + id;
+      url = "//boards.4chan.org/" + g.BOARD + "/thread/" + id;
       if (tab) {
         return $.open(url);
       } else {
@@ -2640,11 +2640,11 @@
         isReply: threadID !== '0'
       });
       if (threadID === '0') {
-        location.pathname = "/" + g.BOARD + "/res/" + postID;
+        location.pathname = "/" + g.BOARD + "/thread/" + postID;
       } else {
         QR.cooldown.auto = QR.replies.length > 1;
         if (Conf['Open Reply in New Tab'] && !g.REPLY && !QR.cooldown.auto) {
-          $.open("//boards.4chan.org/" + g.BOARD + "/res/" + threadID + "#p" + postID);
+          $.open("//boards.4chan.org/" + g.BOARD + "/thread/" + threadID + "#p" + postID);
         }
       }
       if (Conf['Persistent QR'] || QR.cooldown.auto) {
@@ -3267,7 +3267,7 @@
         request.onloadend = null;
         request.abort();
       }
-      url = "//a.4cdn.org/" + g.BOARD + "/res/" + g.THREAD_ID + ".json";
+      url = "//a.4cdn.org/" + g.BOARD + "/thread/" + g.THREAD_ID + ".json";
       return Updater.request = $.ajax(url, {
         onloadend: Updater.cb.load
       }, {
@@ -3382,7 +3382,7 @@
       watched = $.get('watched', {});
       watched[_name = g.BOARD] || (watched[_name] = {});
       watched[g.BOARD][id] = {
-        href: "/" + g.BOARD + "/res/" + id,
+        href: "/" + g.BOARD + "/thread/" + id,
         textContent: Get.title(thread)
       };
       $.set('watched', watched);
@@ -3772,7 +3772,7 @@
       }
       root.textContent = "Loading post No." + postID + "...";
       if (threadID) {
-        return $.cache("//a.4cdn.org/" + board + "/res/" + threadID + ".json", function() {
+        return $.cache("//a.4cdn.org/" + board + "/thread/" + threadID + ".json", function() {
           return Get.parsePost(this, board, threadID, postID, root, cb);
         });
       } else if (url = Redirect.post(board, postID)) {
@@ -4090,7 +4090,7 @@
       container = $.el('div', {
         id: "pc" + postID,
         className: "postContainer " + (isOP ? 'op' : 'reply') + "Container",
-        innerHTML: (isOP ? '' : "<div class=sideArrows id=sa" + postID + ">&gt;&gt;</div>") + ("<div id=p" + postID + " class='post " + (isOP ? 'op' : 'reply') + (capcode === 'admin_highlight' ? ' highlightPost' : '') + "'>") + ("<div class='postInfoM mobile' id=pim" + postID + ">") + ("<span class='nameBlock" + capcodeClass + "'>") + ("<span class=name>" + (name || '') + "</span>") + tripcode + capcodeStart + capcode + userID + flag + sticky + closed + ("<br>" + subject) + ("</span><span class='dateTime postNum' data-utc=" + dateUTC + ">" + date) + '<br><em>' + ("<a href=" + ("/" + board + "/res/" + threadID + "#p" + postID) + ">No.</a>") + ("<a href='" + (g.REPLY && g.THREAD_ID === threadID ? "javascript:quote(" + postID + ")" : "/" + board + "/res/" + threadID + "#q" + postID) + "'>" + postID + "</a>") + '</em></span>' + '</div>' + (isOP ? fileHTML : '') + ("<div class='postInfo desktop' id=pi" + postID + ">") + ("<input type=checkbox name=" + postID + " value=delete> ") + ("" + subject + " ") + ("<span class='nameBlock" + capcodeClass + "'>") + emailStart + ("<span class=name>" + (name || '') + "</span>") + tripcode + capcodeStart + emailEnd + capcode + userID + flag + sticky + closed + ' </span> ' + ("<span class=dateTime data-utc=" + dateUTC + ">" + date + "</span> ") + "<span class='postNum desktop'>" + ("<a href=" + ("/" + board + "/res/" + threadID + "#p" + postID) + " title='Highlight this post'>No.</a>") + ("<a href='" + (g.REPLY && +g.THREAD_ID === threadID ? "javascript:quote(" + postID + ")" : "/" + board + "/res/" + threadID + "#q" + postID) + "' title='Quote this post'>" + postID + "</a>") + '</span>' + '</div>' + (isOP ? '' : fileHTML) + ("<blockquote class=postMessage id=m" + postID + ">" + (comment || '') + "</blockquote> ") + '</div>'
+        innerHTML: (isOP ? '' : "<div class=sideArrows id=sa" + postID + ">&gt;&gt;</div>") + ("<div id=p" + postID + " class='post " + (isOP ? 'op' : 'reply') + (capcode === 'admin_highlight' ? ' highlightPost' : '') + "'>") + ("<div class='postInfoM mobile' id=pim" + postID + ">") + ("<span class='nameBlock" + capcodeClass + "'>") + ("<span class=name>" + (name || '') + "</span>") + tripcode + capcodeStart + capcode + userID + flag + sticky + closed + ("<br>" + subject) + ("</span><span class='dateTime postNum' data-utc=" + dateUTC + ">" + date) + '<br><em>' + ("<a href=" + ("/" + board + "/thread/" + threadID + "#p" + postID) + ">No.</a>") + ("<a href='" + (g.REPLY && g.THREAD_ID === threadID ? "javascript:quote(" + postID + ")" : "/" + board + "/thread/" + threadID + "#q" + postID) + "'>" + postID + "</a>") + '</em></span>' + '</div>' + (isOP ? fileHTML : '') + ("<div class='postInfo desktop' id=pi" + postID + ">") + ("<input type=checkbox name=" + postID + " value=delete> ") + ("" + subject + " ") + ("<span class='nameBlock" + capcodeClass + "'>") + emailStart + ("<span class=name>" + (name || '') + "</span>") + tripcode + capcodeStart + emailEnd + capcode + userID + flag + sticky + closed + ' </span> ' + ("<span class=dateTime data-utc=" + dateUTC + ">" + date + "</span> ") + "<span class='postNum desktop'>" + ("<a href=" + ("/" + board + "/thread/" + threadID + "#p" + postID) + " title='Highlight this post'>No.</a>") + ("<a href='" + (g.REPLY && +g.THREAD_ID === threadID ? "javascript:quote(" + postID + ")" : "/" + board + "/thread/" + threadID + "#q" + postID) + "' title='Quote this post'>" + postID + "</a>") + '</span>' + '</div>' + (isOP ? '' : fileHTML) + ("<blockquote class=postMessage id=m" + postID + ">" + (comment || '') + "</blockquote> ") + '</div>'
       });
       _ref = $$('.quotelink', container);
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -4099,7 +4099,7 @@
         if (href[0] === '/') {
           continue;
         }
-        quote.href = "/" + board + "/res/" + href;
+        quote.href = "/" + board + "/thread/" + href;
       }
       return container;
     }
@@ -4135,7 +4135,7 @@
         }
       }
       a = $.el('a', {
-        href: "/" + g.BOARD + "/res/" + post.threadID + "#p" + post.ID,
+        href: "/" + g.BOARD + "/thread/" + post.threadID + "#p" + post.ID,
         className: post.el.hidden ? 'filtered backlink' : 'backlink',
         textContent: QuoteBacklink.funk(post.ID)
       });
@@ -5505,7 +5505,7 @@
       pathname = path.slice(1).split('/');
       g.BOARD = pathname[0], temp = pathname[1];
       switch (temp) {
-        case 'res':
+        case 'thread':
           g.REPLY = true;
           g.THREAD_ID = pathname[2];
           break;
