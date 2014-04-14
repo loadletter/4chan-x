@@ -10,6 +10,7 @@
 // @match          *://sys.4chan.org/*
 // @match          *://a.4cdn.org/*
 // @match          *://i.4cdn.org/*
+// @match          *://images.4chan.org/*
 // @grant          GM_getValue
 // @grant          GM_setValue
 // @grant          GM_deleteValue
@@ -5545,6 +5546,7 @@
           }
           return;
         case 'i.4cdn.org':
+        case 'images.4chan.org':
           $.ready(function() {
             var url;
             if (/^4chan - 404/.test(d.title) && Conf['404 Redirect']) {
