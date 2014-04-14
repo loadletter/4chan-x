@@ -2976,7 +2976,7 @@
     },
     fileInfo: function() {
       FileInfo.data = {
-        link: '//i.4cdn.org/g/src/1334437723720.jpg',
+        link: '//i.4cdn.org/g/1334437723720.jpg',
         spoiler: true,
         size: '276',
         unit: 'KB',
@@ -3436,7 +3436,7 @@
       link = link.replace(/(\$\d)/g, function(parameter) {
         switch (parameter) {
           case '$1':
-            return "' + (isArchived ? img.firstChild.src : 'http://t.4cdn.org' + img.pathname.replace(/src(\\/\\d+).+$/, 'thumb$1s.jpg')) + '";
+            return "' + (isArchived ? img.firstChild.src : 'http://t.4cdn.org' + img.pathname.replace(/(\\d+).+$/, '$1s.jpg')) + '";
           case '$2':
             return "' + img.href + '";
           case '$3':
@@ -3491,7 +3491,7 @@
       img.removeAttribute('style');
       s = img.style;
       s.maxHeight = s.maxWidth = /\bop\b/.test(post["class"]) ? '250px' : '125px';
-      return img.src = "//t.4cdn.org" + (img.parentNode.pathname.replace(/src(\/\d+).+$/, 'thumb$1s.jpg'));
+      return img.src = "//t.4cdn.org" + (img.parentNode.pathname.replace(/(\d+).+$/, '$1s.jpg'));
     }
   };
 
@@ -3895,7 +3895,7 @@
           width: data.media.media_w,
           MD5: data.media.media_hash,
           size: data.media.media_size,
-          turl: data.media.thumb_link || ("//t.4cdn.org/" + board + "/thumb/" + data.media.preview_orig),
+          turl: data.media.thumb_link || ("//t.4cdn.org/" + board + "/" + data.media.preview_orig),
           theight: data.media.preview_h,
           twidth: data.media.preview_w,
           isSpoiler: data.media.spoiler === '1'
@@ -3992,12 +3992,12 @@
         o.file = {
           name: data.filename + data.ext,
           timestamp: "" + data.tim + data.ext,
-          url: "//i.4cdn.org/" + board + "/src/" + data.tim + data.ext,
+          url: "//i.4cdn.org/" + board + "/" + data.tim + data.ext,
           height: data.h,
           width: data.w,
           MD5: data.md5,
           size: data.fsize,
-          turl: "//t.4cdn.org/" + board + "/thumb/" + data.tim + "s.jpg",
+          turl: "//t.4cdn.org/" + board + "/" + data.tim + "s.jpg",
           theight: data.tn_h,
           twidth: data.tn_w,
           isSpoiler: !!data.spoiler,
@@ -5200,11 +5200,11 @@
       var src, timeoutID, url,
         _this = this;
       src = this.src.split('/');
-      if (!(src[2] === 'i.4cdn.org' && (url = Redirect.image(src[3], src[5])))) {
+      if (!(src[2] === 'i.4cdn.org' && (url = Redirect.image(src[3], src[4])))) {
         if (g.dead) {
           return;
         }
-        url = "//i.4cdn.org/" + src[3] + "/src/" + src[5];
+        url = "//i.4cdn.org/" + src[3] + "/" + src[4];
       }
       if ($.engine !== 'webkit' && url.split('/')[2] === 'i.4cdn.org') {
         return;
@@ -5409,11 +5409,11 @@
       ImageExpand.contract(thumb);
       $.rm(this);
       src = this.src.split('/');
-      if (!(src[2] === 'i.4cdn.org' && (url = Redirect.image(src[3], src[5])))) {
+      if (!(src[2] === 'i.4cdn.org' && (url = Redirect.image(src[3], src[4])))) {
         if (g.dead) {
           return;
         }
-        url = "//i.4cdn.org/" + src[3] + "/src/" + src[5];
+        url = "//i.4cdn.org/" + src[3] + "/" + src[4];
       }
       if ($.engine !== 'webkit' && url.split('/')[2] === 'i.4cdn.org') {
         return;
@@ -5549,7 +5549,7 @@
             var url;
             if (/^4chan - 404/.test(d.title) && Conf['404 Redirect']) {
               path = location.pathname.split('/');
-              url = Redirect.image(path[1], path[3]);
+              url = Redirect.image(path[1], path[2]);
               if (url) {
                 return location.href = url;
               }
