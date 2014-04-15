@@ -3,11 +3,6 @@
 
 Fork of 4chan X 2.x (MayhemYDG) made to keep it working.
 
-##It's HAPPENING
-http://blog.4chan.org/post/82477681005/upcoming-namespace-changes
-
-EVERYTHING IS GOING TO BREAK HORRIBLY BECAUSE OF ARBITRARY AND USELESS CHANGES
-
 ##Installation
 Link: ['4chan_x.user.js'](https://github.com/loadletter/4chan-x/raw/master/4chan_x.user.js)
 
