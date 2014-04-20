@@ -2305,6 +2305,7 @@
         }
       },
       ready: function() {
+        var MutationObserver;
         var _this = this;
         if (this.challenge = $.id('recaptcha_challenge_field_holder')) {
           $.off($.id('captchaContainer'), 'DOMNodeInserted', this.onready);
@@ -2338,11 +2339,18 @@
         } catch(e) {
           /* do nothing */
         }
-        CaptchaObserver = new MutationObserver(QR.captcha.load.bind(QR.captcha)).observe(this.challenge, {
-          childList: true,
-          subtree: true,
-          attributes: true
-        });
+        if (MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.OMutationObserver) {
+          CaptchaObserver = new MutationObserver(QR.captcha.load.bind(QR.captcha));
+          CaptchaObserver.observe(this.challenge, {
+            childList: true,
+            subtree: true,
+            attributes: true
+          });
+        } else {
+          $.on(this.challenge, 'DOMNodeInserted', QR.captcha.load);
+          $.on(this.challenge, 'DOMSubtreeModified', QR.captcha.load);
+          $.on(this.challenge, 'DOMAttrModified', QR.captcha.load);
+        }
         /* always load to update image */
         return _this.load();
       },
