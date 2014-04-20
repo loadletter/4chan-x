@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           4chan x
-// @version        2.40.17
+// @version        2.40.18
 // @namespace      aeosynth
 // @description    Adds various features.
 // @copyright      2009-2011 James Campos <james.r.campos@gmail.com>
@@ -10,6 +10,7 @@
 // @match          *://sys.4chan.org/*
 // @match          *://a.4cdn.org/*
 // @match          *://i.4cdn.org/*
+// @match          *://images.4chan.org/*
 // @grant          GM_getValue
 // @grant          GM_setValue
 // @grant          GM_deleteValue
@@ -19,4 +20,3 @@
 // @downloadURL    https://github.com/loadletter/4chan-x/raw/master/4chan_x.user.js
 // @icon           data:image/gif;base64,R0lGODlhEAAQAKECAAAAAGbMM////////yH5BAEKAAIALAAAAAAQABAAAAIxlI+pq+D9DAgUoFkPDlbs7lGiI2bSVnKglnJMOL6omczxVZK3dH/41AG6Lh7i6qUoAAA7
 // ==/UserScript==
-

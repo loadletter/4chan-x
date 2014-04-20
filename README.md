@@ -17,6 +17,7 @@ Not working on Opera 12.16 because of issue #11
 
 
 ##Changelog
+- 2.40.18: Change everything according to http://blog.4chan.org/post/82477681005/upcoming-namespace-changes
 - 2.40.17: Apply fit to screen rules to webm too
 - 2.40.16: By popular demand added (You) indication (Thanks to WhatIsThisImNotGoodWithComputers) and fixed a webm bug on chrome
 - 2.40.15: Add webm support to image hover
