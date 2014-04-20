@@ -100,6 +100,7 @@
         'Thread Expansion': [true, 'View all replies'],
         'Index Navigation': [true, 'Navigate to previous / next thread'],
         'Reply Navigation': [false, 'Navigate to top / bottom of thread'],
+        'Remove Slug': [false, 'Cut useless comment/post from the URL'],
         'Check for Updates': [true, 'Check for updated versions of 4chan X']
       },
       Filtering: {
@@ -5558,6 +5559,10 @@
             }
           });
           return;
+      }
+      if (g.REPLY && pathname.length > 3 && Conf['Remove Slug']) {
+        window.location.pathname = path.substring(0, path.lastIndexOf('/'));
+        return;
       }
       if (Conf['Disable 4chan\'s extension']) {
         settings = JSON.parse(localStorage.getItem('4chan-settings')) || {};
