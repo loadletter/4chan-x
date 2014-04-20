@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           4chan x
-// @version        2.40.19
+// @version        2.40.20
 // @namespace      aeosynth
 // @description    Adds various features.
 // @copyright      2009-2011 James Campos <james.r.campos@gmail.com>
@@ -20,3 +20,4 @@
 // @downloadURL    https://github.com/loadletter/4chan-x/raw/master/4chan_x.user.js
 // @icon           data:image/gif;base64,R0lGODlhEAAQAKECAAAAAGbMM////////yH5BAEKAAIALAAAAAAQABAAAAIxlI+pq+D9DAgUoFkPDlbs7lGiI2bSVnKglnJMOL6omczxVZK3dH/41AG6Lh7i6qUoAAA7
 // ==/UserScript==
+

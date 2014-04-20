@@ -17,6 +17,7 @@ Not working on Opera 12.16 because of issue #11
 
 
 ##Changelog
+- 2.40.20: Added feature that allows to completely remove slugs (disabled by default, check Remove Slug in the settings to enable)
 - 2.40.19: Fix new posts with quotes appearing as cross-thread
 - 2.40.18: Change everything according to http://blog.4chan.org/post/82477681005/upcoming-namespace-changes
 - 2.40.17: Apply fit to screen rules to webm too
