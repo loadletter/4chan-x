@@ -5594,6 +5594,7 @@
       if (Conf['Disable 4chan\'s extension']) {
         settings = JSON.parse(localStorage.getItem('4chan-settings')) || {};
         settings.disableAll = true;
+        settings.dropDownNav = false;
         localStorage.setItem('4chan-settings', JSON.stringify(settings));
       }
       Main.polyfill();
