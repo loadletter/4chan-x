@@ -17,6 +17,7 @@ Not working on Opera 12.16 because of issue #11
 
 
 ##Changelog
+- 2.40.22: Disable dropdown board selector in the catalog
 - 2.40.21: Fix new posts having wrong filename
 - 2.40.20: Added feature that allows to completely remove slugs (disabled by default, check Remove Slug in the settings to enable)
 - 2.40.19: Fix new posts with quotes appearing as cross-thread
