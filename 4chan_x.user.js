@@ -4081,7 +4081,7 @@
         a.textContent = filename;
         filename = a.innerHTML.replace(/'/g, '&apos;');
         fileDims = ext === 'pdf' ? 'PDF' : "" + file.width + "x" + file.height;
-        fileInfo = ("<div class=fileText id=fT" + postID + (file.isSpoiler ? " title='" + filename + "'" : '') + ">File: <a href='" + file.url + "' target=_blank>" + file.timestamp + "</a>") + ("-(" + fileSize + ", " + fileDims + (file.isSpoiler ? '' : ", <span" + (filename !== shortFilename ? " title='" + filename + "'" : '') + ">" + shortFilename + "</span>")) + ")</div>";
+        fileInfo = ("<div class=fileText id=fT" + postID + (file.isSpoiler ? " title='" + filename + "'" : '') + ">File: <a" + ((filename !== shortFilename && !file.isSpoiler) ? " title='" + filename + "'" : '') + " href='" + file.url + "' target=_blank>" + (file.isSpoiler ? 'Spoiler Image' : shortFilename) + "</a>") + ("-(" + fileSize + ", " + fileDims) + ")</div>";
         fileHTML = "<div class=file id=f" + postID + ">" + fileInfo + imgSrc + "</div>";
       } else {
         fileHTML = '';
