@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           4chan x
-// @version        2.40.22
+// @version        2.40.23
 // @namespace      aeosynth
 // @description    Adds various features.
 // @copyright      2009-2011 James Campos <james.r.campos@gmail.com>
@@ -10,7 +10,6 @@
 // @match          *://sys.4chan.org/*
 // @match          *://a.4cdn.org/*
 // @match          *://i.4cdn.org/*
-// @match          *://images.4chan.org/*
 // @grant          GM_getValue
 // @grant          GM_setValue
 // @grant          GM_deleteValue

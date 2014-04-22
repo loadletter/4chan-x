@@ -1,7 +1,7 @@
 #!/bin/bash
-echo -e "\e[0;31mREMEMBER TO CHANGE version: @ LINE 5957 (before CSS) and TO TAG THE RELEASE\e[0m"
+echo -e "\e[0;31mREMEMBER TO CHANGE version: @ LINE 5956 (before CSS) and TO TAG THE RELEASE\e[0m"
 echo "======meta.js======="
-head -23 4chan_x.user.js | tee 4chan_x.meta.js
+head -22 4chan_x.user.js | tee 4chan_x.meta.js
 
 echo "=====latest.js======"
 vers=$(head -22 4chan_x.meta.js | grep "// @version" | awk '{print $3}')
