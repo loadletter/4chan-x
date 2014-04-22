@@ -5596,6 +5596,7 @@
         settings.disableAll = true;
         settings.dropDownNav = false;
         localStorage.setItem('4chan-settings', JSON.stringify(settings));
+        $.ready(function() { $.globalEval('window.removeEventListener("message", Report.onMessage, false);') });
       }
       Main.polyfill();
       if (g.CATALOG) {
