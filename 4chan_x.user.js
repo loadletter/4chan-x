@@ -5151,10 +5151,11 @@
       return Main.callbacks.push(this.node);
     },
     node: function(post) {
-      if (!post.img || post.hasPdf) {
+      if (!post.img || post.hasPdf || !post.video) {
         return;
-      }
-      return $.on(post.img, 'mouseover', ImageHover.mouseover);
+	  }
+      //return $.on(post.video, 'mouseover', ImageHover.mouseover);
+	  return $.on(post.img, 'mouseover', ImageHover.mouseover);
     },
     mouseover: function() {
       var el;
@@ -5255,7 +5256,30 @@
           return img.src = src;
         });
         return gif.src = src;
-      }
+      } else if (/webm$/.test(src) && !/spoiler/.test(img.src)) {
+		//change to video
+		element = img;
+		
+var parent;
+var video = document.createElement( 'video' );
+var currFrame;
+
+currFrame = video.cloneNode( false );
+currFrame.setAttribute( 'style', element.getAttribute( 'style' ) );
+parent = element.parentNode;
+currFrame.setAttribute( 'src', parent.getAttribute( 'href' ) );
+currFrame.setAttribute( 'autoplay', '' );
+currFrame.setAttribute( 'controls', '' );
+currFrame.setAttribute( 'loop', 'true' );
+parent.insertBefore( currFrame, element );
+parent.removeChild( element );
+		
+        webm = $.el('video');
+        $.on(webm, 'load', function() {
+          return video.src = src;
+        });
+        return webm.src = src;
+	  }
     }
   };
 
@@ -5270,6 +5294,11 @@
         return;
       }
       a = post.img.parentNode;
+      try {
+		  //a = post.video.parentNode;
+	  } catch (exception) {
+		 //yep another empty catch 
+	  }
       $.on(a, 'click', ImageExpand.cb.toggle);
       if (ImageExpand.on && !post.el.hidden) {
         return ImageExpand.expand(post.img);
