@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           4chan x
-// @version        2.40.22
+// @version        2.40.23
 // @namespace      aeosynth
 // @description    Adds various features.
 // @copyright      2009-2011 James Campos <james.r.campos@gmail.com>
@@ -10,7 +10,6 @@
 // @match          *://sys.4chan.org/*
 // @match          *://a.4cdn.org/*
 // @match          *://i.4cdn.org/*
-// @match          *://images.4chan.org/*
 // @grant          GM_getValue
 // @grant          GM_setValue
 // @grant          GM_deleteValue
@@ -5574,7 +5573,6 @@
           }
           return;
         case 'i.4cdn.org':
-        case 'images.4chan.org':
           $.ready(function() {
             var url;
             if (/^4chan - 404/.test(d.title) && Conf['404 Redirect']) {
@@ -5596,6 +5594,7 @@
         settings.disableAll = true;
         settings.dropDownNav = false;
         localStorage.setItem('4chan-settings', JSON.stringify(settings));
+        $.ready(function() { $.globalEval('window.removeEventListener("message", Report.onMessage, false);') });
       }
       Main.polyfill();
       if (g.CATALOG) {
@@ -5954,7 +5953,7 @@
       return $.globalEval(("(" + code + ")()").replace('_id_', bq.id));
     },
     namespace: '4chan_x.',
-    version: '2.40.22',
+    version: '2.40.23',
     callbacks: [],
     css: '\
 /* dialog styling */\
