@@ -8,7 +8,7 @@ import urllib2
 import urlparse
 import multiprocessing
 
-IMAGE_URL_REGEX = r'"(\/\/i\.4cdn\.org\/.+?\/src\/\d+\..+?)"'
+IMAGE_URL_REGEX = r'"(\/\/i\.4cdn\.org\/.+?\/\d+\..+?)"'
 PROCESSES = 8
 
 
