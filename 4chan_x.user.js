@@ -5508,7 +5508,7 @@
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         nav = _ref[_i];
         root = $.id(nav);
-        _ref1 = $$('a[href*="boards.4chan.org"]', root);
+        _ref1 = $$('a[href]', root.getElementsByClassName('boardList')[0]);
         for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
           a = _ref1[_j];
           board = a.pathname.split('/')[1];
