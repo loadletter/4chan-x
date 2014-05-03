@@ -17,6 +17,7 @@ Not working on Opera 12.16 because of issue #11
 
 
 ##Changelog
+- 2.40.26: Fix moot changing titles for all the quote stuff (Thanks to WhatIsThisImNotGoodWithComputers, from MayhemYDG's 3.x)
 - 2.40.25: Fix Reveal Spoilers feature
 - 2.40.24: Fix Catalog Links feature
 - 2.40.23: Fix report awakening the inline extension, remove deprecated fix
