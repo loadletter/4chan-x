@@ -1796,6 +1796,7 @@
           return $('textarea', QR.el).focus();
         });
         $.before($.id('postForm'), link);
+        $.id('togglePostFormLink').style.display = "none";
       }
       if (Conf['Persistent QR']) {
         QR.dialog();
