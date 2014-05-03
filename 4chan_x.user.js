@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           4chan x
-// @version        2.40.19
+// @version        2.40.26
 // @namespace      aeosynth
 // @description    Adds various features.
 // @copyright      2009-2011 James Campos <james.r.campos@gmail.com>
@@ -10,7 +10,6 @@
 // @match          *://sys.4chan.org/*
 // @match          *://a.4cdn.org/*
 // @match          *://i.4cdn.org/*
-// @match          *://images.4chan.org/*
 // @grant          GM_getValue
 // @grant          GM_setValue
 // @grant          GM_deleteValue
@@ -80,7 +79,7 @@
  */
 
 (function() {
-  var $, $$, Anonymize, ArchiveLink, AutoGif, Build, CatalogLinks, Conf, Config, DeleteLink, DownloadLink, ExpandComment, ExpandThread, Favicon, FileInfo, Filter, Get, ImageExpand, ImageHover, Keybinds, Main, Menu, Nav, Options, QR, QuoteBacklink, QuoteCT, QuoteInline, QuoteOP, QuoteYou, QuotePreview, Quotify, Redirect, RelativeDates, ReplyHiding, ReportLink, RevealSpoilers, Sauce, StrikethroughQuotes, ThreadHiding, ThreadStats, Time, TitlePost, UI, Unread, Updater, Watcher, d, g, _base, CaptchaImg, CaptchaInput, CaptchaObserver, CaptchaIsSetup;
+  var $, $$, Anonymize, ArchiveLink, AutoGif, Build, CatalogLinks, Conf, Config, DeleteLink, DownloadLink, ExpandComment, ExpandThread, Favicon, FileInfo, Filter, Get, ImageExpand, ImageHover, Keybinds, Main, Menu, Nav, Options, QR, QuoteBacklink, QuoteCT, QuoteInline, QuoteOP, QuoteYou, QuotePreview, Quotify, Redirect, RelativeDates, RemoveSlug, ReplyHiding, ReportLink, RevealSpoilers, Sauce, StrikethroughQuotes, ThreadHiding, ThreadStats, Time, TitlePost, UI, Unread, Updater, Watcher, d, g, _base, CaptchaImg, CaptchaInput, CaptchaObserver, CaptchaIsSetup;
   CaptchaIsSetup = false;
   
   /* Your posts to add (You) backlinks to */
@@ -1046,7 +1045,7 @@
         reply = replies[_i];
         post = Build.postFromObject(reply, g.BOARD);
         id = reply.no;
-        link = $('a[title="Highlight this post"]', post);
+        link = $('a[title="Link to this post"]', post);
         link.href = "thread/" + threadID + "#p" + id;
         link.nextSibling.href = "thread/" + threadID + "#q" + id;
         nodes.push(post);
@@ -1650,7 +1649,7 @@
     },
     qr: function(thread, quote) {
       if (quote) {
-        QR.quote.call($('a[title="Quote this post"]', $('.post.highlight', thread) || thread));
+        QR.quote.call($('a[title="Reply to this post"]', $('.post.highlight', thread) || thread));
       } else {
         QR.open();
       }
@@ -1809,7 +1808,7 @@
       return $.on(d, 'dragstart dragend', QR.drag);
     },
     node: function(post) {
-      return $.on($('a[title="Quote this post"]', $('.postInfo', post.el)), 'click', QR.quote);
+      return $.on($('a[title="Reply to this post"]', $('.postInfo', post.el)), 'click', QR.quote);
     },
     open: function() {
       if (QR.el) {
@@ -3495,7 +3494,7 @@
     node: function(post) {
       var img, s;
       img = post.img;
-      if (!(img && /^Spoiler/.test(img.alt)) || post.isInlined && !post.isCrosspost || post.isArchived) {
+      if (!(img && /^Spoiler/.test(post.fileInfo.firstElementChild.textContent)) || post.isInlined && !post.isCrosspost || post.isArchived) {
         return;
       }
       img.removeAttribute('style');
@@ -4089,7 +4088,7 @@
         a.textContent = filename;
         filename = a.innerHTML.replace(/'/g, '&apos;');
         fileDims = ext === 'pdf' ? 'PDF' : "" + file.width + "x" + file.height;
-        fileInfo = ("<div class=fileText id=fT" + postID + (file.isSpoiler ? " title='" + filename + "'" : '') + ">File: <a href='" + file.url + "' target=_blank>" + file.timestamp + "</a>") + ("-(" + fileSize + ", " + fileDims + (file.isSpoiler ? '' : ", <span" + (filename !== shortFilename ? " title='" + filename + "'" : '') + ">" + shortFilename + "</span>")) + ")</div>";
+        fileInfo = ("<div class=fileText id=fT" + postID + (file.isSpoiler ? " title='" + filename + "'" : '') + ">File: <a" + ((filename !== shortFilename && !file.isSpoiler) ? " title='" + filename + "'" : '') + " href='" + file.url + "' target=_blank>" + (file.isSpoiler ? 'Spoiler Image' : shortFilename) + "</a>") + ("-(" + fileSize + ", " + fileDims) + ")</div>";
         fileHTML = "<div class=file id=f" + postID + ">" + fileInfo + imgSrc + "</div>";
       } else {
         fileHTML = '';
@@ -4100,7 +4099,7 @@
       container = $.el('div', {
         id: "pc" + postID,
         className: "postContainer " + (isOP ? 'op' : 'reply') + "Container",
-        innerHTML: (isOP ? '' : "<div class=sideArrows id=sa" + postID + ">&gt;&gt;</div>") + ("<div id=p" + postID + " class='post " + (isOP ? 'op' : 'reply') + (capcode === 'admin_highlight' ? ' highlightPost' : '') + "'>") + ("<div class='postInfoM mobile' id=pim" + postID + ">") + ("<span class='nameBlock" + capcodeClass + "'>") + ("<span class=name>" + (name || '') + "</span>") + tripcode + capcodeStart + capcode + userID + flag + sticky + closed + ("<br>" + subject) + ("</span><span class='dateTime postNum' data-utc=" + dateUTC + ">" + date) + '<br><em>' + ("<a href=" + ("/" + board + "/thread/" + threadID + "#p" + postID) + ">No.</a>") + ("<a href='" + (g.REPLY && g.THREAD_ID === threadID ? "javascript:quote(" + postID + ")" : "/" + board + "/thread/" + threadID + "#q" + postID) + "'>" + postID + "</a>") + '</em></span>' + '</div>' + (isOP ? fileHTML : '') + ("<div class='postInfo desktop' id=pi" + postID + ">") + ("<input type=checkbox name=" + postID + " value=delete> ") + ("" + subject + " ") + ("<span class='nameBlock" + capcodeClass + "'>") + emailStart + ("<span class=name>" + (name || '') + "</span>") + tripcode + capcodeStart + emailEnd + capcode + userID + flag + sticky + closed + ' </span> ' + ("<span class=dateTime data-utc=" + dateUTC + ">" + date + "</span> ") + "<span class='postNum desktop'>" + ("<a href=" + ("/" + board + "/thread/" + threadID + "#p" + postID) + " title='Highlight this post'>No.</a>") + ("<a href='" + (g.REPLY && +g.THREAD_ID === threadID ? "javascript:quote(" + postID + ")" : "/" + board + "/thread/" + threadID + "#q" + postID) + "' title='Quote this post'>" + postID + "</a>") + '</span>' + '</div>' + (isOP ? '' : fileHTML) + ("<blockquote class=postMessage id=m" + postID + ">" + (comment || '') + "</blockquote> ") + '</div>'
+        innerHTML: (isOP ? '' : "<div class=sideArrows id=sa" + postID + ">&gt;&gt;</div>") + ("<div id=p" + postID + " class='post " + (isOP ? 'op' : 'reply') + (capcode === 'admin_highlight' ? ' highlightPost' : '') + "'>") + ("<div class='postInfoM mobile' id=pim" + postID + ">") + ("<span class='nameBlock" + capcodeClass + "'>") + ("<span class=name>" + (name || '') + "</span>") + tripcode + capcodeStart + capcode + userID + flag + sticky + closed + ("<br>" + subject) + ("</span><span class='dateTime postNum' data-utc=" + dateUTC + ">" + date) + '<br><em>' + ("<a href=" + ("/" + board + "/thread/" + threadID + "#p" + postID) + ">No.</a>") + ("<a href='" + (g.REPLY && g.THREAD_ID === threadID ? "javascript:quote(" + postID + ")" : "/" + board + "/thread/" + threadID + "#q" + postID) + "'>" + postID + "</a>") + '</em></span>' + '</div>' + (isOP ? fileHTML : '') + ("<div class='postInfo desktop' id=pi" + postID + ">") + ("<input type=checkbox name=" + postID + " value=delete> ") + ("" + subject + " ") + ("<span class='nameBlock" + capcodeClass + "'>") + emailStart + ("<span class=name>" + (name || '') + "</span>") + tripcode + capcodeStart + emailEnd + capcode + userID + flag + sticky + closed + ' </span> ' + ("<span class=dateTime data-utc=" + dateUTC + ">" + date + "</span> ") + "<span class='postNum desktop'>" + ("<a href=" + ("/" + board + "/thread/" + threadID + "#p" + postID) + " title='Link to this post'>No.</a>") + ("<a href='" + (g.REPLY && +g.THREAD_ID === threadID ? "javascript:quote(" + postID + ")" : "/" + board + "/thread/" + threadID + "#q" + postID) + "' title='Reply to this post'>" + postID + "</a>") + '</span>' + '</div>' + (isOP ? '' : fileHTML) + ("<blockquote class=postMessage id=m" + postID + ">" + (comment || '') + "</blockquote> ") + '</div>'
       });
       _ref = $$('.quotelink', container);
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -4479,7 +4478,7 @@
         } else if (postBoard) {
           board = postBoard;
         } else {
-          board = postBoard = $('a[title="Highlight this post"]', post.el).pathname.split('/')[1];
+          board = postBoard = $('a[title="Link to this post"]', post.el).pathname.split('/')[1];
         }
         if (board === g.BOARD && $.id("p" + id)) {
           a.href = "#p" + id;
@@ -4569,7 +4568,7 @@
       $.off(this, 'click', DeleteLink["delete"]);
       this.textContent = 'Deleting...';
       pwd = (m = d.cookie.match(/4chan_pass=([^;]+)/)) ? decodeURIComponent(m[1]) : $.id('delPassword').value;
-      board = $('a[title="Highlight this post"]', $.id(menu.dataset.rootid)).pathname.split('/')[1];
+      board = $('a[title="Link to this post"]', $.id(menu.dataset.rootid)).pathname.split('/')[1];
       self = this;
       form = {
         mode: 'usrdel',
@@ -4653,7 +4652,7 @@
     },
     report: function() {
       var a, id, set, url;
-      a = $('a[title="Highlight this post"]', $.id(this.parentNode.dataset.rootid));
+      a = $('a[title="Link to this post"]', $.id(this.parentNode.dataset.rootid));
       url = "//sys.4chan.org/" + (a.pathname.split('/')[1]) + "/imgboard.php?mode=report&no=" + this.parentNode.dataset.id;
       id = Date.now();
       set = "toolbar=0,scrollbars=0,location=0,status=1,menubar=0,resizable=1,width=685,height=200";
@@ -4697,7 +4696,7 @@
         el: div,
         open: function(post) {
           var path;
-          path = $('a[title="Highlight this post"]', post.el).pathname.split('/');
+          path = $('a[title="Link to this post"]', post.el).pathname.split('/');
           if ((Redirect.to({
             board: path[1],
             threadID: path[3],
@@ -5462,6 +5461,33 @@
     }
   };
 
+  RemoveSlug = {
+    init: function() {
+      var catalogdiv;
+      var threads = [];
+      if (g.CATALOG) {
+        catalogdiv = document.getElementsByClassName('thread');
+        for (var i = 0; i < catalogdiv.length; i++) {
+          threads.push(catalogdiv[i].firstElementChild);
+        }
+      } else {
+        threads = document.getElementsByClassName('replylink');
+      }
+      return RemoveSlug.deslug(threads);
+    },
+    deslug: function(els) {
+      var el;
+      for (var i = 0; i < els.length; i++) {
+        el = els[i];
+        path = el.pathname;
+        if (path.slice(1).split('/').length > 3) {
+          el.pathname = path.substring(0, path.lastIndexOf('/'));
+        }
+      }
+      return;
+    }
+  };
+
   CatalogLinks = {
     init: function() {
       var clone, el, nav, _i, _len, _ref;
@@ -5490,7 +5516,7 @@
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         nav = _ref[_i];
         root = $.id(nav);
-        _ref1 = $$('a[href*="boards.4chan.org"]', root);
+        _ref1 = $$('a[href]', root.getElementsByClassName('boardList')[0]);
         for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
           a = _ref1[_j];
           board = a.pathname.split('/')[1];
@@ -5555,7 +5581,6 @@
           }
           return;
         case 'i.4cdn.org':
-        case 'images.4chan.org':
           $.ready(function() {
             var url;
             if (/^4chan - 404/.test(d.title) && Conf['404 Redirect']) {
@@ -5569,13 +5594,15 @@
           return;
       }
       if (g.REPLY && pathname.length > 3 && Conf['Remove Slug']) {
-        window.location.pathname = path.substring(0, path.lastIndexOf('/'));
+        window.location.pathname = path.substring(0, path.lastIndexOf('/')) + location.hash;
         return;
       }
       if (Conf['Disable 4chan\'s extension']) {
         settings = JSON.parse(localStorage.getItem('4chan-settings')) || {};
         settings.disableAll = true;
+        settings.dropDownNav = false;
         localStorage.setItem('4chan-settings', JSON.stringify(settings));
+        $.ready(function() { $.globalEval('window.removeEventListener("message", Report.onMessage, false);') });
       }
       Main.polyfill();
       if (g.CATALOG) {
@@ -5600,6 +5627,9 @@
       }
     },
     catalog: function() {
+      if (Conf['Remove Slug']) {
+        $.ready(RemoveSlug.init);
+      }
       if (Conf['Catalog Links']) {
         CatalogLinks.init();
       }
@@ -5784,6 +5814,9 @@
           Unread.init();
         }
       } else {
+        if (Conf['Remove Slug']) {
+          RemoveSlug.init();
+        }
         if (Conf['Thread Hiding']) {
           ThreadHiding.init();
         }
@@ -5928,7 +5961,7 @@
       return $.globalEval(("(" + code + ")()").replace('_id_', bq.id));
     },
     namespace: '4chan_x.',
-    version: '2.40.19',
+    version: '2.40.26',
     callbacks: [],
     css: '\
 /* dialog styling */\

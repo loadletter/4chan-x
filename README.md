@@ -17,6 +17,13 @@ Not working on Opera 12.16 because of issue #11
 
 
 ##Changelog
+- 2.40.26: Fix moot changing titles for all the quote stuff (Thanks to WhatIsThisImNotGoodWithComputers, from MayhemYDG's 3.x)
+- 2.40.25: Fix Reveal Spoilers feature
+- 2.40.24: Fix Catalog Links feature
+- 2.40.23: Fix report awakening the inline extension, remove deprecated fix
+- 2.40.22: Disable dropdown board selector in the catalog
+- 2.40.21: Fix new posts having wrong filename
+- 2.40.20: Added feature that allows to completely remove slugs (disabled by default, check Remove Slug in the settings to enable)
 - 2.40.19: Fix new posts with quotes appearing as cross-thread
 - 2.40.18: Change everything according to http://blog.4chan.org/post/82477681005/upcoming-namespace-changes
 - 2.40.17: Apply fit to screen rules to webm too
