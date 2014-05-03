@@ -1045,7 +1045,7 @@
         reply = replies[_i];
         post = Build.postFromObject(reply, g.BOARD);
         id = reply.no;
-        link = $('a[title="Highlight this post"]', post);
+        link = $('a[title="Link to this post"]', post);
         link.href = "thread/" + threadID + "#p" + id;
         link.nextSibling.href = "thread/" + threadID + "#q" + id;
         nodes.push(post);
@@ -1649,7 +1649,7 @@
     },
     qr: function(thread, quote) {
       if (quote) {
-        QR.quote.call($('a[title="Quote this post"]', $('.post.highlight', thread) || thread));
+        QR.quote.call($('a[title="Reply to this post"]', $('.post.highlight', thread) || thread));
       } else {
         QR.open();
       }
@@ -1808,7 +1808,7 @@
       return $.on(d, 'dragstart dragend', QR.drag);
     },
     node: function(post) {
-      return $.on($('a[title="Quote this post"]', $('.postInfo', post.el)), 'click', QR.quote);
+      return $.on($('a[title="Reply to this post"]', $('.postInfo', post.el)), 'click', QR.quote);
     },
     open: function() {
       if (QR.el) {
@@ -4091,7 +4091,7 @@
       container = $.el('div', {
         id: "pc" + postID,
         className: "postContainer " + (isOP ? 'op' : 'reply') + "Container",
-        innerHTML: (isOP ? '' : "<div class=sideArrows id=sa" + postID + ">&gt;&gt;</div>") + ("<div id=p" + postID + " class='post " + (isOP ? 'op' : 'reply') + (capcode === 'admin_highlight' ? ' highlightPost' : '') + "'>") + ("<div class='postInfoM mobile' id=pim" + postID + ">") + ("<span class='nameBlock" + capcodeClass + "'>") + ("<span class=name>" + (name || '') + "</span>") + tripcode + capcodeStart + capcode + userID + flag + sticky + closed + ("<br>" + subject) + ("</span><span class='dateTime postNum' data-utc=" + dateUTC + ">" + date) + '<br><em>' + ("<a href=" + ("/" + board + "/thread/" + threadID + "#p" + postID) + ">No.</a>") + ("<a href='" + (g.REPLY && g.THREAD_ID === threadID ? "javascript:quote(" + postID + ")" : "/" + board + "/thread/" + threadID + "#q" + postID) + "'>" + postID + "</a>") + '</em></span>' + '</div>' + (isOP ? fileHTML : '') + ("<div class='postInfo desktop' id=pi" + postID + ">") + ("<input type=checkbox name=" + postID + " value=delete> ") + ("" + subject + " ") + ("<span class='nameBlock" + capcodeClass + "'>") + emailStart + ("<span class=name>" + (name || '') + "</span>") + tripcode + capcodeStart + emailEnd + capcode + userID + flag + sticky + closed + ' </span> ' + ("<span class=dateTime data-utc=" + dateUTC + ">" + date + "</span> ") + "<span class='postNum desktop'>" + ("<a href=" + ("/" + board + "/thread/" + threadID + "#p" + postID) + " title='Highlight this post'>No.</a>") + ("<a href='" + (g.REPLY && +g.THREAD_ID === threadID ? "javascript:quote(" + postID + ")" : "/" + board + "/thread/" + threadID + "#q" + postID) + "' title='Quote this post'>" + postID + "</a>") + '</span>' + '</div>' + (isOP ? '' : fileHTML) + ("<blockquote class=postMessage id=m" + postID + ">" + (comment || '') + "</blockquote> ") + '</div>'
+        innerHTML: (isOP ? '' : "<div class=sideArrows id=sa" + postID + ">&gt;&gt;</div>") + ("<div id=p" + postID + " class='post " + (isOP ? 'op' : 'reply') + (capcode === 'admin_highlight' ? ' highlightPost' : '') + "'>") + ("<div class='postInfoM mobile' id=pim" + postID + ">") + ("<span class='nameBlock" + capcodeClass + "'>") + ("<span class=name>" + (name || '') + "</span>") + tripcode + capcodeStart + capcode + userID + flag + sticky + closed + ("<br>" + subject) + ("</span><span class='dateTime postNum' data-utc=" + dateUTC + ">" + date) + '<br><em>' + ("<a href=" + ("/" + board + "/thread/" + threadID + "#p" + postID) + ">No.</a>") + ("<a href='" + (g.REPLY && g.THREAD_ID === threadID ? "javascript:quote(" + postID + ")" : "/" + board + "/thread/" + threadID + "#q" + postID) + "'>" + postID + "</a>") + '</em></span>' + '</div>' + (isOP ? fileHTML : '') + ("<div class='postInfo desktop' id=pi" + postID + ">") + ("<input type=checkbox name=" + postID + " value=delete> ") + ("" + subject + " ") + ("<span class='nameBlock" + capcodeClass + "'>") + emailStart + ("<span class=name>" + (name || '') + "</span>") + tripcode + capcodeStart + emailEnd + capcode + userID + flag + sticky + closed + ' </span> ' + ("<span class=dateTime data-utc=" + dateUTC + ">" + date + "</span> ") + "<span class='postNum desktop'>" + ("<a href=" + ("/" + board + "/thread/" + threadID + "#p" + postID) + " title='Link to this post'>No.</a>") + ("<a href='" + (g.REPLY && +g.THREAD_ID === threadID ? "javascript:quote(" + postID + ")" : "/" + board + "/thread/" + threadID + "#q" + postID) + "' title='Reply to this post'>" + postID + "</a>") + '</span>' + '</div>' + (isOP ? '' : fileHTML) + ("<blockquote class=postMessage id=m" + postID + ">" + (comment || '') + "</blockquote> ") + '</div>'
       });
       _ref = $$('.quotelink', container);
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -4470,7 +4470,7 @@
         } else if (postBoard) {
           board = postBoard;
         } else {
-          board = postBoard = $('a[title="Highlight this post"]', post.el).pathname.split('/')[1];
+          board = postBoard = $('a[title="Link to this post"]', post.el).pathname.split('/')[1];
         }
         if (board === g.BOARD && $.id("p" + id)) {
           a.href = "#p" + id;
@@ -4560,7 +4560,7 @@
       $.off(this, 'click', DeleteLink["delete"]);
       this.textContent = 'Deleting...';
       pwd = (m = d.cookie.match(/4chan_pass=([^;]+)/)) ? decodeURIComponent(m[1]) : $.id('delPassword').value;
-      board = $('a[title="Highlight this post"]', $.id(menu.dataset.rootid)).pathname.split('/')[1];
+      board = $('a[title="Link to this post"]', $.id(menu.dataset.rootid)).pathname.split('/')[1];
       self = this;
       form = {
         mode: 'usrdel',
@@ -4644,7 +4644,7 @@
     },
     report: function() {
       var a, id, set, url;
-      a = $('a[title="Highlight this post"]', $.id(this.parentNode.dataset.rootid));
+      a = $('a[title="Link to this post"]', $.id(this.parentNode.dataset.rootid));
       url = "//sys.4chan.org/" + (a.pathname.split('/')[1]) + "/imgboard.php?mode=report&no=" + this.parentNode.dataset.id;
       id = Date.now();
       set = "toolbar=0,scrollbars=0,location=0,status=1,menubar=0,resizable=1,width=685,height=200";
@@ -4688,7 +4688,7 @@
         el: div,
         open: function(post) {
           var path;
-          path = $('a[title="Highlight this post"]', post.el).pathname.split('/');
+          path = $('a[title="Link to this post"]', post.el).pathname.split('/');
           if ((Redirect.to({
             board: path[1],
             threadID: path[3],
