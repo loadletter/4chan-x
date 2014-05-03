@@ -1906,8 +1906,8 @@
             }
           })(),
           sage: 60,
-          file: 60,
-          post: 60
+          file: g.BOARD === 'vg' ? 120 : 60,
+          post: g.BOARD === 'vg' ? 90 : 60
         };
         QR.cooldown.cooldowns = $.get("" + g.BOARD + ".cooldown", {});
         QR.cooldown.start();
