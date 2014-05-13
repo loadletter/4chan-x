@@ -3493,6 +3493,7 @@
       img.removeAttribute('style');
       s = img.style;
       s.maxHeight = s.maxWidth = /\bop\b/.test(post["class"]) ? '250px' : '125px';
+      post.fileInfo.firstElementChild.textContent = post.el.getElementsByClassName('fileText')[0].title;
       return img.src = "//t.4cdn.org" + (img.parentNode.pathname.replace(/(\d+).+$/, '$1s.jpg'));
     }
   };
