@@ -185,6 +185,7 @@
       openOptions: ['ctrl+o', 'Open Options'],
       close: ['Esc', 'Close Options or QR'],
       spoiler: ['ctrl+s', 'Quick spoiler tags'],
+      sageru: ['alt+n', 'Sage keybind'],
       code: ['alt+c', 'Quick code tags'],
       submit: ['alt+s', 'Submit post'],
       watch: ['w', 'Watch thread'],
@@ -1483,6 +1484,10 @@
             return;
           }
           Keybinds.tags('code', target);
+          break;
+        case Conf.sageru:
+          $("[name=email]", QR.el).value = "sage";
+          QR.selected.email = "sage";
           break;
         case Conf.watch:
           Watcher.toggle(thread);
