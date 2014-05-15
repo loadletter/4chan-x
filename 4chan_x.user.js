@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           4chan x
-// @version        2.40.26
+// @version        2.40.28
 // @namespace      aeosynth
 // @description    Adds various features.
 // @copyright      2009-2011 James Campos <james.r.campos@gmail.com>
@@ -189,6 +189,7 @@
       openOptions: ['ctrl+o', 'Open Options'],
       close: ['Esc', 'Close Options or QR'],
       spoiler: ['ctrl+s', 'Quick spoiler tags'],
+      sageru: ['alt+n', 'Sage keybind'],
       code: ['alt+c', 'Quick code tags'],
       submit: ['alt+s', 'Submit post'],
       watch: ['w', 'Watch thread'],
@@ -1488,6 +1489,10 @@
           }
           Keybinds.tags('code', target);
           break;
+        case Conf.sageru:
+          $("[name=email]", QR.el).value = "sage";
+          QR.selected.email = "sage";
+          break;
         case Conf.watch:
           Watcher.toggle(thread);
           break;
@@ -1800,6 +1805,7 @@
           return $('textarea', QR.el).focus();
         });
         $.before($.id('postForm'), link);
+        $.id('togglePostFormLink').style.display = "none";
       }
       if (Conf['Persistent QR']) {
         QR.dialog();
@@ -1910,8 +1916,8 @@
             }
           })(),
           sage: 60,
-          file: 60,
-          post: 60
+          file: g.BOARD === 'vg' ? 120 : 60,
+          post: g.BOARD === 'vg' ? 90 : 60
         };
         QR.cooldown.cooldowns = $.get("" + g.BOARD + ".cooldown", {});
         QR.cooldown.start();
@@ -3504,6 +3510,7 @@
       img.removeAttribute('style');
       s = img.style;
       s.maxHeight = s.maxWidth = /\bop\b/.test(post["class"]) ? '250px' : '125px';
+      post.fileInfo.firstElementChild.textContent = post.el.getElementsByClassName('fileText')[0].title;
       return img.src = "//t.4cdn.org" + (img.parentNode.pathname.replace(/(\d+).+$/, '$1s.jpg'));
     }
   };
@@ -3728,6 +3735,11 @@
       }
       return "" + size + " " + unitT;
     },
+    escape: function(name) {
+      return name.replace(/<|>/g, function(c) {
+        return c === '<' && '&lt;' || '&gt;';
+      });
+    },
     formatters: {
       t: function() {
         return FileInfo.data.link.match(/\d+\..+$/)[0];
@@ -3743,13 +3755,13 @@
       },
       n: function() {
         if (FileInfo.data.fullname === FileInfo.data.shortname) {
-          return FileInfo.data.fullname;
+          return FileInfo.escape(FileInfo.data.fullname);
         } else {
-          return "<span class=fntrunc>" + FileInfo.data.shortname + "</span><span class=fnfull>" + FileInfo.data.fullname + "</span>";
+          return "<span class=fntrunc>" + FileInfo.escape(FileInfo.data.shortname) + "</span><span class=fnfull>" + FileInfo.escape(FileInfo.data.fullname) + "</span>";
         }
       },
       N: function() {
-        return FileInfo.data.fullname;
+        return FileInfo.escape(FileInfo.data.fullname);
       },
       p: function() {
         if (FileInfo.data.spoiler) {
@@ -4005,7 +4017,7 @@
         o.file = {
           name: data.filename + data.ext,
           timestamp: "" + data.tim + data.ext,
-          url: "//i.4cdn.org/" + board + "/" + data.tim + data.ext,
+          url: board === 'f' ? "//i.4cdn.org/" + board + "/" + (encodeURIComponent(data.filename)) + data.ext : "//i.4cdn.org/" + board + "/" + data.tim + data.ext,
           height: data.h,
           width: data.w,
           MD5: data.md5,
@@ -4082,7 +4094,7 @@
             file.twidth = file.theight = 100;
           }
         }
-        imgSrc = ("<a class='fileThumb" + (file.isSpoiler ? ' imgspoiler' : '') + "' href='" + file.url + "' target=_blank>") + ("<img src='" + fileThumb + "' alt='" + fileSize + "' data-md5=" + file.MD5 + " style='width:" + file.twidth + "px;height:" + file.theight + "px'></a>");
+        imgSrc = board === 'f' ? '' : ("<a class='fileThumb" + (file.isSpoiler ? ' imgspoiler' : '') + "' href=\"" + file.url + "\" target=_blank>") + ("<img src='" + fileThumb + "' alt='" + fileSize + "' data-md5=" + file.MD5 + " style='width:" + file.twidth + "px;height:" + file.theight + "px'></a>");
         a = $.el('a', {
           innerHTML: file.name
         });
@@ -4092,7 +4104,7 @@
         a.textContent = filename;
         filename = a.innerHTML.replace(/'/g, '&apos;');
         fileDims = ext === 'pdf' ? 'PDF' : "" + file.width + "x" + file.height;
-        fileInfo = ("<div class=fileText id=fT" + postID + (file.isSpoiler ? " title='" + filename + "'" : '') + ">File: <a" + ((filename !== shortFilename && !file.isSpoiler) ? " title='" + filename + "'" : '') + " href='" + file.url + "' target=_blank>" + (file.isSpoiler ? 'Spoiler Image' : shortFilename) + "</a>") + ("-(" + fileSize + ", " + fileDims) + ")</div>";
+        fileInfo = ("<div class=fileText id=fT" + postID + (file.isSpoiler ? " title='" + filename + "'" : '') + ">File: <a" + ((filename !== shortFilename && !file.isSpoiler) ? " title='" + filename + "'" : '') + " href=\"" + file.url + "\" target=_blank>" + (file.isSpoiler ? 'Spoiler Image' : shortFilename) + "</a>") + ("-(" + fileSize + ", " + fileDims) + ")</div>";
         fileHTML = "<div class=file id=f" + postID + ">" + fileInfo + imgSrc + "</div>";
       } else {
         fileHTML = '';
@@ -5965,7 +5977,7 @@
       return $.globalEval(("(" + code + ")()").replace('_id_', bq.id));
     },
     namespace: '4chan_x.',
-    version: '2.40.26',
+    version: '2.40.28',
     callbacks: [],
     css: '\
 /* dialog styling */\
