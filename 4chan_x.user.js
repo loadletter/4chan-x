@@ -6,10 +6,14 @@
 // @copyright      2009-2011 James Campos <james.r.campos@gmail.com>
 // @copyright      2012-2013 Nicolas Stepien <stepien.nicolas@gmail.com>
 // @license        MIT; http://en.wikipedia.org/wiki/Mit_license
-// @match          *://boards.4chan.org/*
-// @match          *://sys.4chan.org/*
-// @match          *://a.4cdn.org/*
-// @match          *://i.4cdn.org/*
+// @include        http://boards.4chan.org/*
+// @include        https://boards.4chan.org/*
+// @include        http://sys.4chan.org/*
+// @include        https://sys.4chan.org/*
+// @include        http://a.4cdn.org/*
+// @include        https://a.4cdn.org/*
+// @include        http://i.4cdn.org/*
+// @include        https://i.4cdn.org/*
 // @grant          GM_getValue
 // @grant          GM_setValue
 // @grant          GM_deleteValue
@@ -2310,6 +2314,7 @@
         }
       },
       ready: function() {
+        var MutationObserver;
         var _this = this;
         if (this.challenge = $.id('recaptcha_challenge_field_holder')) {
           $.off($.id('captchaContainer'), 'DOMNodeInserted', this.onready);
@@ -2343,17 +2348,35 @@
         } catch(e) {
           /* do nothing */
         }
-        CaptchaObserver = new MutationObserver(QR.captcha.load.bind(QR.captcha)).observe(this.challenge, {
-          childList: true,
-          subtree: true,
-          attributes: true
-        });
+        if (MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.OMutationObserver) {
+          CaptchaObserver = new MutationObserver(QR.captcha.load.bind(QR.captcha));
+          CaptchaObserver.observe(this.challenge, {
+            childList: true,
+            subtree: true,
+            attributes: true
+          });
+        } else {
+          $.on(this.challenge, 'DOMNodeInserted', QR.captcha.load);
+          $.on(this.challenge, 'DOMSubtreeModified', QR.captcha.load);
+          $.on(this.challenge, 'DOMAttrModified', QR.captcha.load);
+        }
         /* always load to update image */
         return _this.load();
       },
       load: function() {
         var challenge;
-        challenge = this.challenge.firstChild.value;
+        
+        /* begin opera hack */
+        try {
+          challenge = this.challenge.firstChild.value;
+        } catch(e) {
+          if(QR.captcha.challenge.firstChild === null) {
+            return;
+          }
+          challenge = QR.captcha.challenge.firstChild.value;
+        }
+        /* end opera hack */
+        
         CaptchaImg.alt = challenge;
         CaptchaImg.src = "//www.google.com/recaptcha/api/image?c=" + challenge;
         return CaptchaInput.value = null;
