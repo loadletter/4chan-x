@@ -1,5 +1,5 @@
 #!/bin/bash
-echo -e "\e[0;31mREMEMBER TO CHANGE version: @ LINE 5963 (before CSS) and TO TAG THE RELEASE\e[0m"
+echo -e "\e[0;31mREMEMBER TO CHANGE version: @ LINE 5991 (before CSS) and TO TAG THE RELEASE\e[0m"
 echo "======meta.js======="
 head -26 4chan_x.user.js | tee 4chan_x.meta.js
 
