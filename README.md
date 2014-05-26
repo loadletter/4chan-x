@@ -15,6 +15,13 @@ Make sure you have greasemonkey installed and just click on the previous link.
 Install tampermonkey or equivalent and then just click on the previuos link.
 Not working on Opera 12.16 because of issue #11
 
+### dwb:
+1. Install dwb with your package manager
+2. Install the dwb userscripts extension with `dwbem -N -i userscripts` in your terminal.
+3. Make a directory for dwb userscripts with `mkdir .config/dwb/greasemonkey`
+4. Change directory to your newly created userscripts folder with `cd .config /dwb/greasemonkey`
+5. Download 4chanX with `wget https://github.com/ccd0/4chan-x/raw/master/builds/4chan-X.user.js`
+6. Start dwb
 
 ##Changelog
 - 2.40.28: Fix some security issues and reveal the filename when reveal spoilers is enabled
