@@ -19,8 +19,8 @@ Not working on Opera 12.16 because of issue #11
 1. Install dwb with your package manager
 2. Install the dwb userscripts extension with `dwbem -N -i userscripts` in your terminal.
 3. Make a directory for dwb userscripts with `mkdir .config/dwb/greasemonkey`
-4. Change directory to your newly created userscripts folder with `cd .config /dwb/greasemonkey`
-5. Download 4chanX with `wget https://github.com/ccd0/4chan-x/raw/master/builds/4chan-X.user.js`
+4. Change directory to your newly created userscripts folder with `cd .config/dwb/greasemonkey`
+5. Download 4chanX with `wget https://github.com/loadletter/4chan-x/raw/master/4chan_x.user.js`
 6. Start dwb
 
 ##Changelog
