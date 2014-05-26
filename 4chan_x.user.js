@@ -2365,7 +2365,18 @@
       },
       load: function() {
         var challenge;
-        challenge = this.challenge.firstChild.value;
+        
+        /* begin opera hack */
+        try {
+          challenge = this.challenge.firstChild.value;
+        } catch(e) {
+          if(QR.captcha.challenge.firstChild === null) {
+            return;
+          }
+          challenge = QR.captcha.challenge.firstChild.value;
+        }
+        /* end opera hack */
+        
         CaptchaImg.alt = challenge;
         CaptchaImg.src = "//www.google.com/recaptcha/api/image?c=" + challenge;
         return CaptchaInput.value = null;
