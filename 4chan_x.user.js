@@ -2534,9 +2534,6 @@
           err = 'No valid captcha.';
         } else {
           response = response.trim();
-          if (!/\s/.test(response)) {
-            response = "" + response + " " + response;
-          }
         }
       }
       if (err) {
@@ -5595,12 +5592,7 @@
                 }
               });
               return $.on(form, 'submit', function(e) {
-                var response;
                 e.preventDefault();
-                response = field.value.trim();
-                if (!/\s/.test(response)) {
-                  field.value = "" + response + " " + response;
-                }
                 return form.submit();
               });
             };
