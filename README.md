@@ -23,6 +23,7 @@ Install tampermonkey or equivalent and then just click on the previuos link.
 6. Start dwb
 
 ##Changelog
+- 2.40.30: Removed the feature that duplicated captcha words since it conflicts with single-word captchas
 - 2.40.29: Fix captcha loading in Opera presto (12.17)
 - 2.40.28: Fix some security issues and reveal the filename when reveal spoilers is enabled
 - 2.40.27: Change cooldowns on /vg/
