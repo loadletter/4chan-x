@@ -5669,7 +5669,7 @@
           $.on(window, 'message', Main.message);
           $.set('lastUpdate', now);
           return $.add(d.head, $.el('script', {
-            src: 'https://github.com/loadletter/4chan-x/raw/master/latest.js'
+            src: 'https://loadletter.github.io/4chan-x/latest.js'
           }));
         });
       }
