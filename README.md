@@ -56,7 +56,10 @@ Install tampermonkey or equivalent and then just click on the previuos link.
 
 
 ### My setup:
-- Linkify: http://userscripts.org/scripts/show/87750
-- Youtube link title: http://userscripts.org/scripts/show/83584
+- Linkify: ~~http://userscripts.org/scripts/show/87750~~
+    - Mirror: https://gist.github.com/loadletter/d988bbdccc99f3e341c9
+- Youtube link title: ~~http://userscripts.org/scripts/show/83584~~
+    - Mirror: https://gist.github.com/loadletter/d988bbdccc99f3e341c9
+    - Newer version with more websites supported: https://greasyfork.org/scripts/413-youtube-link-title
 - Highlight sage: https://github.com/loadletter/resage-ext
 - Inverted /a/: https://github.com/loadletter/4chan-x/raw/master/utils/inverted_a.user.js
