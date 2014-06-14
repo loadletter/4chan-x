@@ -27,10 +27,10 @@ BOTTOM = '''        default:
     },
 '''
 
-CASE = "        case '%s':"
-RETURN_IMAGE = '          return "%s/" + board + "/full_image/" + filename;'
-RETURN_POST = '          return "%s/_/api/chan/post/?board=" + board + "&num=" + postID;'
-RETURN_REDIRECT = """         url = Redirect.path('%s', 'foolfuuka', data);
+CASE = "        case '%s':\n"
+RETURN_IMAGE = '          return "%s/" + board + "/full_image/" + filename;\n'
+RETURN_POST = '          return "%s/_/api/chan/post/?board=" + board + "&num=" + postID;\n'
+RETURN_REDIRECT = """          url = Redirect.path('%s', '%s', data);
           break;
 """
 
@@ -48,12 +48,22 @@ def jsonsavef(filename, data):
 	with open(filename, 'wb') as f:
 		json.dump(data, f, sort_keys=True, indent=4, separators=(',', ': '), encoding='utf-8')
 
+def http_protocol(a):
+	dom = a['domain']
+	if a['https'] and a['http']:
+		return '//' + dom
+	elif a['https']:
+		return 'https://' + dom
+	elif a['http']:
+		return 'http://' + dom
+
 class Build:
 	def __init__(self, outstream=sys.stdout, msgstream=sys.stderr):
 		self.out = outstream
 		self.msg = msgstream
 		self.files = {}
 		self.boards = {}
+		self.priorities = jsonloadf(PRIORITIES_JSON)
 	
 	def page_dl(self):
 		request = urllib2.Request(ARCHIVES_URL)
@@ -79,12 +89,12 @@ class Build:
 				if e in f:
 					f[e].append(n)
 				else:
-					f[e] = []
+					f[e] = [n]
 			for e in a['boards']:	
 				if e in b:
 					b[e].append(n)
 				else:
-					b[e] = []
+					b[e] = [n]
 		self.singleboards = {k: v for k, v in b.iteritems() if len(v) == 1}
 		self.singlefiles = {k: v for k, v in f.iteritems() if len(v) == 1}
 		self.redundantboards = {k: v for k, v in b.iteritems() if len(v) > 1}
@@ -94,14 +104,14 @@ class Build:
 		print >>self.msg, "%s:" % t
 		for k, v in self.redundantboards.iteritems():
 			#print >>self.msg, "%s --> %s" % (k, repr([(self.data[x]['name'] + " (%i)" % self.data[x]['uid']) for x in v]))
-			print >>self.msg, "%s --> ", k,
+			print >>self.msg, "%s --> " % k,
 			sel = None
-			if k in priorities[t]:
-				sel = priorities[t][k]
+			if k in self.priorities[t]:
+				sel = self.priorities[t][k]
 			for x in v:
-				if sel x == sel:
+				if self.data[x]['uid'] == sel:
 					forstr = "{%s}"
-				else
+				else:
 					forstr = '"%s"'
 				print >>self.msg, forstr % self.data[x]['name'],
 			if sel == None:
@@ -114,22 +124,22 @@ class Build:
 					self.boards[k] = v
 	
 	def prioprint(self):
-		separator()
+		self.separator()
 		print >>self.msg, "archives:"
 		for a in self.data:
 			print >>self.msg, a['uid'], a['name']
-		separator()
-		pprint('boards')
-		separator()
-		pprint('files')
-		separator()
+		self.separator()
+		self.pprint('boards')
+		self.separator()
+		self.pprint('files')
+		self.separator()
 					
 	def merge(self):
 		self.boards.update(self.singleboards)
 		self.files.update(self.singlefiles)
 					
 	def separator(self):
-		if self.msg == sys.sterr:
+		if self.msg == sys.stderr:
 			print >>self.msg, "-" * 80
 		
 	def build(self):
@@ -138,19 +148,40 @@ class Build:
 		self.find_redundant()
 		self.prioprint()
 		self.merge()
+		#image
 		self.out.write(HEADER)
-		for a in self.data:
-			boardfound = False
+		for n, a in enumerate(self.data):
 			filefound = False
-			for b in a['boards']:
-				if b in self.boards and self.boards[b]['uid'] == a['uid']:
-					boardfound = True
-					#TODO
-			for f in a['files']:
-				if f in self.files and self.files[f]['uid'] == a['uid']:
+			for b in a['files']:
+				if b in self.files and n in self.files[b]:
 					filefound = True
-					#TODO
-		#TODO
+					self.out.write(CASE % b)
+			if filefound:
+				self.out.write(RETURN_IMAGE % http_protocol(a))
+		self.out.write(POST)
+		#post		
+		for n, a in enumerate(self.data):
+			if a['software'] != 'foolfuuka':
+				continue
+			boardfound = False
+			for b in a['boards']:
+				if b in self.boards and n in self.boards[b]:
+					boardfound = True
+					self.out.write(CASE % b)
+			if boardfound:
+				self.out.write(RETURN_POST % http_protocol(a))
+		self.out.write(TO)
+		#redirect
+		for n, a in enumerate(self.data):
+			boardfound = False
+			for b in a['boards']:
+				if b in self.boards and n in self.boards[b]:
+					boardfound = True
+					self.out.write(CASE % b)
+			if boardfound:
+				self.out.write(RETURN_REDIRECT % (http_protocol(a), a['software']))
+		self.out.write(BOTTOM)
+		
 		
 if __name__ == "__main__":
 	builder = Build()
