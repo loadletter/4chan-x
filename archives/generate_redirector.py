@@ -96,8 +96,8 @@ class Build:
 					b[e].append(n)
 				else:
 					b[e] = [n]
-		self.singleboards = {k: v for k, v in b.iteritems() if len(v) == 1}
-		self.singlefiles = {k: v for k, v in f.iteritems() if len(v) == 1}
+		self.singleboards = {k: v[0] for k, v in b.iteritems() if len(v) == 1}
+		self.singlefiles = {k: v[0] for k, v in f.iteritems() if len(v) == 1}
 		self.redundantboards = {k: v for k, v in b.iteritems() if len(v) > 1}
 		self.redundantfiles = {k: v for k, v in f.iteritems() if len(v) > 1}
 	
@@ -110,24 +110,24 @@ class Build:
 		for k, v in it:
 			print >>self.msg, "%s --> " % k,
 			sel = None
+			selfound = None
 			if k in self.priorities[t]:
 				sel = self.priorities[t][k]
-			selfound = False
 			for x in v:
 				if self.data[x]['uid'] == sel:
 					forstr = "{%s}"
-					selfound = True
+					selfound = x
 				else:
 					forstr = '"%s"'
 				print >>self.msg, forstr % self.data[x]['name'],
-			if sel == None or not selfound:
+			if sel == None or selfound == None:
 				print >>self.msg, "NOT SELECTED!"
 			else:
 				print >>self.msg
 				if t == 'files':
-					self.files[k] = v
+					self.files[k] = selfound
 				else:
-					self.boards[k] = v
+					self.boards[k] = selfound
 	
 	def prioprint(self):
 		self.separator()
@@ -160,7 +160,7 @@ class Build:
 		for n, a in enumerate(self.data):
 			filefound = False
 			for b in a['files']:
-				if b in self.files and n in self.files[b]:
+				if b in self.files and n == self.files[b]:
 					filefound = True
 					self.out.write(CASE % b)
 			if filefound:
@@ -172,7 +172,7 @@ class Build:
 				continue
 			boardfound = False
 			for b in a['boards']:
-				if b in self.boards and n in self.boards[b]:
+				if b in self.boards and n == self.boards[b]:
 					boardfound = True
 					self.out.write(CASE % b)
 			if boardfound:
@@ -182,7 +182,7 @@ class Build:
 		for n, a in enumerate(self.data):
 			boardfound = False
 			for b in a['boards']:
-				if b in self.boards and n in self.boards[b]:
+				if b in self.boards and n == self.boards[b]:
 					boardfound = True
 					self.out.write(CASE % b)
 			if boardfound:
