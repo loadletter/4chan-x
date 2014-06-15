@@ -4948,10 +4948,14 @@
       switch (board) {
         case 'a':
         case 'biz':
+        case 'c':
+        case 'co':
+        case 'diy':
         case 'gd':
         case 'jp':
         case 'm':
-        case 'q':
+        case 'po':
+        case 'sci':
         case 'tg':
         case 'vg':
         case 'vp':
@@ -4960,41 +4964,32 @@
           return "//archive.foolz.us/" + board + "/full_image/" + filename;
         case 'u':
           return "//nsfw.foolz.us/" + board + "/full_image/" + filename;
-        case 'po':
-          return "//archive.thedarkcave.org/" + board + "/full_image/" + filename;
+        case 'adv':
+        case 'f':
         case 'hr':
+        case 'o':
+        case 'pol':
+        case 's4s':
+        case 'trv':
         case 'tv':
         case 'x':
-          return "http://archive.4plebs.org/" + board + "/full_image/" + filename;
-        case 'c':
+          return "//archive.4plebs.org/" + board + "/full_image/" + filename;
+        case 'e':
         case 'w':
         case 'wg':
           return "//archive.nyafuu.org/" + board + "/full_image/" + filename;
         case 'd':
-        case 'h':
-        case 'v':
-          return "//loveisover.me/" + board + "/full_image/" + filename;
-        case 'adv':
-        case 'asp':
-        case 'cm':
-        case 'e':
         case 'i':
         case 'lgbt':
-        case 'n':
-        case 'o':
-        case 'p':
-        case 's':
-        case 's4s':
-        case 't':
-        case 'trv':
-        case 'y':
-          return "//archive.foolzashit.com/" + board + "/full_image/" + filename;
+          return "//archive.loveisover.me/" + board + "/full_image/" + filename;
         case 'cgl':
         case 'g':
         case 'mu':
-          return "//rbt.asia/" + board + "/full_image/" + filename;
+          return "//archive.rebeccablacktech.com/" + board + "/full_image/" + filename;
         case 'an':
+        case 'fit':
         case 'k':
+        case 'r9k':
         case 'toy':
           return "http://archive.heinessen.com/" + board + "/full_image/" + filename;
         case '3':
@@ -5002,18 +4997,39 @@
         case 'fa':
         case 'ic':
         case 'lit':
-          return "//fuuka.warosu.org/" + board + "/full_image/" + filename;
+          return "https://warosu.org/" + board + "/full_image/" + filename;
+        case 'asp':
+        case 'cm':
+        case 'h':
+        case 'hc':
+        case 'hm':
+        case 'n':
+        case 'p':
+        case 'r':
+        case 's':
+        case 'soc':
+        case 'y':
+          return "//fgts.jp/" + board + "/full_image/" + filename;
+        case 't':
+          return "http://archive.mawa.re/" + board + "/full_image/" + filename;
+        case 'v':
+          return "http://boards.deniableplausibility.net/" + board + "/full_image/" + filename;
       }
     },
     post: function(board, postID) {
       switch (board) {
         case 'a':
         case 'biz':
+        case 'c':
         case 'co':
+        case 'diy':
         case 'gd':
+        case 'int':
         case 'jp':
         case 'm':
-        case 'q':
+        case 'out':
+        case 'po':
+        case 'sci':
         case 'sp':
         case 'tg':
         case 'tv':
@@ -5021,42 +5037,42 @@
         case 'vp':
         case 'vr':
         case 'wsg':
-          return "https://archive.foolz.us/_/api/chan/post/?board=" + board + "&num=" + postID;
+          return "//archive.foolz.us/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'u':
-          return "https://nsfw.foolz.us/_/api/chan/post/?board=" + board + "&num=" + postID;
-        case 'int':
-        case 'out':
-        case 'po':
-          return "//archive.thedarkcave.org/_/api/chan/post/?board=" + board + "&num=" + postID;
+          return "//nsfw.foolz.us/_/api/chan/post/?board=" + board + "&num=" + postID;
+        case 'adv':
+        case 'f':
         case 'hr':
+        case 'o':
+        case 'pol':
+        case 's4s':
+        case 'trv':
         case 'x':
-          return "http://archive.4plebs.org/_/api/chan/post/?board=" + board + "&num=" + postID;
-        case 'c':
+          return "//archive.4plebs.org/_/api/chan/post/?board=" + board + "&num=" + postID;
+        case 'e':
         case 'w':
         case 'wg':
           return "//archive.nyafuu.org/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'd':
-        case 'h':
-        case 'v':
-          return "//loveisover.me/_/api/chan/post/?board=" + board + "&num=" + postID;
-        case 'adv':
-        case 'asp':
-        case 'cm':
-        case 'e':
         case 'i':
         case 'lgbt':
+          return "//archive.loveisover.me/_/api/chan/post/?board=" + board + "&num=" + postID;
+        case 'asp':
+        case 'cm':
+        case 'h':
+        case 'hc':
+        case 'hm':
         case 'n':
-        case 'o':
         case 'p':
-        case 'pol':
+        case 'r':
         case 's':
-        case 's4s':
-        case 't':
-        case 'trv':
+        case 'soc':
         case 'y':
-          return "//archive.foolzashit.com/_/api/chan/post/?board=" + board + "&num=" + postID;
-      }
-    },
+          return "//fgts.jp/_/api/chan/post/?board=" + board + "&num=" + postID;
+        case 't':
+          return "http://archive.mawa.re/_/api/chan/post/?board=" + board + "&num=" + postID;
+        case 'v':
+          return "http://boards.deniableplausibility.net/_/api/chan/post/?board=" + board + "&num=" + postID;
     to: function(data) {
       var board, threadID, url;
       if (!data.isSearch) {
@@ -5066,11 +5082,16 @@
       switch (board) {
         case 'a':
         case 'biz':
+        case 'c':
         case 'co':
+        case 'diy':
         case 'gd':
+        case 'int':
         case 'jp':
         case 'm':
-        case 'q':
+        case 'out':
+        case 'po':
+        case 'sci':
         case 'sp':
         case 'tg':
         case 'tv':
@@ -5083,45 +5104,29 @@
         case 'u':
           url = Redirect.path('//nsfw.foolz.us', 'foolfuuka', data);
           break;
-        case 'int':
-        case 'out':
-        case 'po':
-          url = Redirect.path('//archive.thedarkcave.org', 'foolfuuka', data);
-          break;
+        case 'adv':
+        case 'f':
         case 'hr':
+        case 'o':
+        case 'pol':
+        case 's4s':
+        case 'trv':
         case 'x':
-          url = Redirect.path('http://archive.4plebs.org', 'foolfuuka', data);
+          url = Redirect.path('//archive.4plebs.org', 'foolfuuka', data);
           break;
-        case 'c':
+        case 'e':
         case 'w':
         case 'wg':
           url = Redirect.path('//archive.nyafuu.org', 'foolfuuka', data);
           break;
         case 'd':
-        case 'h':
-        case 'v':
-          url = Redirect.path('//loveisover.me', 'foolfuuka', data);
-          break;
-        case 'adv':
-        case 'asp':
-        case 'cm':
-        case 'e':
         case 'i':
         case 'lgbt':
-        case 'n':
-        case 'o':
-        case 'p':
-        case 'pol':
-        case 's':
-        case 's4s':
-        case 't':
-        case 'trv':
-        case 'y':
-          url = Redirect.path('//archive.foolzashit.com', 'foolfuuka', data);
+          url = Redirect.path('//archive.loveisover.me', 'foolfuuka', data);
           break;
         case 'cgl':
         case 'mu':
-          url = Redirect.path('//rbt.asia', 'fuuka', data);
+          url = Redirect.path('//archive.rebeccablacktech.com', 'fuuka', data);
           break;
         case 'an':
         case 'fit':
@@ -5134,12 +5139,29 @@
         case '3':
         case 'ck':
         case 'fa':
+        case 'g':
         case 'ic':
         case 'lit':
-        case 'diy':
-        case 'g':
-        case 'sci':
-          url = Redirect.path('//fuuka.warosu.org', 'fuuka', data);
+          url = Redirect.path('https://warosu.org', 'fuuka', data);
+          break;
+        case 'asp':
+        case 'cm':
+        case 'h':
+        case 'hc':
+        case 'hm':
+        case 'n':
+        case 'p':
+        case 'r':
+        case 's':
+        case 'soc':
+        case 'y':
+          url = Redirect.path('//fgts.jp', 'foolfuuka', data);
+          break;
+        case 't':
+          url = Redirect.path('http://archive.mawa.re', 'foolfuuka', data);
+          break;
+        case 'v':
+          url = Redirect.path('http://boards.deniableplausibility.net', 'foolfuuka', data);
           break;
         default:
           if (threadID) {
