@@ -4989,6 +4989,7 @@
         case 'an':
         case 'fit':
         case 'k':
+        case 'mlp':
         case 'r9k':
         case 'toy':
           return "http://archive.heinessen.com/" + board + "/full_image/" + filename;
@@ -5073,6 +5074,8 @@
           return "http://archive.mawa.re/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'v':
           return "http://boards.deniableplausibility.net/_/api/chan/post/?board=" + board + "&num=" + postID;
+      }
+    },
     to: function(data) {
       var board, threadID, url;
       if (!data.isSearch) {

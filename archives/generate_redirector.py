@@ -10,7 +10,9 @@ POST = '''      }
     post: function(board, postID) {
       switch (board) {
 '''
-TO = '''    to: function(data) {
+TO = '''      }
+    },
+    to: function(data) {
       var board, threadID, url;
       if (!data.isSearch) {
         threadID = data.threadID;
