@@ -63,6 +63,7 @@ class Build:
 		self.msg = msgstream
 		self.files = {}
 		self.boards = {}
+		self.data = None
 		self.priorities = jsonloadf(PRIORITIES_JSON)
 	
 	def page_dl(self):
@@ -102,19 +103,24 @@ class Build:
 	
 	def pprint(self, t):
 		print >>self.msg, "%s:" % t
-		for k, v in self.redundantboards.iteritems():
-			#print >>self.msg, "%s --> %s" % (k, repr([(self.data[x]['name'] + " (%i)" % self.data[x]['uid']) for x in v]))
+		if t == 'files':
+			it = self.redundantfiles.iteritems()
+		else:
+			it = self.redundantboards.iteritems()
+		for k, v in it:
 			print >>self.msg, "%s --> " % k,
 			sel = None
 			if k in self.priorities[t]:
 				sel = self.priorities[t][k]
+			selfound = False
 			for x in v:
 				if self.data[x]['uid'] == sel:
 					forstr = "{%s}"
+					selfound = True
 				else:
 					forstr = '"%s"'
 				print >>self.msg, forstr % self.data[x]['name'],
-			if sel == None:
+			if sel == None or not selfound:
 				print >>self.msg, "NOT SELECTED!"
 			else:
 				print >>self.msg
@@ -143,7 +149,8 @@ class Build:
 			print >>self.msg, "-" * 80
 		
 	def build(self):
-		self.page_dl()
+		if not self.data:
+			self.page_dl()
 		self.boards_list()
 		self.find_redundant()
 		self.prioprint()
@@ -185,4 +192,6 @@ class Build:
 		
 if __name__ == "__main__":
 	builder = Build()
+	if len(sys.argv) == 2:
+		builder.data = jsonloadf(sys.argv[1])
 	builder.build()
