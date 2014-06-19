@@ -2604,7 +2604,7 @@
       return QR.ajax = $.ajax($.id('postForm').parentNode.action, callbacks, opts);
     },
     response: function(html) {
-      var ban, board, doc, err, persona, postID, reply, threadID, _, _ref, _ref1;
+      var ban, board, clone, doc, err, obj, persona, postID, reply, threadID, _, _ref, _ref1;
       if (QR.captcha.isEnabled) {
         QR.captcha.destroy();
         QR.captcha.init();
@@ -2648,12 +2648,11 @@
       };
       $.set('QR.persona', persona);
       _ref1 = doc.body.lastChild.textContent.match(/thread:(\d+),no:(\d+)/), _ = _ref1[0], threadID = _ref1[1], postID = _ref1[2];
+      obj = {threadID: threadID, postID: postID};
+      clone = (typeof(cloneInto) === 'function' && cloneInto(obj, document.defaultView)) || obj;
       $.event(QR.el, new CustomEvent('QRPostSuccessful', {
         bubbles: true,
-        detail: {
-          threadID: threadID,
-          postID: postID
-        }
+        detail: clone
       }));
       
       /* Add your own replies to yourPosts and storage to watch for replies */
