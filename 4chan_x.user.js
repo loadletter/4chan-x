@@ -2648,7 +2648,7 @@
       };
       $.set('QR.persona', persona);
       _ref1 = doc.body.lastChild.textContent.match(/thread:(\d+),no:(\d+)/), _ = _ref1[0], threadID = _ref1[1], postID = _ref1[2];
-      obj = {threadID: threadID, postID: postID};
+      obj = {boardID: g.BOARD, threadID: threadID, postID: postID};
       clone = (typeof(cloneInto) === 'function' && cloneInto(obj, document.defaultView)) || obj;
       $.event(QR.el, new CustomEvent('QRPostSuccessful', {
         bubbles: true,
