@@ -4984,7 +4984,7 @@
         case 'cgl':
         case 'g':
         case 'mu':
-          return "//archive.rebeccablacktech.com/" + board + "/full_image/" + filename;
+          return "https://archive.rebeccablacktech.com/" + board + "/full_image/" + filename;
         case 'an':
         case 'fit':
         case 'k':
@@ -5128,7 +5128,7 @@
           break;
         case 'cgl':
         case 'mu':
-          url = Redirect.path('//archive.rebeccablacktech.com', 'fuuka', data);
+          url = Redirect.path('https://archive.rebeccablacktech.com', 'fuuka', data);
           break;
         case 'an':
         case 'fit':
