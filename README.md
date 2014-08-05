@@ -65,3 +65,5 @@ Install tampermonkey or equivalent and then just click on the previuos link.
     - Newer version with more websites supported: https://greasyfork.org/scripts/413-youtube-link-title
 - Highlight sage: https://github.com/loadletter/resage-ext
 - Inverted /a/: https://github.com/loadletter/4chan-x/raw/master/utils/inverted_a.user.js
+
+Execution order Youtube Link Title -> 4chan x -> 4chan Linkify
