@@ -5021,7 +5021,7 @@
         case 't':
           return "http://archive.mawa.re/" + board + "/full_image/" + filename;
         case 'v':
-          return "http://boards.deniableplausibility.net/" + board + "/full_image/" + filename;
+          return "//archive.vidya.moe/" + board + "/full_image/" + filename;
       }
     },
     post: function(board, postID) {
@@ -5080,7 +5080,7 @@
         case 't':
           return "http://archive.mawa.re/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'v':
-          return "http://boards.deniableplausibility.net/_/api/chan/post/?board=" + board + "&num=" + postID;
+          return "//archive.vidya.moe/_/api/chan/post/?board=" + board + "&num=" + postID;
       }
     },
     to: function(data) {
@@ -5171,7 +5171,7 @@
           url = Redirect.path('http://archive.mawa.re', 'foolfuuka', data);
           break;
         case 'v':
-          url = Redirect.path('http://boards.deniableplausibility.net', 'foolfuuka', data);
+          url = Redirect.path('//archive.vidya.moe', 'foolfuuka', data);
           break;
         default:
           if (threadID) {
