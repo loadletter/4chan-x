@@ -23,6 +23,7 @@ Install tampermonkey or equivalent and then just click on the previuos link.
 6. Start dwb
 
 ##Changelog
+- 2.40.33: Fix 404 and updated archives
 - 2.40.32: Compatibility with Greasemonkey 2
 - 2.40.31: Fix a possible autoupdate problem and updated all the archives
 - 2.40.30: Removed the feature that duplicated captcha words since it conflicts with single-word captchas
