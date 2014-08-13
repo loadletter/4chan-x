@@ -3185,21 +3185,24 @@
           return !d.hidden;
         };
       },
+      buryDead: function() {
+        Updater.set('timer', '');
+        Updater.set('count', 404);
+        Updater.count.className = 'warning';
+        clearTimeout(Updater.timeoutID);
+        g.dead = true;
+        if (Conf['Unread Count']) {
+          Unread.title = Unread.title.match(/^.+-/)[0] + ' 404';
+        } else {
+          d.title = d.title.match(/^.+-/)[0] + ' 404';
+        }
+        Unread.update(true);
+        QR.abort();
+      },
       load: function() {
         switch (this.status) {
           case 404:
-            Updater.set('timer', '');
-            Updater.set('count', 404);
-            Updater.count.className = 'warning';
-            clearTimeout(Updater.timeoutID);
-            g.dead = true;
-            if (Conf['Unread Count']) {
-              Unread.title = Unread.title.match(/^.+-/)[0] + ' 404';
-            } else {
-              d.title = d.title.match(/^.+-/)[0] + ' 404';
-            }
-            Unread.update(true);
-            QR.abort();
+            Updater.cb.buryDead();
             break;
           case 0:
           case 304:
@@ -3217,8 +3220,13 @@
             break;
           case 200:
             Updater.lastModified = this.getResponseHeader('Last-Modified');
-            Updater.cb.update(JSON.parse(this.response).posts);
-            Updater.set('timer', -Conf['Interval']);
+            var parsed_posts = JSON.parse(this.response).posts;
+            if ('archived' in parsed_posts[0] && parsed_posts[0].archived === 1) {
+              Updater.cb.buryDead();
+            } else {
+              Updater.cb.update(parsed_posts);
+              Updater.set('timer', -Conf['Interval']);
+            }
             break;
           default:
             Updater.set('timer', -Conf['Interval']);
