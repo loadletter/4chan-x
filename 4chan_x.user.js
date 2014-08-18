@@ -4964,11 +4964,12 @@
         case 'po':
         case 'sci':
         case 'tg':
+        case 'v':
         case 'vg':
         case 'vp':
         case 'vr':
         case 'wsg':
-          return "//archive.foolz.us/" + board + "/full_image/" + filename;
+          return "//archive.moe/" + board + "/full_image/" + filename;
         case 'u':
           return "//nsfw.foolz.us/" + board + "/full_image/" + filename;
         case 'adv':
@@ -5020,8 +5021,6 @@
           return "//fgts.jp/" + board + "/full_image/" + filename;
         case 't':
           return "http://archive.mawa.re/" + board + "/full_image/" + filename;
-        case 'v':
-          return "//archive.vidya.moe/" + board + "/full_image/" + filename;
       }
     },
     post: function(board, postID) {
@@ -5041,11 +5040,12 @@
         case 'sp':
         case 'tg':
         case 'tv':
+        case 'v':
         case 'vg':
         case 'vp':
         case 'vr':
         case 'wsg':
-          return "//archive.foolz.us/_/api/chan/post/?board=" + board + "&num=" + postID;
+          return "//archive.moe/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'u':
           return "//nsfw.foolz.us/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'adv':
@@ -5079,8 +5079,6 @@
           return "//fgts.jp/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 't':
           return "http://archive.mawa.re/_/api/chan/post/?board=" + board + "&num=" + postID;
-        case 'v':
-          return "//archive.vidya.moe/_/api/chan/post/?board=" + board + "&num=" + postID;
       }
     },
     to: function(data) {
@@ -5105,11 +5103,12 @@
         case 'sp':
         case 'tg':
         case 'tv':
+        case 'v':
         case 'vg':
         case 'vp':
         case 'vr':
         case 'wsg':
-          url = Redirect.path('//archive.foolz.us', 'foolfuuka', data);
+          url = Redirect.path('//archive.moe', 'foolfuuka', data);
           break;
         case 'u':
           url = Redirect.path('//nsfw.foolz.us', 'foolfuuka', data);
@@ -5169,9 +5168,6 @@
           break;
         case 't':
           url = Redirect.path('http://archive.mawa.re', 'foolfuuka', data);
-          break;
-        case 'v':
-          url = Redirect.path('//archive.vidya.moe', 'foolfuuka', data);
           break;
         default:
           if (threadID) {
