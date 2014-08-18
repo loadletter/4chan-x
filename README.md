@@ -23,6 +23,7 @@ Install tampermonkey or equivalent and then just click on the previuos link.
 6. Start dwb
 
 ##Changelog
+- 2.40.34: Update archives (archive.foolz.us -> archive.moe)
 - 2.40.33: Fix 404 and updated archives
 - 2.40.32: Compatibility with Greasemonkey 2
 - 2.40.31: Fix a possible autoupdate problem and updated all the archives
