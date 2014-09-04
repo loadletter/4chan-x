@@ -4966,7 +4966,7 @@
         case 'wsg':
           return "//archive.moe/" + board + "/full_image/" + filename;
         case 'u':
-          return "//nsfw.foolz.us/" + board + "/full_image/" + filename;
+          return "//nsfw.archive.moe/" + board + "/full_image/" + filename;
         case 'adv':
         case 'f':
         case 'hr':
@@ -4977,13 +4977,12 @@
         case 'tv':
         case 'x':
           return "//archive.4plebs.org/" + board + "/full_image/" + filename;
-        case 'e':
-        case 'w':
-        case 'wg':
-          return "//archive.nyafuu.org/" + board + "/full_image/" + filename;
         case 'd':
+        case 'e':
         case 'i':
         case 'lgbt':
+        case 'w':
+        case 'wg':
           return "//archive.loveisover.me/" + board + "/full_image/" + filename;
         case 'cgl':
         case 'g':
@@ -5029,6 +5028,7 @@
         case 'int':
         case 'jp':
         case 'm':
+        case 'mlp':
         case 'out':
         case 'po':
         case 'sci':
@@ -5042,7 +5042,7 @@
         case 'wsg':
           return "//archive.moe/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'u':
-          return "//nsfw.foolz.us/_/api/chan/post/?board=" + board + "&num=" + postID;
+          return "//nsfw.archive.moe/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'adv':
         case 'f':
         case 'hr':
@@ -5052,13 +5052,12 @@
         case 'trv':
         case 'x':
           return "//archive.4plebs.org/_/api/chan/post/?board=" + board + "&num=" + postID;
-        case 'e':
-        case 'w':
-        case 'wg':
-          return "//archive.nyafuu.org/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'd':
+        case 'e':
         case 'i':
         case 'lgbt':
+        case 'w':
+        case 'wg':
           return "//archive.loveisover.me/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'asp':
         case 'cm':
@@ -5092,6 +5091,7 @@
         case 'int':
         case 'jp':
         case 'm':
+        case 'mlp':
         case 'out':
         case 'po':
         case 'sci':
@@ -5106,7 +5106,7 @@
           url = Redirect.path('//archive.moe', 'foolfuuka', data);
           break;
         case 'u':
-          url = Redirect.path('//nsfw.foolz.us', 'foolfuuka', data);
+          url = Redirect.path('//nsfw.archive.moe', 'foolfuuka', data);
           break;
         case 'adv':
         case 'f':
@@ -5118,14 +5118,12 @@
         case 'x':
           url = Redirect.path('//archive.4plebs.org', 'foolfuuka', data);
           break;
-        case 'e':
-        case 'w':
-        case 'wg':
-          url = Redirect.path('//archive.nyafuu.org', 'foolfuuka', data);
-          break;
         case 'd':
+        case 'e':
         case 'i':
         case 'lgbt':
+        case 'w':
+        case 'wg':
           url = Redirect.path('//archive.loveisover.me', 'foolfuuka', data);
           break;
         case 'cgl':
@@ -5135,7 +5133,6 @@
         case 'an':
         case 'fit':
         case 'k':
-        case 'mlp':
         case 'r9k':
         case 'toy':
           url = Redirect.path('http://archive.heinessen.com', 'fuuka', data);
