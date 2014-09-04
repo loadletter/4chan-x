@@ -2993,9 +2993,8 @@
       }));
     },
     time: function() {
-      Time.foo();
       Time.date = new Date();
-      return $.id('timePreview').textContent = Time.funk(Time);
+      return $.id('timePreview').textContent = Time.funk();
     },
     backlink: function() {
       return $.id('backlinkPreview').textContent = Conf['backlink'].replace(/%id/, '123456789');
@@ -3010,8 +3009,7 @@
         fullname: 'd9bb2efc98dd0df141a94399ff5880b7.jpg',
         shortname: 'd9bb2efc98dd0df141a94399ff5880(...).jpg'
       };
-      FileInfo.setFormats();
-      return $.id('fileInfoPreview').innerHTML = FileInfo.funk(FileInfo);
+      return $.id('fileInfoPreview').innerHTML = FileInfo.funk();
     },
     favicon: function() {
       Favicon["switch"]();
@@ -3467,23 +3465,9 @@
     },
     createSauceLink: function(link) {
       var domain, el, href, m;
-      link = link.replace(/(\$\d)/g, function(parameter) {
-        switch (parameter) {
-          case '$1':
-            return "' + (isArchived ? img.firstChild.src : 'http://t.4cdn.org' + img.pathname.replace(/(\\d+).+$/, '$1s.jpg')) + '";
-          case '$2':
-            return "' + img.href + '";
-          case '$3':
-            return "' + encodeURIComponent(img.firstChild.dataset.md5) + '";
-          case '$4':
-            return g.BOARD;
-          default:
-            return parameter;
-        }
-      });
+      link = link.replace(/\$4/g, g.BOARD);
       domain = (m = link.match(/;text:(.+)$/)) ? m[1] : link.match(/(\w+)\.\w+\//)[1];
       href = link.replace(/;text:.+$/, '');
-      href = Function('img', 'isArchived', "return '" + href + "'");
       el = $.el('a', {
         target: '_blank',
         textContent: domain
@@ -3491,7 +3475,18 @@
       return function(img, isArchived) {
         var a;
         a = el.cloneNode(true);
-        a.href = href(img, isArchived);
+        a.href = href.replace(/(\$\d)/g, function(parameter) {
+          switch (parameter) {
+            case '$1':
+              return isArchived ? img.firstChild.src : 'http://t.4cdn.org' + img.pathname.replace(/(\d+).+$/, '$1s.jpg');
+            case '$2':
+              return img.href;
+            case '$3':
+              return encodeURIComponent(img.firstChild.dataset.md5);
+            default:
+              return parameter;
+          }
+        });
         return a;
       };
     },
@@ -3532,7 +3527,6 @@
 
   Time = {
     init: function() {
-      Time.foo();
       return Main.callbacks.push(this.node);
     },
     node: function(post) {
@@ -3542,18 +3536,16 @@
       }
       node = $('.postInfo > .dateTime', post.el);
       Time.date = new Date(node.dataset.utc * 1000);
-      return node.textContent = Time.funk(Time);
+      return node.textContent = Time.funk();
     },
-    foo: function() {
-      var code;
-      code = Conf['time'].replace(/%([A-Za-z])/g, function(s, c) {
+    funk: function() {
+      return Conf['time'].replace(/%([A-Za-z])/g, function(s, c) {
         if (c in Time.formatters) {
-          return "' + Time.formatters." + c + "() + '";
+          return Time.formatters[c]();
         } else {
           return s;
         }
       });
-      return Time.funk = Function('Time', "return '" + code + "'");
     },
     day: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
     month: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
@@ -3691,7 +3683,6 @@
       if (g.BOARD === 'f') {
         return;
       }
-      this.setFormats();
       return Main.callbacks.push(this.node);
     },
     node: function(post) {
@@ -3712,18 +3703,16 @@
         shortname: Build.shortFilename(filename, post.ID === post.threadID)
       };
       node.setAttribute('data-filename', filename);
-      return post.fileInfo.innerHTML = FileInfo.funk(FileInfo);
+      return post.fileInfo.innerHTML = FileInfo.funk();
     },
-    setFormats: function() {
-      var code;
-      code = Conf['fileInfo'].replace(/%(.)/g, function(s, c) {
+    funk: function() {
+      return Conf['fileInfo'].replace(/%(.)|[^%]+/g, function(s, c) {
         if (c in FileInfo.formatters) {
-          return "' + f.formatters." + c + "() + '";
+          return FileInfo.formatters[c]();
         } else {
-          return s;
+          return FileInfo.escape(s);
         }
       });
-      return this.funk = Function('f', "return '" + code + "'");
     },
     convertUnit: function(unitT) {
       var i, size, unitF, units;
@@ -3750,29 +3739,29 @@
       }
       return "" + size + " " + unitT;
     },
-    escape: function(name) {
-      return name.replace(/<|>/g, function(c) {
-        return c === '<' && '&lt;' || '&gt;';
+    escape: function(text) {
+      return (text + '').replace(/[&"'<>]/g, function(c) {
+        return {'&': '&amp;', "'": '&#039;', '"': '&quot;', '<': '&lt;', '>': '&gt;'}[c];
       });
     },
     formatters: {
       t: function() {
-        return FileInfo.data.link.match(/\d+\..+$/)[0];
+        return FileInfo.data.link.match(/\d+\.\w+$/)[0];
       },
       T: function() {
-        return "<a href=" + FileInfo.data.link + " target=_blank>" + (this.t()) + "</a>";
+        return '<a href="' + FileInfo.escape(FileInfo.data.link) + '" target="_blank">' + (this.t()) + '</a>';
       },
       l: function() {
-        return "<a href=" + FileInfo.data.link + " target=_blank>" + (this.n()) + "</a>";
+        return '<a href="' + FileInfo.escape(FileInfo.data.link) + '" target="_blank">' + (this.n()) + '</a>';
       },
       L: function() {
-        return "<a href=" + FileInfo.data.link + " target=_blank>" + (this.N()) + "</a>";
+        return '<a href="' + FileInfo.escape(FileInfo.data.link) + '" target="_blank">' + (this.N()) + '</a>';
       },
       n: function() {
         if (FileInfo.data.fullname === FileInfo.data.shortname) {
           return FileInfo.escape(FileInfo.data.fullname);
         } else {
-          return "<span class=fntrunc>" + FileInfo.escape(FileInfo.data.shortname) + "</span><span class=fnfull>" + FileInfo.escape(FileInfo.data.fullname) + "</span>";
+          return '<span class="fntrunc">' + FileInfo.escape(FileInfo.data.shortname) + '</span><span class="fnfull">' + FileInfo.escape(FileInfo.data.fullname) + '</span>';
         }
       },
       N: function() {
@@ -3862,6 +3851,12 @@
         return cb();
       }
     },
+    escape: function(text) {
+      if (text == null) return null;
+      return (text + '').replace(/[&"'<>]/g, function(c) {
+        return {'&': '&amp;', "'": '&#039;', '"': '&quot;', '<': '&lt;', '>': '&gt;'}[c];
+      });
+    },
     parseArchivedPost: function(req, board, postID, root, cb) {
       var bq, comment, data, o, _ref;
       data = JSON.parse(req.response);
@@ -3903,9 +3898,9 @@
       comment = comment.replace(/((&gt;){2}(&gt;\/[a-z\d]+\/)?\d+)/g, '<span class=deadlink>$1</span>');
       o = {
         postID: postID,
-        threadID: data.thread_num,
+        threadID: Get.escape(data.thread_num),
         board: board,
-        name: data.name_processed,
+        name: Get.escape(data.name),
         capcode: (function() {
           switch (data.capcode) {
             case 'M':
@@ -3916,28 +3911,28 @@
               return 'developer';
           }
         })(),
-        tripcode: data.trip,
-        uniqueID: data.poster_hash,
-        email: data.email ? encodeURI(data.email) : '',
-        subject: data.title_processed,
-        flagCode: data.poster_country,
-        flagName: data.poster_country_name_processed,
-        date: data.fourchan_date,
-        dateUTC: data.timestamp,
+        tripcode: Get.escape(data.trip),
+        uniqueID: Get.escape(data.poster_hash),
+        email: data.email ? Get.escape(encodeURI(data.email)) : '',
+        subject: Get.escape(data.title),
+        flagCode: Get.escape(data.poster_country),
+        flagName: data.poster_country_name ? Get.escape(data.poster_country_name) : '',
+        date: Get.escape(data.fourchan_date),
+        dateUTC: +data.timestamp,
         comment: comment
       };
       if ((_ref = data.media) != null ? _ref.media_filename : void 0) {
         o.file = {
-          name: data.media.media_filename_processed,
-          timestamp: data.media.media_orig,
-          url: data.media.media_link || data.media.remote_media_link,
-          height: data.media.media_h,
-          width: data.media.media_w,
-          MD5: data.media.media_hash,
-          size: data.media.media_size,
-          turl: data.media.thumb_link || ("//t.4cdn.org/" + board + "/" + data.media.preview_orig),
-          theight: data.media.preview_h,
-          twidth: data.media.preview_w,
+          name: Get.escape(data.media.media_filename),
+          timestamp: Get.escape(data.media.media_orig),
+          url: Get.escape(data.media.media_link || data.media.remote_media_link),
+          height: Get.escape(data.media.media_h),
+          width: Get.escape(data.media.media_w),
+          MD5: Get.escape(data.media.media_hash),
+          size: Get.escape(data.media.media_size),
+          turl: Get.escape(data.media.thumb_link || ("//t.4cdn.org/" + board + "/" + data.media.preview_orig)),
+          theight: Get.escape(data.media.preview_h),
+          twidth: Get.escape(data.media.preview_w),
           isSpoiler: data.media.spoiler === '1'
         };
       }
@@ -4063,33 +4058,33 @@
         emailStart = '';
         emailEnd = '';
       }
-      subject = "<span class=subject>" + (subject || '') + "</span>";
-      userID = !capcode && uniqueID ? (" <span class='posteruid id_" + uniqueID + "'>(ID: ") + ("<span class=hand title='Highlight posts by this ID'>" + uniqueID + "</span>)</span> ") : '';
+      subject = '<span class="subject">' + (subject || '') + '</span>';
+      userID = !capcode && uniqueID ? ' <span class="posteruid id_' + uniqueID + '">(ID: <span class="hand" title="Highlight posts by this ID">' + uniqueID + '</span>)</span> ' : '';
       switch (capcode) {
         case 'admin':
         case 'admin_highlight':
-          capcodeClass = " capcodeAdmin";
-          capcodeStart = " <strong class='capcode hand id_admin'" + "title='Highlight posts by the Administrator'>## Admin</strong>";
-          capcode = (" <img src='" + staticPath + "/image/adminicon.gif' ") + "alt='This user is the 4chan Administrator.' " + "title='This user is the 4chan Administrator.' class=identityIcon>";
+          capcodeClass = ' capcodeAdmin';
+          capcodeStart = ' <strong class="capcode hand id_admin" title="Highlight posts by the Administrator">## Admin</strong>';
+          capcode = ' <img src="' + staticPath + '/image/adminicon.gif" alt="This user is the 4chan Administrator." title="This user is the 4chan Administrator." class="identityIcon">';
           break;
         case 'mod':
-          capcodeClass = " capcodeMod";
-          capcodeStart = " <strong class='capcode hand id_mod' " + "title='Highlight posts by Moderators'>## Mod</strong>";
-          capcode = (" <img src='" + staticPath + "/image/modicon.gif' ") + "alt='This user is a 4chan Moderator.' " + "title='This user is a 4chan Moderator.' class=identityIcon>";
+          capcodeClass = ' capcodeMod';
+          capcodeStart = ' <strong class="capcode hand id_mod" title="Highlight posts by Moderators">## Mod</strong>';
+          capcode = ' <img src="' + staticPath + '/image/modicon.gif" alt="This user is a 4chan Moderator." title="This user is a 4chan Moderator." class="identityIcon">';
           break;
         case 'developer':
-          capcodeClass = " capcodeDeveloper";
-          capcodeStart = " <strong class='capcode hand id_developer' " + "title='Highlight posts by Developers'>## Developer</strong>";
-          capcode = (" <img src='" + staticPath + "/image/developericon.gif' ") + "alt='This user is a 4chan Developer.' " + "title='This user is a 4chan Developer.' class=identityIcon>";
+          capcodeClass = ' capcodeDeveloper';
+          capcodeStart = ' <strong class="capcode hand id_developer" title="Highlight posts by Developers">## Developer</strong>';
+          capcode = ' <img src="' + staticPath + '/image/developericon.gif" alt="This user is a 4chan Developer." title="This user is a 4chan Developer." class="identityIcon">';
           break;
         default:
           capcodeClass = '';
           capcodeStart = '';
           capcode = '';
       }
-      flag = flagCode ? (" <img src='" + staticPath + "/image/country/" + (board === 'pol' ? 'troll/' : '')) + flagCode.toLowerCase() + (".gif' alt=" + flagCode + " title='" + flagName + "' class=countryFlag>") : '';
+      flag = flagCode ? ' <img src="' + staticPath + '/image/country/' + (board === 'pol' ? 'troll/' : '') + flagCode.toLowerCase() + '.gif" alt="' + flagCode + '" title="' + flagName + '" class="countryFlag">' : '';
       if (file != null ? file.isDeleted : void 0) {
-        fileHTML = isOP ? ("<div class=file id=f" + postID + "><div class=fileInfo></div><span class=fileThumb>") + ("<img src='" + staticPath + "/image/filedeleted.gif' alt='File deleted.' class='fileDeleted retina'>") + "</span></div>" : ("<div id=f" + postID + " class=file><span class=fileThumb>") + ("<img src='" + staticPath + "/image/filedeleted-res.gif' alt='File deleted.' class='fileDeletedRes retina'>") + "</span></div>";
+        fileHTML = isOP ? '<div class="file" id="f' + postID + '"><div class="fileInfo"></div><span class="fileThumb"><img src="' + staticPath + '/image/filedeleted.gif" alt="File deleted." class="fileDeleted retina"></span></div>' : '<div id="f' + postID + '" class="file"><span class="fileThumb"><img src="' + staticPath + '/image/filedeleted-res.gif" alt="File deleted." class="fileDeletedRes retina"></span></div>';
       } else if (file) {
         ext = file.name.slice(-3);
         if (!file.twidth && !file.theight && ext === 'gif') {
@@ -4099,38 +4094,38 @@
         fileSize = $.bytesToString(file.size);
         fileThumb = file.turl;
         if (file.isSpoiler) {
-          fileSize = "Spoiler Image, " + fileSize;
+          fileSize = 'Spoiler Image, ' + fileSize;
           if (!isArchived) {
             fileThumb = '//s.4cdn.org/image/spoiler';
             if (spoilerRange = Build.spoilerRange[board]) {
-              fileThumb += ("-" + board) + Math.floor(1 + spoilerRange * Math.random());
+              fileThumb += '-' + board + Math.floor(1 + spoilerRange * Math.random());
             }
             fileThumb += '.png';
             file.twidth = file.theight = 100;
           }
         }
-        imgSrc = board === 'f' ? '' : ("<a class='fileThumb" + (file.isSpoiler ? ' imgspoiler' : '') + "' href=\"" + file.url + "\" target=_blank>") + ("<img src='" + fileThumb + "' alt='" + fileSize + "' data-md5=" + file.MD5 + " style='width:" + file.twidth + "px;height:" + file.theight + "px'></a>");
-        a = $.el('a', {
-          innerHTML: file.name
-        });
-        filename = a.textContent.replace(/%22/g, '"');
+        imgSrc = board === 'f' ? '' : '<a class="fileThumb' + (file.isSpoiler ? ' imgspoiler' : '') + '" href="' + file.url + '" target="_blank"><img src="' + fileThumb + '" alt="' + fileSize + '" data-md5="' + file.MD5 + '" style="width:' + file.twidth + 'px;height:' + file.theight + 'px"></a>';
+        filename = file.name.replace(/&(amp|#039|quot|lt|gt);/g, function (c) {
+          return {'&amp;': '&', '&#039;': "'", '&quot;': '"', '&lt;': '<', '&gt;': '>'}[c];
+        }).replace(/%22/g, '"');
+        a = $.el('a');
         a.textContent = Build.shortFilename(filename);
         shortFilename = a.innerHTML;
         a.textContent = filename;
-        filename = a.innerHTML.replace(/'/g, '&apos;');
-        fileDims = ext === 'pdf' ? 'PDF' : "" + file.width + "x" + file.height;
-        fileInfo = ("<div class=fileText id=fT" + postID + (file.isSpoiler ? " title='" + filename + "'" : '') + ">File: <a" + ((filename !== shortFilename && !file.isSpoiler) ? " title='" + filename + "'" : '') + " href=\"" + file.url + "\" target=_blank>" + (file.isSpoiler ? 'Spoiler Image' : shortFilename) + "</a>") + ("-(" + fileSize + ", " + fileDims) + ")</div>";
-        fileHTML = "<div class=file id=f" + postID + ">" + fileInfo + imgSrc + "</div>";
+        filename = a.innerHTML.replace(/'/g, '&#039;');
+        fileDims = ext === 'pdf' ? 'PDF' : '' + file.width + 'x' + file.height;
+        fileInfo = '<div class="fileText" id="fT' + postID + '"' + (file.isSpoiler ? ' title="' + filename + '"' : '') + '>File: <a' + ((filename !== shortFilename && !file.isSpoiler) ? ' title="' + filename + '"' : '') + ' href="' + file.url + '" target="_blank">' + (file.isSpoiler ? 'Spoiler Image' : shortFilename) + '</a>-(' + fileSize + ', ' + fileDims + ')</div>';
+        fileHTML = '<div class="file" id="f' + postID + '">' + fileInfo + imgSrc + '</div>';
       } else {
         fileHTML = '';
       }
-      tripcode = tripcode ? " <span class=postertrip>" + tripcode + "</span>" : '';
-      sticky = isSticky ? ' <img src=//s.4cdn.org/image/sticky.gif alt=Sticky title=Sticky style="height:16px;width:16px">' : '';
-      closed = isClosed ? ' <img src=//s.4cdn.org/image/closed.gif alt=Closed title=Closed style="height:16px;width:16px">' : '';
+      tripcode = tripcode ? ' <span class="postertrip">' + tripcode + '</span>' : '';
+      sticky = isSticky ? ' <img src="//s.4cdn.org/image/sticky.gif" alt="Sticky" title="Sticky" style="height:16px;width:16px">' : '';
+      closed = isClosed ? ' <img src="//s.4cdn.org/image/closed.gif" alt="Closed" title="Closed" style="height:16px;width:16px">' : '';
       container = $.el('div', {
-        id: "pc" + postID,
-        className: "postContainer " + (isOP ? 'op' : 'reply') + "Container",
-        innerHTML: (isOP ? '' : "<div class=sideArrows id=sa" + postID + ">&gt;&gt;</div>") + ("<div id=p" + postID + " class='post " + (isOP ? 'op' : 'reply') + (capcode === 'admin_highlight' ? ' highlightPost' : '') + "'>") + ("<div class='postInfoM mobile' id=pim" + postID + ">") + ("<span class='nameBlock" + capcodeClass + "'>") + ("<span class=name>" + (name || '') + "</span>") + tripcode + capcodeStart + capcode + userID + flag + sticky + closed + ("<br>" + subject) + ("</span><span class='dateTime postNum' data-utc=" + dateUTC + ">" + date) + '<br><em>' + ("<a href=" + ("/" + board + "/thread/" + threadID + "#p" + postID) + ">No.</a>") + ("<a href='" + (g.REPLY && g.THREAD_ID === threadID ? "javascript:quote(" + postID + ")" : "/" + board + "/thread/" + threadID + "#q" + postID) + "'>" + postID + "</a>") + '</em></span>' + '</div>' + (isOP ? fileHTML : '') + ("<div class='postInfo desktop' id=pi" + postID + ">") + ("<input type=checkbox name=" + postID + " value=delete> ") + ("" + subject + " ") + ("<span class='nameBlock" + capcodeClass + "'>") + emailStart + ("<span class=name>" + (name || '') + "</span>") + tripcode + capcodeStart + emailEnd + capcode + userID + flag + sticky + closed + ' </span> ' + ("<span class=dateTime data-utc=" + dateUTC + ">" + date + "</span> ") + "<span class='postNum desktop'>" + ("<a href=" + ("/" + board + "/thread/" + threadID + "#p" + postID) + " title='Link to this post'>No.</a>") + ("<a href='" + (g.REPLY && +g.THREAD_ID === threadID ? "javascript:quote(" + postID + ")" : "/" + board + "/thread/" + threadID + "#q" + postID) + "' title='Reply to this post'>" + postID + "</a>") + '</span>' + '</div>' + (isOP ? '' : fileHTML) + ("<blockquote class=postMessage id=m" + postID + ">" + (comment || '') + "</blockquote> ") + '</div>'
+        id: 'pc' + postID,
+        className: 'postContainer ' + (isOP ? 'op' : 'reply') + 'Container',
+        innerHTML: (isOP ? '' : '<div class="sideArrows" id="sa' + postID + '">&gt;&gt;</div>') + '<div id="p' + postID + '" class="post ' + (isOP ? 'op' : 'reply') + (capcode === 'admin_highlight' ? ' highlightPost' : '') + '"><div class="postInfoM mobile" id="pim' + postID + '"><span class="nameBlock' + capcodeClass + '"><span class="name">' + (name || '') + '</span>' + tripcode + capcodeStart + capcode + userID + flag + sticky + closed + '<br>' + subject + '</span><span class="dateTime postNum" data-utc="' + dateUTC + '">' + date + '<br><em><a href="/' + board + '/thread/' + threadID + '#p' + postID + '">No.</a><a href="' + (g.REPLY && g.THREAD_ID === threadID ? 'javascript:quote(' + postID + ')' : '/' + board + '/thread/' + threadID + '#q' + postID) + '">' + postID + '</a></em></span></div>' + (isOP ? fileHTML : '') + '<div class="postInfo desktop" id="pi' + postID + '"><input type="checkbox" name="' + postID + '" value="delete"> ' + subject + ' <span class="nameBlock' + capcodeClass + '">' + emailStart + '<span class="name">' + (name || '') + '</span>' + tripcode + capcodeStart + emailEnd + capcode + userID + flag + sticky + closed + ' </span> <span class="dateTime" data-utc="' + dateUTC + '">' + date + '</span> <span class="postNum desktop"><a href="/' + board + '/thread/' + threadID + '#p' + postID + '" title="Link to this post">No.</a><a href="' + (g.REPLY && +g.THREAD_ID === threadID ? 'javascript:quote(' + postID + ')' : '/' + board + '/thread/' + threadID + '#q' + postID) + '" title="Reply to this post">' + postID + '</a></span></div>' + (isOP ? '' : fileHTML) + '<blockquote class="postMessage" id="m' + postID + '">' + (comment || '') + '</blockquote> </div>'
       });
       _ref = $$('.quotelink', container);
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -4139,7 +4134,7 @@
         if (href[0] === '/') {
           continue;
         }
-        quote.href = "/" + board + "/thread/" + threadID + href;
+        quote.href = '/' + board + '/thread/' + threadID + href;
       }
       return container;
     }
@@ -4153,10 +4148,10 @@
 
   QuoteBacklink = {
     init: function() {
-      var format;
-      format = Conf['backlink'].replace(/%id/g, "' + id + '");
-      this.funk = Function('id', "return '" + format + "'");
       return Main.callbacks.push(this.node);
+    },
+    funk: function(id) {
+      return Conf['backlink'].replace(/%id/g, id);
     },
     node: function(post) {
       var a, container, el, link, qid, quote, quotes, _i, _len, _ref;
