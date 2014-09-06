@@ -3710,7 +3710,7 @@
         if (c in FileInfo.formatters) {
           return FileInfo.formatters[c]();
         } else {
-          return FileInfo.escape(s);
+          return Build.escape(s);
         }
       });
     },
@@ -3739,33 +3739,28 @@
       }
       return "" + size + " " + unitT;
     },
-    escape: function(text) {
-      return (text + '').replace(/[&"'<>]/g, function(c) {
-        return {'&': '&amp;', "'": '&#039;', '"': '&quot;', '<': '&lt;', '>': '&gt;'}[c];
-      });
-    },
     formatters: {
       t: function() {
         return FileInfo.data.link.match(/\d+\.\w+$/)[0];
       },
       T: function() {
-        return '<a href="' + FileInfo.escape(FileInfo.data.link) + '" target="_blank">' + (this.t()) + '</a>';
+        return '<a href="' + Build.escape(FileInfo.data.link) + '" target="_blank">' + (this.t()) + '</a>';
       },
       l: function() {
-        return '<a href="' + FileInfo.escape(FileInfo.data.link) + '" target="_blank">' + (this.n()) + '</a>';
+        return '<a href="' + Build.escape(FileInfo.data.link) + '" target="_blank">' + (this.n()) + '</a>';
       },
       L: function() {
-        return '<a href="' + FileInfo.escape(FileInfo.data.link) + '" target="_blank">' + (this.N()) + '</a>';
+        return '<a href="' + Build.escape(FileInfo.data.link) + '" target="_blank">' + (this.N()) + '</a>';
       },
       n: function() {
         if (FileInfo.data.fullname === FileInfo.data.shortname) {
-          return FileInfo.escape(FileInfo.data.fullname);
+          return Build.escape(FileInfo.data.fullname);
         } else {
-          return '<span class="fntrunc">' + FileInfo.escape(FileInfo.data.shortname) + '</span><span class="fnfull">' + FileInfo.escape(FileInfo.data.fullname) + '</span>';
+          return '<span class="fntrunc">' + Build.escape(FileInfo.data.shortname) + '</span><span class="fnfull">' + Build.escape(FileInfo.data.fullname) + '</span>';
         }
       },
       N: function() {
-        return FileInfo.escape(FileInfo.data.fullname);
+        return Build.escape(FileInfo.data.fullname);
       },
       p: function() {
         if (FileInfo.data.spoiler) {
@@ -3852,10 +3847,7 @@
       }
     },
     escape: function(text) {
-      if (text == null) return null;
-      return (text + '').replace(/[&"'<>]/g, function(c) {
-        return {'&': '&amp;', "'": '&#039;', '"': '&quot;', '<': '&lt;', '>': '&gt;'}[c];
-      });
+      return (text == null) ? null : Build.escape(text);
     },
     parseArchivedPost: function(req, board, postID, root, cb) {
       var bq, comment, data, o, _ref;
@@ -3993,6 +3985,11 @@
   };
 
   Build = {
+    escape: function(text) {
+      return (text + '').replace(/[&"'<>]/g, function(c) {
+        return {'&': '&amp;', "'": '&#039;', '"': '&quot;', '<': '&lt;', '>': '&gt;'}[c];
+      });
+    },
     spoilerRange: {},
     shortFilename: function(filename, isOP) {
       var threshold;
@@ -4108,11 +4105,8 @@
         filename = file.name.replace(/&(amp|#039|quot|lt|gt);/g, function (c) {
           return {'&amp;': '&', '&#039;': "'", '&quot;': '"', '&lt;': '<', '&gt;': '>'}[c];
         }).replace(/%22/g, '"');
-        a = $.el('a');
-        a.textContent = Build.shortFilename(filename);
-        shortFilename = a.innerHTML;
-        a.textContent = filename;
-        filename = a.innerHTML.replace(/'/g, '&#039;');
+        shortFilename = Build.escape(Build.shortFilename(filename));
+        filename = Build.escape(filename);
         fileDims = ext === 'pdf' ? 'PDF' : '' + file.width + 'x' + file.height;
         fileInfo = '<div class="fileText" id="fT' + postID + '"' + (file.isSpoiler ? ' title="' + filename + '"' : '') + '>File: <a' + ((filename !== shortFilename && !file.isSpoiler) ? ' title="' + filename + '"' : '') + ' href="' + file.url + '" target="_blank">' + (file.isSpoiler ? 'Spoiler Image' : shortFilename) + '</a>-(' + fileSize + ', ' + fileDims + ')</div>';
         fileHTML = '<div class="file" id="f' + postID + '">' + fileInfo + imgSrc + '</div>';
