@@ -36,7 +36,7 @@ RETURN_REDIRECT = """          url = Redirect.path('%s', '%s', data);
           break;
 """
 
-ARCHIVES_URL = "https://github.com/MayhemYDG/4chan-x/raw/v3/json/archives.json"
+ARCHIVES_URL = "https://github.com/MayhemYDG/archives.json/raw/master/archives.json"
 ARCHIVES_JSON = os.path.join(os.path.dirname(os.path.abspath(__file__)), "archives.json")
 PRIORITIES_JSON = os.path.join(os.path.dirname(os.path.abspath(__file__)), "priorities.json")
 
