@@ -4975,6 +4975,7 @@
         case 'e':
         case 'i':
         case 'lgbt':
+        case 't':
         case 'w':
         case 'wg':
           return "//archive.loveisover.me/" + board + "/full_image/" + filename;
@@ -5007,8 +5008,6 @@
         case 'soc':
         case 'y':
           return "//fgts.jp/" + board + "/full_image/" + filename;
-        case 't':
-          return "http://archive.mawa.re/" + board + "/full_image/" + filename;
       }
     },
     post: function(board, postID) {
@@ -5050,6 +5049,7 @@
         case 'e':
         case 'i':
         case 'lgbt':
+        case 't':
         case 'w':
         case 'wg':
           return "//archive.loveisover.me/_/api/chan/post/?board=" + board + "&num=" + postID;
@@ -5065,8 +5065,6 @@
         case 'soc':
         case 'y':
           return "//fgts.jp/_/api/chan/post/?board=" + board + "&num=" + postID;
-        case 't':
-          return "http://archive.mawa.re/_/api/chan/post/?board=" + board + "&num=" + postID;
       }
     },
     to: function(data) {
@@ -5116,6 +5114,7 @@
         case 'e':
         case 'i':
         case 'lgbt':
+        case 't':
         case 'w':
         case 'wg':
           url = Redirect.path('//archive.loveisover.me', 'foolfuuka', data);
@@ -5151,9 +5150,6 @@
         case 'soc':
         case 'y':
           url = Redirect.path('//fgts.jp', 'foolfuuka', data);
-          break;
-        case 't':
-          url = Redirect.path('http://archive.mawa.re', 'foolfuuka', data);
           break;
         default:
           if (threadID) {
