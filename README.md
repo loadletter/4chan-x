@@ -23,6 +23,7 @@ Install tampermonkey or equivalent and then just click on the previuos link.
 6. Start dwb
 
 ##Changelog
+- 2.40.37: Corrected small bug, updated archives
 - 2.40.36: Security fixes (Many thanks to ccd0, which discovered those bugs some time ago)
 - 2.40.35: Security fixes (Many thanks to ccd0, which discovered those bugs some time ago), fixed small issue, updated archives
 - 2.40.34: Update archives (archive.foolz.us -> archive.moe)
