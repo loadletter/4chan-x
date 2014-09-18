@@ -735,13 +735,6 @@
       }
       return false;
     },
-    email: function(post) {
-      var mail;
-      if (mail = $('.useremail', post.el)) {
-        return decodeURIComponent(mail.href.slice(7));
-      }
-      return false;
-    },
     subject: function(post) {
       var subject;
       if (subject = $('.postInfo .subject', post.el)) {
@@ -813,7 +806,7 @@
         },
         children: []
       };
-      _ref = [['Name', 'name'], ['Unique ID', 'uniqueid'], ['Tripcode', 'tripcode'], ['Admin/Mod', 'mod'], ['E-mail', 'email'], ['Subject', 'subject'], ['Comment', 'comment'], ['Country', 'country'], ['Filename', 'filename'], ['Image dimensions', 'dimensions'], ['Filesize', 'filesize'], ['Image MD5', 'md5']];
+      _ref = [['Name', 'name'], ['Unique ID', 'uniqueid'], ['Tripcode', 'tripcode'], ['Admin/Mod', 'mod'], ['Subject', 'subject'], ['Comment', 'comment'], ['Country', 'country'], ['Filename', 'filename'], ['Image dimensions', 'dimensions'], ['Filesize', 'filesize'], ['Image MD5', 'md5']];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         type = _ref[_i];
         entry.children.push(Filter.createSubEntry(type[0], type[1]));
@@ -2780,7 +2773,6 @@
       <option value=uniqueid>Unique ID</option>\
       <option value=tripcode>Tripcode</option>\
       <option value=mod>Admin/Mod</option>\
-      <option value=email>E-mail</option>\
       <option value=subject>Subject</option>\
       <option value=comment>Comment</option>\
       <option value=country>Country</option>\
@@ -4729,7 +4721,7 @@
         },
         children: []
       };
-      _ref = [['Post', 'apost'], ['Name', 'name'], ['Tripcode', 'tripcode'], ['E-mail', 'email'], ['Subject', 'subject'], ['Filename', 'filename'], ['Image MD5', 'md5']];
+      _ref = [['Post', 'apost'], ['Name', 'name'], ['Tripcode', 'tripcode'], ['Subject', 'subject'], ['Filename', 'filename'], ['Image MD5', 'md5']];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         type = _ref[_i];
         entry.children.push(this.createSubEntry(type[0], type[1]));
