@@ -759,13 +759,14 @@
       return false;
     },
     filename: function(post) {
-      var file, fileInfo;
+      var file, fileInfo, fname;
       fileInfo = post.fileInfo;
       if (fileInfo) {
         if (file = $('.fileText > span', fileInfo)) {
           return file.title;
         } else {
-          return fileInfo.firstElementChild.childNodes[1].textContent;
+          fname = fileInfo.firstElementChild.childNodes[1] || fileInfo.firstElementChild.childNodes[0];
+          return fname.textContent;
         }
       }
       return false;
