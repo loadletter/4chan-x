@@ -3698,7 +3698,7 @@
         spoiler: /^Spoiler/.test(alt),
         size: alt.match(/\d+\.?\d*/)[0],
         unit: alt.match(/\w+$/)[0],
-        resolution: post.fileInfo.lastChild.textContent.match(/\d+x\d+|PDF/)[0],
+        resolution: post.fileInfo.childNodes[2].textContent.match(/\d+x\d+|PDF/)[0],
         fullname: filename,
         shortname: Build.shortFilename(filename, post.ID === post.threadID)
       };
