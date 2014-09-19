@@ -765,7 +765,7 @@
         if (file = $('.fileText > span', fileInfo)) {
           return file.title;
         } else {
-          return fileInfo.firstElementChild.dataset.filename;
+          return fileInfo.firstElementChild.childNodes[1].textContent;
         }
       }
       return false;
@@ -773,7 +773,7 @@
     dimensions: function(post) {
       var fileInfo, match;
       fileInfo = post.fileInfo;
-      if (fileInfo && (match = fileInfo.textContent.match(/\d+x\d+/))) {
+      if (fileInfo && (match = fileInfo.childNodes[1].textContent.match(/\d+x\d+/))) {
         return match[0];
       }
       return false;
@@ -782,7 +782,7 @@
       var img;
       img = post.img;
       if (img) {
-        return img.alt.replace('Spoiler Image, ', '');
+        return img.alt;
       }
       return false;
     },
