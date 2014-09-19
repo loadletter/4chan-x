@@ -717,7 +717,7 @@
     uniqueid: function(post) {
       var uid;
       if (uid = $('.posteruid', post.el)) {
-        return uid.textContent.slice(5, -1);
+        return uid.firstElementChild.textContent;
       }
       return false;
     },
@@ -730,8 +730,8 @@
     },
     mod: function(post) {
       var mod;
-      if (mod = $('.capcode', post.el)) {
-        return mod.textContent;
+      if (mod = $('.capcode.hand', post.el)) {
+        return mod.textContent.replace('## ', '');
       }
       return false;
     },
@@ -753,7 +753,7 @@
     },
     country: function(post) {
       var flag;
-      if (flag = $('.countryFlag', post.el)) {
+      if (flag = $('.flag, .countryFlag', post.el)) {
         return flag.title;
       }
       return false;
