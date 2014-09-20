@@ -23,6 +23,7 @@ Install tampermonkey or equivalent and then just click on the previuos link.
 6. Start dwb
 
 ##Changelog
+- 2.40.38: Updated filtering code, now various filters should work again
 - 2.40.37: Corrected small bug, updated archives
 - 2.40.36: Security fixes (Many thanks to ccd0, which discovered those bugs some time ago)
 - 2.40.35: Security fixes (Many thanks to ccd0, which discovered those bugs some time ago), fixed small issue, updated archives
