@@ -1728,9 +1728,14 @@
         textContent: '▼',
         href: 'javascript:;'
       });
+      openQR = $.el('a', {
+        textContent: 'QR',
+        href: 'javascript:;'
+      });
       $.on(prev, 'click', this.prev);
       $.on(next, 'click', this.next);
-      $.add(span, [prev, $.tn(' '), next]);
+      $.on(openQR, 'click', this.openQR);
+      $.add(span, [openQR, $.tn(' '), prev, $.tn(' '), next]);
       return $.add(d.body, span);
     },
     prev: function() {
@@ -1746,6 +1751,13 @@
       } else {
         return Nav.scroll(+1);
       }
+    },
+    openQR: function() {
+      QR.open();
+      if (!g.REPLY) {
+        QR.threadSelector.value = g.BOARD === 'f' ? '9999' : 'new';
+      }
+      return $('textarea', QR.el).focus();
     },
     getThread: function(full) {
       var bottom, i, rect, thread, _i, _len, _ref;
