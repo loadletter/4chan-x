@@ -4695,6 +4695,22 @@
         className: 'download_link',
         textContent: 'Download file'
       });
+      if($.engine === "gecko") {
+        $.on(a, 'click', function(e) {
+          if (this.protocol === 'blob:') {
+            return true;
+          }
+          e.preventDefault();
+          return DownloadLink.firefoxDL(this.href, (function(_this) {
+            return function(blob) {
+              if (blob) {
+                _this.href = URL.createObjectURL(blob);
+                return _this.click();
+              }
+            };
+          })(this));
+        });
+      }
       return Menu.addEntry({
         el: a,
         open: function(post) {
@@ -4703,12 +4719,51 @@
             return false;
           }
           a.href = post.img.parentNode.href;
-          fileText = post.fileInfo.firstElementChild;
-          a.download = Conf['File Info Formatting'] ? fileText.dataset.filename : $('span', fileText).title;
+          fname = post.fileInfo.firstElementChild.childNodes[1] || post.fileInfo.firstElementChild.childNodes[0];
+          a.download = Conf['File Info Formatting'] ? fname.textContent : post.fileInfo.firstElementChild.title;
           return true;
         }
       });
-    }
+    },
+    firefoxDL: (function() {
+        var makeBlob;
+        makeBlob = function(urlBlob, contentType, contentDisposition, url) {
+          var blob, match, mime, name, _ref, _ref1, _ref2;
+          name = (_ref = url.match(/([^\/]+)\/*$/)) != null ? _ref[1] : void 0;
+          mime = (contentType != null ? contentType.match(/[^;]*/)[0] : void 0) || 'application/octet-stream';
+          match = (contentDisposition != null ? (_ref1 = contentDisposition.match(/\bfilename\s*=\s*"((\\"|[^"])+)"/i)) != null ? _ref1[1] : void 0 : void 0) || (contentType != null ? (_ref2 = contentType.match(/\bname\s*=\s*"((\\"|[^"])+)"/i)) != null ? _ref2[1] : void 0 : void 0);
+          if (match) {
+            name = match.replace(/\\"/g, '"');
+          }
+          blob = new Blob([urlBlob], {
+            type: mime
+          });
+          blob.name = name;
+          return blob;
+        };
+        return function(url, cb) {
+          return GM_xmlhttpRequest({
+            method: "GET",
+            url: url,
+            onload: function(xhr) {
+              var contentDisposition, contentType, data, i, r, _ref, _ref1;
+              r = xhr.responseText;
+              data = new Uint8Array(r.length);
+              i = 0;
+              while (i < r.length) {
+                data[i] = r.charCodeAt(i);
+                i++;
+              }
+              contentType = (_ref = xhr.responseHeaders.match(/Content-Type:\s*(.*)/i)) != null ? _ref[1] : void 0;
+              contentDisposition = (_ref1 = xhr.responseHeaders.match(/Content-Disposition:\s*(.*)/i)) != null ? _ref1[1] : void 0;
+              return cb(makeBlob(data, contentType, contentDisposition, url));
+            },
+            onerror: function() {
+              return cb(null);
+            }
+          });
+        };
+      })()
   };
 
   ArchiveLink = {
