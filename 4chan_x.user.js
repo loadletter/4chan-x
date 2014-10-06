@@ -4746,6 +4746,7 @@
           return GM_xmlhttpRequest({
             method: "GET",
             url: url,
+            overrideMimeType: "text/plain; charset=x-user-defined",
             onload: function(xhr) {
               var contentDisposition, contentType, data, i, r, _ref, _ref1;
               r = xhr.responseText;
