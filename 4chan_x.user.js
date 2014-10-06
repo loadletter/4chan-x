@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           4chan x
-// @version        2.40.38
+// @version        2.40.39
 // @namespace      aeosynth
 // @description    Adds various features.
 // @copyright      2009-2011 James Campos <james.r.campos@gmail.com>
@@ -127,7 +127,7 @@
         'Menu': [true, 'Add a drop-down menu in posts'],
         'Report Link': [true, 'Add a report link to the menu'],
         'Delete Link': [true, 'Add post and image deletion links to the menu'],
-        'Download Link': [true, 'Add a download with original filename link to the menu (Chrome only)'],
+        'Download Link': [true, 'Add a download with original filename link to the menu'],
         'Archive Link': [true, 'Add an archive link to the menu']
       },
       Monitoring: {
@@ -6052,7 +6052,7 @@
       return $.globalEval(("(" + code + ")()").replace('_id_', bq.id));
     },
     namespace: '4chan_x.',
-    version: '2.40.38',
+    version: '2.40.39',
     callbacks: [],
     css: '\
 /* dialog styling */\

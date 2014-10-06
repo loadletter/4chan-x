@@ -23,6 +23,7 @@ Install tampermonkey or equivalent and then just click on the previuos link.
 6. Start dwb
 
 ##Changelog
+- 2.40.39: Made download link in the dropdown menu work on firefox too (from ccd0 fork), added a shortcut for the Quick Reply next to the navigation arrows
 - 2.40.38: Updated filtering code, now various filters should work again
 - 2.40.37: Corrected small bug, updated archives
 - 2.40.36: Security fixes (Many thanks to ccd0, which discovered those bugs some time ago)
