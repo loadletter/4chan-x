@@ -4142,7 +4142,11 @@
 
   TitlePost = {
     init: function() {
-      return d.title = Get.title();
+      if(Conf['Post in Title']) {
+        return d.title = Get.title();
+      }
+      var boardTitle;
+      return d.title = ((boardTitle = $('.boardTitle', d)) && boardTitle.textContent) || ((boardTitle = $('#boardNavDesktop .current', d)) && "/" + g.BOARD + "/ - " + boardTitle.title) || ("/" + g.BOARD + "/");
     }
   };
 
@@ -5898,9 +5902,7 @@
             return Nav.init();
           });
         }
-        if (Conf['Post in Title']) {
-          TitlePost.init();
-        }
+        TitlePost.init();
         if (Conf['Unread Count'] || Conf['Unread Favicon']) {
           Unread.init();
         }
