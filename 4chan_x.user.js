@@ -5074,6 +5074,8 @@
         case 'soc':
         case 'y':
           return "//fgts.jp/" + board + "/full_image/" + filename;
+        case 'gif':
+          return "http://imcute.yt/" + board + "/full_image/" + filename;
       }
     },
     post: function(board, postID) {
@@ -5131,6 +5133,8 @@
         case 'soc':
         case 'y':
           return "//fgts.jp/_/api/chan/post/?board=" + board + "&num=" + postID;
+        case 'gif':
+          return "http://imcute.yt/_/api/chan/post/?board=" + board + "&num=" + postID;
       }
     },
     to: function(data) {
@@ -5216,6 +5220,9 @@
         case 'soc':
         case 'y':
           url = Redirect.path('//fgts.jp', 'foolfuuka', data);
+          break;
+        case 'gif':
+          url = Redirect.path('http://imcute.yt', 'foolfuuka', data);
           break;
         default:
           if (threadID) {
