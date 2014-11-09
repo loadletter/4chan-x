@@ -3242,9 +3242,12 @@
         return delete Updater.request;
       },
       update: function(posts) {
-        var count, id, lastPost, nodes, post, scroll, spoilerRange, _i, _len, _ref;
+        var count, id, lastPost, nodes, post, posterCount, scroll, spoilerRange, _i, _len, _ref;
         if (spoilerRange = posts[0].custom_spoiler) {
           Build.spoilerRange[g.BOARD] = spoilerRange;
+        }
+        if (Conf['Thread Stats'] && (posterCount = posts[0].unique_ips)) {
+          ThreadStats.posterCount(posterCount);
         }
         lastPost = Updater.thread.lastElementChild;
         id = +lastPost.id.slice(2);
@@ -4839,7 +4842,7 @@
   ThreadStats = {
     init: function() {
       var dialog;
-      dialog = UI.dialog('stats', 'bottom: 0; left: 0;', '<div class=move><span id=postcount>0</span> / <span id=imagecount>0</span></div>');
+      dialog = UI.dialog('stats', 'bottom: 0; left: 0;', '<div class=move><span id=postcount>0</span> / <span id=imagecount>0</span><span id=postercount></span></div>');
       dialog.className = 'dialog';
       $.add(d.body, dialog);
       this.posts = this.images = 0;
@@ -4875,6 +4878,9 @@
       if (ThreadStats.images > ThreadStats.imgLimit) {
         return $.addClass(imgcount, 'warning');
       }
+    },
+    posterCount: function(poster_count) {
+      $.id('postercount').textContent = ' / ' + poster_count;
     }
   };
 
