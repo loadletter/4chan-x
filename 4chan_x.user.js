@@ -4865,16 +4865,16 @@
         }
       })();
       this.pageGradients = {
-        10 : 'ff0000',
-        9 : 'ff4000',
-        8 : 'ff7f00',
-        7 : 'ffff00',
-        6 : '80ff00',
-        5 : '00ff00',
-        4 : '00ffff',
-        3 : '0080ff',
-        2 : '0000ff',
-        1 : '8b00ff'
+        10 : 'FF0000',
+        9 : 'E50019',
+        8 : 'CC0033',
+        7 : 'B2004C',
+        6 : '990066',
+        5 : '7F007F',
+        4 : '650099',
+        3 : '4C00B2',
+        2 : '3300CC',
+        1 : '1900E5'
       };
       if (Conf['Current Page']) {
         this.pageInterval = setInterval(ThreadStats.fetchPages, 2 * $.MINUTE);
@@ -4931,7 +4931,7 @@
             continue; /* == because g.THREAD_ID is a string */
           }
           page_color = page.page in ThreadStats.pageGradients ? ThreadStats.pageGradients[page.page] : '000000';
-          $.id('currentpage').innerHTML = ' / ' + '<span style="color:#' + page_color + ';">' + page.page + '</span>';
+          $.id('currentpage').innerHTML = ' / ' + '<span style="color:#' + page_color + ';">' + parseInt(page.page) + '</span>'; /* parseInt just to escape */
           return delete ThreadStats.request;
         }
       }
