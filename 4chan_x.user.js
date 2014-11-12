@@ -135,7 +135,8 @@
         'Unread Count': [true, 'Show unread post count in tab title'],
         'Unread Favicon': [true, 'Show a different favicon when there are unread posts'],
         'Post in Title': [true, 'Show the op\'s post in the tab title'],
-        'Thread Stats': [true, 'Display reply and image count'],
+        'Thread Stats': [true, 'Display reply, image and poster count'],
+        'Current Page': [false, 'Display position of the thread in the page index'],
         'Thread Watcher': [true, 'Bookmark threads'],
         'Auto Watch': [true, 'Automatically watch threads that you start'],
         'Auto Watch Reply': [false, 'Automatically watch threads that you reply to']
@@ -4842,7 +4843,7 @@
   ThreadStats = {
     init: function() {
       var dialog;
-      dialog = UI.dialog('stats', 'bottom: 0; left: 0;', '<div class=move><span id=postcount>0</span> / <span id=imagecount>0</span><span id=postercount></span></div>');
+      dialog = UI.dialog('stats', 'bottom: 0; left: 0;', '<div class=move><span id=postcount>0</span> / <span id=imagecount>0</span><span id=postercount></span><span id=currentpage></span></div>');
       dialog.className = 'dialog';
       $.add(d.body, dialog);
       this.posts = this.images = 0;
@@ -4862,6 +4863,22 @@
             return 151;
         }
       })();
+      this.pageGradients = {
+        10 : 'ff0000',
+        9 : 'ff4000',
+        8 : 'ff7f00',
+        7 : 'ffff00',
+        6 : '80ff00',
+        5 : '00ff00',
+        4 : '00ffff',
+        3 : '0080ff',
+        2 : '0000ff',
+        1 : '8b00ff'
+      };
+      if (Conf['Current Page']) {
+        this.pageInterval = setInterval(ThreadStats.fetchPages, 2 * $.MINUTE);
+        setTimeout(ThreadStats.fetchPages, 2 * $.SECOND); /* Interval starts with the timeout, so execute it this way the first time */
+      }
       return Main.callbacks.push(this.node);
     },
     node: function(post) {
@@ -4881,6 +4898,43 @@
     },
     posterCount: function(poster_count) {
       $.id('postercount').textContent = ' / ' + poster_count;
+    },
+    fetchPages: function() {
+      var request, url;
+      request = ThreadStats.request;
+      if (request) {
+        request.onloadend = null;
+        request.abort();
+      }
+      url = "//a.4cdn.org/" + g.BOARD + "/threads.json";
+      return ThreadStats.request = $.ajax(url, {
+        onloadend: ThreadStats.updatePage
+      });
+    },
+    updatePage: function() {
+      if (!(Conf['Current Page'] && this.status === 200)) {
+        if (this.status === 404) {
+          clearInterval(ThreadStats.pageInterval);
+        }
+        return delete ThreadStats.request;
+      }
+      
+      var page, page_color, thread, _i, _j, _len, _len1, _ref1;
+      var parsed_threads = JSON.parse(this.response);
+      for (_i = 0, _len = parsed_threads.length; _i < _len; _i++) {
+        page = parsed_threads[_i];
+        _ref1 = page.threads;
+        for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+          thread = _ref1[_j];
+          if (!(thread.no == g.THREAD_ID)) {
+            continue; /* == because g.THREAD_ID is a string */
+          }
+          page_color = page.page in ThreadStats.pageGradients ? ThreadStats.pageGradients[page.page] : '000000';
+          $.id('currentpage').innerHTML = ' / ' + '<span style="color:#' + page_color + ';">' + page.page + '</span>';
+          return delete ThreadStats.request;
+        }
+      }
+      delete ThreadStats.request;
     }
   };
 
