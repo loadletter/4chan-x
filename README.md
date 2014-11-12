@@ -23,6 +23,7 @@ Install tampermonkey or equivalent and then just click on the previuos link.
 6. Start dwb
 
 ##Changelog
+- 2.40.42: Added page index position to thread stats, fix original post form hiding
 - 2.40.41: Added unique poster count, updated archives
 - 2.40.40: Correct Post in Title beahviour, updated archives
 - 2.40.39: Made download link in the dropdown menu work on firefox too (from ccd0 fork), added a shortcut for the Quick Reply next to the navigation arrows
