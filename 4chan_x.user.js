@@ -1813,6 +1813,7 @@
           return $('textarea', QR.el).focus();
         });
         $.before($.id('postForm'), link);
+        $.id('postForm').style.display = "none";
         $.id('togglePostFormLink').style.display = "none";
       }
       if (Conf['Persistent QR']) {
