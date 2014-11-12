@@ -136,7 +136,7 @@
         'Unread Favicon': [true, 'Show a different favicon when there are unread posts'],
         'Post in Title': [true, 'Show the op\'s post in the tab title'],
         'Thread Stats': [true, 'Display reply, image and poster count'],
-        'Current Page': [false, 'Display position of the thread in the page index'],
+        'Current Page': [true, 'Display position of the thread in the page index'],
         'Thread Watcher': [true, 'Bookmark threads'],
         'Auto Watch': [true, 'Automatically watch threads that you start'],
         'Auto Watch Reply': [false, 'Automatically watch threads that you reply to']
@@ -4914,12 +4914,8 @@
     },
     updatePage: function() {
       if (!(Conf['Current Page'] && this.status === 200)) {
-        if (this.status === 404) {
-          clearInterval(ThreadStats.pageInterval);
-        }
         return delete ThreadStats.request;
       }
-      
       var page, page_color, thread, _i, _j, _len, _len1, _ref1;
       var parsed_threads = JSON.parse(this.response);
       for (_i = 0, _len = parsed_threads.length; _i < _len; _i++) {
@@ -4935,6 +4931,9 @@
           return delete ThreadStats.request;
         }
       }
+      /* If we get here the thread was not found in the catalog, stop updating */
+      clearInterval(ThreadStats.pageInterval);
+      $.id('currentpage').textContent = ' / X';
       delete ThreadStats.request;
     }
   };
