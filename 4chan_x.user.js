@@ -5636,41 +5636,18 @@
         val = Conf[key];
         Conf[key] = $.get(key, val);
       }
-      switch (location.hostname) {
-        case 'sys.4chan.org':
-          if (/report/.test(location.search)) {
-            asap = function() {
-              var field, form;
-              if (!(field = $.id('recaptcha_response_field'))) {
-                setTimeout(asap, 200);
-                return;
-              }
-              form = $('form');
-              $.on(field, 'keydown', function(e) {
-                if (e.keyCode === 8 && !e.target.value) {
-                  return window.location = 'javascript:Recaptcha.reload()';
-                }
-              });
-              return $.on(form, 'submit', function(e) {
-                e.preventDefault();
-                return form.submit();
-              });
-            };
-            asap();
-          }
-          return;
-        case 'i.4cdn.org':
-          $.ready(function() {
-            var url;
-            if (/^4chan - 404/.test(d.title) && Conf['404 Redirect']) {
-              path = location.pathname.split('/');
-              url = Redirect.image(path[1], path[2]);
-              if (url) {
-                return location.href = url;
-              }
+      if (location.hostname === 'i.4cdn.org') {
+        $.ready(function() {
+          var url;
+          if (/^4chan - 404/.test(d.title) && Conf['404 Redirect']) {
+            path = location.pathname.split('/');
+            url = Redirect.image(path[1], path[2]);
+            if (url) {
+              return location.href = url;
             }
-          });
-          return;
+          }
+        });
+        return;
       }
       if (g.REPLY && pathname.length > 3 && Conf['Remove Slug']) {
         window.location.pathname = path.substring(0, path.lastIndexOf('/')) + location.hash;
