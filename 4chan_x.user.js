@@ -4987,17 +4987,17 @@
         case 'gd':
         case 'jp':
         case 'm':
+        case 'mlp':
         case 'po':
         case 'sci':
         case 'tg':
+        case 'u':
         case 'v':
         case 'vg':
         case 'vp':
         case 'vr':
         case 'wsg':
-          return "//archive.moe/" + board + "/full_image/" + filename;
-        case 'u':
-          return "//nsfw.archive.moe/" + board + "/full_image/" + filename;
+          return "https://archive.moe/" + board + "/full_image/" + filename;
         case 'adv':
         case 'f':
         case 'hr':
@@ -5020,13 +5020,6 @@
         case 'g':
         case 'mu':
           return "https://archive.rebeccablacktech.com/" + board + "/full_image/" + filename;
-        case 'an':
-        case 'fit':
-        case 'k':
-        case 'mlp':
-        case 'r9k':
-        case 'toy':
-          return "http://archive.heinessen.com/" + board + "/full_image/" + filename;
         case '3':
         case 'ck':
         case 'fa':
@@ -5045,11 +5038,14 @@
         case 'soc':
         case 'y':
           return "//fgts.jp/" + board + "/full_image/" + filename;
-        case 'b':
+        case 'an':
         case 'gif':
+        case 'fit':
         case 'int':
         case 'out':
+        case 'r9k':
         case 'sp':
+        case 'toy':
           return "http://imcute.yt/" + board + "/full_image/" + filename;
       }
     },
@@ -5063,22 +5059,23 @@
         case 'gd':
         case 'int':
         case 'jp':
+        case 'k':
         case 'm':
         case 'mlp':
         case 'out':
         case 'po':
+        case 'r9k':
         case 'sci':
         case 'sp':
         case 'tg':
         case 'tv':
+        case 'u':
         case 'v':
         case 'vg':
         case 'vp':
         case 'vr':
         case 'wsg':
-          return "//archive.moe/_/api/chan/post/?board=" + board + "&num=" + postID;
-        case 'u':
-          return "//nsfw.archive.moe/_/api/chan/post/?board=" + board + "&num=" + postID;
+          return "https://archive.moe/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'adv':
         case 'f':
         case 'hr':
@@ -5108,8 +5105,10 @@
         case 'soc':
         case 'y':
           return "//fgts.jp/_/api/chan/post/?board=" + board + "&num=" + postID;
-        case 'b':
+        case 'an':
+        case 'fit':
         case 'gif':
+        case 'toy':
           return "http://imcute.yt/_/api/chan/post/?board=" + board + "&num=" + postID;
       }
     },
@@ -5128,23 +5127,23 @@
         case 'gd':
         case 'int':
         case 'jp':
+        case 'k':
         case 'm':
         case 'mlp':
         case 'out':
         case 'po':
+        case 'r9k':
         case 'sci':
         case 'sp':
         case 'tg':
         case 'tv':
+        case 'u':
         case 'v':
         case 'vg':
         case 'vp':
         case 'vr':
         case 'wsg':
-          url = Redirect.path('//archive.moe', 'foolfuuka', data);
-          break;
-        case 'u':
-          url = Redirect.path('//nsfw.archive.moe', 'foolfuuka', data);
+          url = Redirect.path('https://archive.moe', 'foolfuuka', data);
           break;
         case 'adv':
         case 'f':
@@ -5169,13 +5168,6 @@
         case 'mu':
           url = Redirect.path('https://archive.rebeccablacktech.com', 'fuuka', data);
           break;
-        case 'an':
-        case 'fit':
-        case 'k':
-        case 'r9k':
-        case 'toy':
-          url = Redirect.path('http://archive.heinessen.com', 'fuuka', data);
-          break;
         case '3':
         case 'ck':
         case 'fa':
@@ -5197,8 +5189,10 @@
         case 'y':
           url = Redirect.path('//fgts.jp', 'foolfuuka', data);
           break;
-        case 'b':
+        case 'an':
+        case 'fit':
         case 'gif':
+        case 'toy':
           url = Redirect.path('http://imcute.yt', 'foolfuuka', data);
           break;
         default:
