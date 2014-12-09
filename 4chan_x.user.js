@@ -2316,10 +2316,17 @@
       ready: function() {
         if(!CaptchaIsSetup) {
           $.addClass(QR.el, 'captcha');
+          $.globalEval('(function () {window.grecaptcha.render(document.getElementById("g-recaptcha"), {sitekey: "6Ldp2bsSAAAAAAJ5uyx_lx34lJeEpTLVkP5k04qc", theme: "light", callback: (function (res) {console.log("xd");}) });})()');
           $.after($('.textarea', QR.el), $.id('g-recaptcha'));
           CaptchaIsSetup = true;
         }
-        return $.globalEval('(function () {window.grecaptcha.render(document.getElementById("g-recaptcha"), {sitekey: "6Ldp2bsSAAAAAAJ5uyx_lx34lJeEpTLVkP5k04qc", theme: "light", callback: function () {console.log("xd");} });})');
+      },
+      getResponse: function() {
+        $.globalEval('document.getElementById("captcha_response_field").value = window.grecaptcha.getResponse();');
+        return $.id("captcha_response_field").value;
+      },
+      reset: function() {
+        $.globalEval('window.grecaptcha.reset();');
       }
     },
     dialog: function() {
@@ -2336,6 +2343,7 @@
   <div><input type=file title="Shift+Click to remove the selected file." multiple size=16><input type=submit></div>\
   <label id=spoilerLabel><input type=checkbox id=spoiler> Spoiler Image</label>\
   <div class=warning></div>\
+  <input type="hidden" name="captcha_response" id="captcha_response_field" value="">\
 </form>');
       if (Conf['Remember QR size'] && $.engine === 'gecko') {
         $.on(ta = $('textarea', QR.el), 'mouseup', function() {
@@ -2415,7 +2423,7 @@
       }));
     },
     submit: function(e) {
-      var callbacks, challenge, err, filetag, m, opts, post, reply, response, textOnly, threadID;
+      var callbacks, err, filetag, m, opts, post, reply, response, textOnly, threadID;
       if (e != null) {
         e.preventDefault();
       }
@@ -2445,12 +2453,9 @@
         err = 'No file selected.';
       }
       if (QR.captcha.isEnabled && !err) {
-        challenge = CaptchaImg.alt;
-        response = CaptchaInput.value;
+        response = QR.captcha.getResponse();
         if (!response) {
           err = 'No valid captcha.';
-        } else {
-          response = response.trim();
         }
       }
       if (err) {
@@ -2482,8 +2487,7 @@
         textonly: textOnly,
         mode: 'regist',
         pwd: (m = d.cookie.match(/4chan_pass=([^;]+)/)) ? decodeURIComponent(m[1]) : $('input[name=pwd]').value,
-        recaptcha_challenge_field: challenge,
-        recaptcha_response_field: response
+        'g-recaptcha-response': response
       };
       callbacks = {
         onload: function() {
@@ -2491,8 +2495,7 @@
         },
         onerror: function() {
           if (QR.captcha.isEnabled) {
-            QR.captcha.destroy();
-            QR.captcha.init();
+            QR.captcha.reset();
           }
           QR.cooldown.auto = false;
           QR.status();
@@ -2523,8 +2526,7 @@
     response: function(html) {
       var ban, board, clone, doc, err, obj, persona, postID, reply, threadID, _, _ref, _ref1;
       if (QR.captcha.isEnabled) {
-        QR.captcha.destroy();
-        QR.captcha.init();
+        QR.captcha.reset();
       }
       doc = d.implementation.createHTMLDocument('');
       doc.documentElement.innerHTML = html;
