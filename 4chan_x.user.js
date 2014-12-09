@@ -2305,110 +2305,21 @@
     })(),
     captcha: {
       init: function() {
-        $.globalEval('loadRecaptcha()');
-        var _this = this;
         if (-1 !== d.cookie.indexOf('pass_enabled=')) {
           return;
         }
-        if (!(this.isEnabled = !!$.id('captchaFormPart'))) {
+        if (!(this.isEnabled = !!$.id('g-recaptcha'))) {
           return;
         }
-        if ($.id('recaptcha_challenge_field_holder')) {
-          return this.ready();
-        } else {
-          this.onready = function() {
-            return _this.ready();
-          };
-          return $.on($.id('captchaContainer'), 'DOMNodeInserted', this.onready);
-        }
+        return this.ready();
       },
       ready: function() {
-        var MutationObserver;
-        var _this = this;
-        if (this.challenge = $.id('recaptcha_challenge_field_holder')) {
-          $.off($.id('captchaContainer'), 'DOMNodeInserted', this.onready);
-          delete this.onready;
-        } else {
-          return;
-        }
         if(!CaptchaIsSetup) {
           $.addClass(QR.el, 'captcha');
-          $.after($('.textarea', QR.el), $.el('div', {
-            className: 'captchaimg',
-            title: 'Reload',
-            innerHTML: '<img>'
-          }));
-          $.after($('.captchaimg', QR.el), $.el('div', {
-            className: 'captchainput',
-            innerHTML: '<input title=Verification class=field autocomplete=off size=1>'
-          }));
+          $.after($('.textarea', QR.el), $.id('g-recaptcha'));
           CaptchaIsSetup = true;
         }
-        CaptchaImg = $('.captchaimg > img', QR.el);
-        CaptchaInput = $('.captchainput > input', QR.el);
-        $.on(CaptchaImg, 'click', this.reload);
-        $.on(CaptchaInput, 'keydown', this.keydown);
-        $.on(this.challenge, 'DOMNodeInserted', function() {
-          return _this.load();
-        });
-        CaptchaInput.placeholder = 'Verification';
-        try {
-          CaptchaObserver.disconnect();
-        } catch(e) {
-          /* do nothing */
-        }
-        if (MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.OMutationObserver) {
-          CaptchaObserver = new MutationObserver(QR.captcha.load.bind(QR.captcha));
-          CaptchaObserver.observe(this.challenge, {
-            childList: true,
-            subtree: true,
-            attributes: true
-          });
-        } else {
-          $.on(this.challenge, 'DOMNodeInserted', QR.captcha.load);
-          $.on(this.challenge, 'DOMSubtreeModified', QR.captcha.load);
-          $.on(this.challenge, 'DOMAttrModified', QR.captcha.load);
-        }
-        /* always load to update image */
-        return _this.load();
-      },
-      load: function() {
-        var challenge;
-        
-        /* begin opera hack */
-        try {
-          challenge = this.challenge.firstChild.value;
-        } catch(e) {
-          if(QR.captcha.challenge.firstChild === null) {
-            return;
-          }
-          challenge = QR.captcha.challenge.firstChild.value;
-        }
-        /* end opera hack */
-        
-        CaptchaImg.alt = challenge;
-        CaptchaImg.src = "//www.google.com/recaptcha/api/image?c=" + challenge;
-        return CaptchaInput.value = null;
-      },
-      reload: function(focus) {
-        $.globalEval('javascript:Recaptcha.reload("t")');
-        if (focus) {
-          return CaptchaInput.focus();
-        }
-      },
-      destroy: function() {
-        $.globalEval('Recaptcha.destroy()');
-        return;
-      },
-      keydown: function(e) {
-        var c;
-        c = QR.captcha;
-        if (e.keyCode === 8 && !CaptchaInput.value) {
-          c.reload();
-        } else {
-          return;
-        }
-        return e.preventDefault();
+        return $.globalEval('(function () {window.grecaptcha.render(document.getElementById("g-recaptcha"), {sitekey: "6Ldp2bsSAAAAAAJ5uyx_lx34lJeEpTLVkP5k04qc", theme: "light", callback: function () {console.log("xd");} });})');
       }
     },
     dialog: function() {
@@ -2466,9 +2377,6 @@
       });
       $.on($('#addReply', QR.el), 'click', function() {
         return new QR.reply().select();
-      });
-      $.on($('#commentTextArea', QR.el), 'click', function() {
-        return $.globalEval('javascript:loadRecaptcha()');
       });
       $.on($('form', QR.el), 'submit', QR.submit);
       $.on(ta, 'input', function() {
