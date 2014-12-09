@@ -84,7 +84,7 @@
  */
 
 (function() {
-  var $, $$, Anonymize, ArchiveLink, AutoGif, Build, CatalogLinks, Conf, Config, DeleteLink, DownloadLink, ExpandComment, ExpandThread, Favicon, FileInfo, Filter, Get, ImageExpand, ImageHover, Keybinds, Main, Menu, Nav, Options, QR, QuoteBacklink, QuoteCT, QuoteInline, QuoteOP, QuoteYou, QuotePreview, Quotify, Redirect, RelativeDates, RemoveSlug, ReplyHiding, ReportLink, RevealSpoilers, Sauce, StrikethroughQuotes, ThreadHiding, ThreadStats, Time, TitlePost, UI, Unread, Updater, Watcher, d, g, _base, CaptchaImg, CaptchaInput, CaptchaObserver, CaptchaIsSetup;
+  var $, $$, Anonymize, ArchiveLink, AutoGif, Build, CatalogLinks, Conf, Config, DeleteLink, DownloadLink, ExpandComment, ExpandThread, Favicon, FileInfo, Filter, Get, ImageExpand, ImageHover, Keybinds, Main, Menu, Nav, Options, QR, QuoteBacklink, QuoteCT, QuoteInline, QuoteOP, QuoteYou, QuotePreview, Quotify, Redirect, RelativeDates, RemoveSlug, ReplyHiding, ReportLink, RevealSpoilers, Sauce, StrikethroughQuotes, ThreadHiding, ThreadStats, Time, TitlePost, UI, Unread, Updater, Watcher, d, g, _base, CaptchaIsSetup;
   CaptchaIsSetup = false;
   
   /* Your posts to add (You) backlinks to */
@@ -6288,20 +6288,6 @@ h1 {\
 }\
 #charCount.warning {\
   color: red;\
-}\
-.captchainput > .field {\
-  min-width: 100%;\
-}\
-.captchaimg {\
-  background: #FFF;\
-  outline: 1px solid #CCC;\
-  outline-offset: -1px;\
-  text-align: center;\
-}\
-.captchaimg > img {\
-  display: block;\
-  height: 57px;\
-  width: 300px;\
 }\
 #qr [type=file] {\
   margin: 1px 0;\
