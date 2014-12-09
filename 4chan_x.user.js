@@ -144,6 +144,7 @@
       Posting: {
         'Quick Reply': [true, 'Reply without leaving the page'],
         'Cooldown': [true, 'Prevent "flood detected" errors'],
+        'Auto Submit': [true, 'Submit automatically when captcha has been solved'],
         'Persistent QR': [false, 'The Quick reply won\'t disappear after posting'],
         'Auto Hide QR': [true, 'Automatically hide the quick reply when posting'],
         'Open Reply in New Tab': [false, 'Open replies in a new tab that are made from the main board'],
@@ -2316,7 +2317,7 @@
       ready: function() {
         if(!CaptchaIsSetup) {
           $.addClass(QR.el, 'captcha');
-          $.globalEval('(function () {window.grecaptcha.render(document.getElementById("g-recaptcha"), {sitekey: "6Ldp2bsSAAAAAAJ5uyx_lx34lJeEpTLVkP5k04qc", theme: "light", callback: (function (res) {console.log("xd");}) });})()');
+          $.globalEval('(function () {window.grecaptcha.render(document.getElementById("g-recaptcha"), {sitekey: "6Ldp2bsSAAAAAAJ5uyx_lx34lJeEpTLVkP5k04qc", theme: "light", callback: (' + (Conf['Auto Submit'] ? 'function (res) {var sb = document.getElementById("x_QR_Submit"); if(sb) sb.click(); }' : 'function (res) {}') + ') });})()');
           $.after($('.textarea', QR.el), $.id('g-recaptcha'));
           CaptchaIsSetup = true;
         }
@@ -2340,7 +2341,7 @@
   <div><input id=dump type=button title="Dump list" value=+ class=field><input name=name title=Name placeholder=Name class=field size=1><input name=email title=E-mail placeholder=E-mail class=field size=1><input name=sub title=Subject placeholder=Subject class=field size=1></div>\
   <div id=replies><div><a id=addReply href=javascript:; title="Add a reply">+</a></div></div>\
   <div class=textarea><textarea name=com title=Comment placeholder=Comment class=field id=commentTextArea></textarea><span id=charCount></span></div>\
-  <div><input type=file title="Shift+Click to remove the selected file." multiple size=16><input type=submit></div>\
+  <div><input type=file title="Shift+Click to remove the selected file." multiple size=16><input type=submit id="x_QR_Submit"></div>\
   <label id=spoilerLabel><input type=checkbox id=spoiler> Spoiler Image</label>\
   <div class=warning></div>\
   <input type="hidden" name="captcha_response" id="captcha_response_field" value="">\
