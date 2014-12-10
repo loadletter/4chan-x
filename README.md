@@ -23,6 +23,7 @@ Install tampermonkey or equivalent and then just click on the previuos link.
 6. Start dwb
 
 ##Changelog
+- 2.40.44: Small fix
 - 2.40.43: Adapted for recaptcha2 api, also added and enabled by default automatic posting after user has been verified, updated archives
 - 2.40.42: Added page index position to thread stats, fix original post form hiding
 - 2.40.41: Added unique poster count, updated archives
