@@ -1879,9 +1879,6 @@
         $.add(el, err);
       }
       QR.open();
-      if (QR.captcha.isEnabled && /captcha|verification/i.test(el.textContent)) {
-        $('[autocomplete]', QR.el).focus();
-      }
       if (d.hidden) {
         return alert(el.textContent);
       }
