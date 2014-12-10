@@ -3112,6 +3112,10 @@
         }
         Unread.update(true);
         QR.abort();
+        return $.event('ThreadUpdate', {
+          404: true,
+          threadID: g.THREAD_ID
+        });
       },
       load: function() {
         switch (this.status) {
@@ -3183,8 +3187,16 @@
         scroll = Conf['Scrolling'] && Updater.scrollBG() && lastPost.getBoundingClientRect().bottom - d.documentElement.clientHeight < 25;
         $.add(Updater.thread, nodes.reverse());
         if (scroll) {
-          return nodes[0].scrollIntoView();
+          nodes[0].scrollIntoView();
         }
+        
+        return $.event('ThreadUpdate', {
+          404: false,
+          threadID: g.THREAD_ID,
+          newPosts: nodes.map(function(data) {
+            return data.postID;
+          })
+        });
       }
     },
     set: function(name, text) {
