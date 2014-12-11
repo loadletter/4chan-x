@@ -3112,10 +3112,14 @@
         }
         Unread.update(true);
         QR.abort();
-        return $.event('ThreadUpdate', {
+        var evdetails = {
           404: true,
           threadID: g.THREAD_ID
-        });
+        };
+        return $.event(d, new CustomEvent('ThreadUpdate', {
+          bubbles: true,
+          detail: evdetails
+        }));
       },
       load: function() {
         switch (this.status) {
@@ -3156,7 +3160,7 @@
         return delete Updater.request;
       },
       update: function(posts) {
-        var count, id, lastPost, nodes, post, posterCount, scroll, spoilerRange, _i, _len, _ref;
+        var count, evdetails, id, lastPost, nodes, post, posterCount, scroll, spoilerRange, _i, _len, _ref;
         if (spoilerRange = posts[0].custom_spoiler) {
           Build.spoilerRange[g.BOARD] = spoilerRange;
         }
@@ -3189,14 +3193,19 @@
         if (scroll) {
           nodes[0].scrollIntoView();
         }
-        
-        return $.event('ThreadUpdate', {
+
+        evdetails = {
           404: false,
           threadID: g.THREAD_ID,
           newPosts: nodes.map(function(data) {
-            return data.postID;
+            return parseInt(data.id.replace('pc', ''));
           })
-        });
+        };
+
+        return $.event(d, new CustomEvent('ThreadUpdate', {
+          bubbles: true,
+          detail: evdetails
+        }));
       }
     },
     set: function(name, text) {
