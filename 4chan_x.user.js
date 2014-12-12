@@ -3198,7 +3198,7 @@
           404: false,
           threadID: g.THREAD_ID,
           newPosts: nodes.map(function(data) {
-            return parseInt(data.id.replace('pc', ''));
+            return data.id.replace('pc', g.BOARD + '.');
           })
         };
 
