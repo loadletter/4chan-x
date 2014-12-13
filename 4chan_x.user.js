@@ -756,7 +756,7 @@
     },
     country: function(post) {
       var flag;
-      if (flag = $('.flag, .countryFlag', post.el)) {
+      if (flag = $('.flag', post.el)) {
         return flag.title;
       }
       return false;
@@ -4019,7 +4019,7 @@
           capcodeStart = '';
           capcode = '';
       }
-      flag = flagCode ? ' <img src="' + staticPath + '/image/country/' + (board === 'pol' ? 'troll/' : '') + flagCode.toLowerCase() + '.gif" alt="' + flagCode + '" title="' + flagName + '" class="countryFlag">' : '';
+      flag = flagCode ? ' <img src="' + staticPath + '/image/country/' + (board === 'pol' ? 'troll/' : '') + flagCode.toLowerCase() + '.gif" alt="' + flagCode + '" title="' + flagName + '" class="flag">' : '';
       if (file != null ? file.isDeleted : void 0) {
         fileHTML = isOP ? '<div class="file" id="f' + postID + '"><div class="fileInfo"></div><span class="fileThumb"><img src="' + staticPath + '/image/filedeleted.gif" alt="File deleted." class="fileDeleted retina"></span></div>' : '<div id="f' + postID + '" class="file"><span class="fileThumb"><img src="' + staticPath + '/image/filedeleted-res.gif" alt="File deleted." class="fileDeletedRes retina"></span></div>';
       } else if (file) {
