@@ -509,8 +509,17 @@
     open: function(url) {
       return (GM_openInTab || window.open)(location.protocol + url, '_blank');
     },
-    event: function(el, e) {
-      return el.dispatchEvent(e);
+    event: function(event, detail, root) {
+      if (root == null) {
+        root = d;
+      }
+      if ((detail != null) && typeof cloneInto === 'function') {
+        detail = cloneInto(detail, document.defaultView);
+      }
+      return root.dispatchEvent(new CustomEvent(event, {
+        bubbles: true,
+        detail: detail
+      }));
     },
     globalEval: function(code) {
       var script;
@@ -851,7 +860,7 @@
           Options.dialog();
           select = $('select[name=filter]', $.id('options'));
           select.value = type;
-          $.event(select, new Event('change'));
+          select.dispatchEvent(new Event('change'));
           $.id('filter_tab').checked = true;
           ta = select.nextElementSibling;
           tl = ta.textLength;
@@ -1642,7 +1651,7 @@
       ta.value = value.slice(0, selStart) + ("[" + tag + "]") + value.slice(selStart, selEnd) + ("[/" + tag + "]") + value.slice(selEnd);
       range = ("[" + tag + "]").length + selEnd;
       ta.setSelectionRange(range, range);
-      return $.event(ta, new Event('input'));
+      return ta.dispatchEvent(new Event('input'));
     },
     img: function(thread, all) {
       var thumb;
@@ -2047,7 +2056,7 @@
       range = caretPos + text.length;
       ta.setSelectionRange(range, range);
       ta.focus();
-      return $.event(ta, new Event('input'));
+      return ta.dispatchEvent(new Event('input'));
     },
     characterCount: function() {
       var count, counter;
@@ -2416,9 +2425,7 @@
       QR.cooldown.init();
       QR.captcha.init();
       $.add(d.body, QR.el);
-      return $.event(QR.el, new CustomEvent('QRDialogCreation', {
-        bubbles: true
-      }));
+      return $.event('QRDialogCreation', null, QR.el);
     },
     submit: function(e) {
       var callbacks, err, filetag, m, opts, post, reply, response, textOnly, threadID;
@@ -2567,10 +2574,7 @@
       _ref1 = doc.body.lastChild.textContent.match(/thread:(\d+),no:(\d+)/), _ = _ref1[0], threadID = _ref1[1], postID = _ref1[2];
       obj = {boardID: g.BOARD, threadID: threadID, postID: postID};
       clone = (typeof(cloneInto) === 'function' && cloneInto(obj, document.defaultView)) || obj;
-      $.event(QR.el, new CustomEvent('QRPostSuccessful', {
-        bubbles: true,
-        detail: clone
-      }));
+      $.event('QRPostSuccessful', clone, QR.el);
       
       /* Add your own replies to yourPosts and storage to watch for replies */
       if (Conf['Indicate You quote']) {
@@ -3112,14 +3116,10 @@
         }
         Unread.update(true);
         QR.abort();
-        var evdetails = {
+        return $.event('ThreadUpdate', {
           404: true,
           threadID: g.THREAD_ID
-        };
-        return $.event(d, new CustomEvent('ThreadUpdate', {
-          bubbles: true,
-          detail: evdetails
-        }));
+        });
       },
       load: function() {
         switch (this.status) {
@@ -3160,7 +3160,7 @@
         return delete Updater.request;
       },
       update: function(posts) {
-        var count, evdetails, id, lastPost, nodes, post, posterCount, scroll, spoilerRange, _i, _len, _ref;
+        var count, id, lastPost, nodes, post, posterCount, scroll, spoilerRange, _i, _len, _ref;
         if (spoilerRange = posts[0].custom_spoiler) {
           Build.spoilerRange[g.BOARD] = spoilerRange;
         }
@@ -3186,7 +3186,7 @@
         
         if (count && Conf['Beep'] && d.hidden && (Unread.replies.length === 0)) {
           Updater.audio.play();
-          return;
+          //return;
         }
         scroll = Conf['Scrolling'] && Updater.scrollBG() && lastPost.getBoundingClientRect().bottom - d.documentElement.clientHeight < 25;
         $.add(Updater.thread, nodes.reverse());
@@ -3194,18 +3194,13 @@
           nodes[0].scrollIntoView();
         }
 
-        evdetails = {
+        return $.event('ThreadUpdate', {
           404: false,
           threadID: g.THREAD_ID,
           newPosts: nodes.map(function(data) {
             return data.id.replace('pc', g.BOARD + '.');
           })
-        };
-
-        return $.event(d, new CustomEvent('ThreadUpdate', {
-          bubbles: true,
-          detail: evdetails
-        }));
+        });
       }
     },
     set: function(name, text) {
@@ -5690,7 +5685,7 @@
         return $.on(d, event, function() {
           d.visibilityState = d[property];
           d.hidden = d.visibilityState === 'hidden';
-          return $.event(d, new CustomEvent('visibilitychange'));
+          return $.event('visibilitychange', null, d);
         });
       }
     },
