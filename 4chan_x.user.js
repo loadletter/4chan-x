@@ -139,7 +139,8 @@
         'Current Page': [true, 'Display position of the thread in the page index'],
         'Thread Watcher': [true, 'Bookmark threads'],
         'Auto Watch': [true, 'Automatically watch threads that you start'],
-        'Auto Watch Reply': [false, 'Automatically watch threads that you reply to']
+        'Auto Watch Reply': [false, 'Automatically watch threads that you reply to'],
+        'Remember Last Watched Post': [false, 'Scroll to the last read post when opening a watched thread']
       },
       Posting: {
         'Quick Reply': [true, 'Reply without leaving the page'],
@@ -3355,6 +3356,17 @@
       $.set('watched', watched);
       Watcher.refresh();
       return true;
+    },
+    scrolled: function(replies) {
+      var watched, lastReadPostId;
+      watched = $.get('watched', {});
+      if (!watched[g.BOARD] || !watched[g.BOARD][g.THREAD_ID]) {
+        return;
+      }
+      lastReadPostId = replies[0].id;
+      watched[g.BOARD][g.THREAD_ID]['href'] = "/" + g.BOARD + "/thread/" + g.THREAD_ID + "#" + lastReadPostId;
+      $.set('watched', watched);
+      Watcher.refresh();
     }
   };
 
@@ -4902,6 +4914,11 @@
       if (i === 0) {
         return;
       }
+      
+      if (Unread.replies.length > 0 && Conf['Thread Watcher'] && Conf['Remember Last Watched Post']) {
+        Unread.setWatcher();
+      }
+      
       Unread.replies = Unread.replies.slice(i);
       return Unread.update(Unread.replies.length === 0);
     },
@@ -4915,6 +4932,17 @@
       return this.scheduled = setTimeout((function() {
         return d.title = "(" + count + ") " + Unread.title;
       }), 5);
+    },
+    setWatcher: function() {
+      if (this.scheduledWatch) {
+        clearTimeout(this.scheduledWatch);
+        delete Unread.scheduledWatch;
+        this.setWatcher();
+        return;
+      }
+      return this.scheduledWatch = setTimeout((function() {
+        return Watcher.scrolled(Unread.replies);
+      }), 1000);
     },
     update: function(updateFavicon) {
       var count;
