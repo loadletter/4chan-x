@@ -23,6 +23,7 @@ Install tampermonkey or equivalent and then just click on the previuos link.
 6. Start dwb
 
 ##Changelog
+- 2.40.46: Added Replace PNG/JPG, updated archives
 - 2.40.45: Compatibility fix to events for other extensions (based on ccd0 fork)
 - 2.40.44: Small fix
 - 2.40.43: Adapted for recaptcha2 api, also added and enabled by default automatic posting after user has been verified, updated archives
