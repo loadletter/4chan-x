@@ -5007,6 +5007,7 @@
         case 'diy':
         case 'gd':
         case 'jp':
+        case 'k':
         case 'm':
         case 'mlp':
         case 'po':
@@ -5060,12 +5061,11 @@
         case 'y':
           return "//fgts.jp/" + board + "/full_image/" + filename;
         case 'an':
-        case 'gif':
         case 'fit':
+        case 'gif':
         case 'int':
         case 'out':
         case 'r9k':
-        case 'sp':
         case 'toy':
           return "http://imcute.yt/" + board + "/full_image/" + filename;
       }
@@ -5087,7 +5087,6 @@
         case 'po':
         case 'r9k':
         case 'sci':
-        case 'sp':
         case 'tg':
         case 'tv':
         case 'u':
@@ -5155,7 +5154,6 @@
         case 'po':
         case 'r9k':
         case 'sci':
-        case 'sp':
         case 'tg':
         case 'tv':
         case 'u':
