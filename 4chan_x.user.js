@@ -84,7 +84,7 @@
  */
 
 (function() {
-  var $, $$, Anonymize, ArchiveLink, AutoGif, Build, CatalogLinks, Conf, Config, DeleteLink, DownloadLink, ExpandComment, ExpandThread, Favicon, FileInfo, Filter, Get, ImageExpand, ImageHover, Keybinds, Main, Menu, Nav, Options, QR, QuoteBacklink, QuoteCT, QuoteInline, QuoteOP, QuoteYou, QuotePreview, Quotify, Redirect, RelativeDates, RemoveSlug, ReplyHiding, ReportLink, RevealSpoilers, Sauce, StrikethroughQuotes, ThreadHiding, ThreadStats, Time, TitlePost, UI, Unread, Updater, Watcher, d, g, _base, CaptchaIsSetup;
+  var $, $$, Anonymize, ArchiveLink, AutoGif, Build, CatalogLinks, Conf, Config, DeleteLink, DownloadLink, ExpandComment, ExpandThread, Favicon, FileInfo, Filter, Get, ImageExpand, ImageHover, Keybinds, Main, Menu, Nav, Options, QR, QuoteBacklink, QuoteCT, QuoteInline, QuoteOP, QuoteYou, QuotePreview, Quotify, Redirect, RelativeDates, RemoveSlug, ReplaceJpg, ReplacePng, ReplyHiding, ReportLink, RevealSpoilers, Sauce, StrikethroughQuotes, ThreadHiding, ThreadStats, Time, TitlePost, UI, Unread, Updater, Watcher, d, g, _base, CaptchaIsSetup;
   CaptchaIsSetup = false;
   
   /* Your posts to add (You) backlinks to */
@@ -117,6 +117,8 @@
       },
       Imaging: {
         'Image Auto-Gif': [false, 'Animate gif thumbnails'],
+        'Replace PNG': [false, 'Replace thumbnail with original PNG image'],
+        'Replace JPG': [false, 'Replace thumbnail with original JPG image'],
         'Image Expansion': [true, 'Expand images'],
         'Image Hover': [false, 'Show full image on mouseover'],
         'Sauce': [true, 'Add sauce to images'],
@@ -4295,6 +4297,12 @@
         if (Conf['Image Auto-Gif']) {
           AutoGif.node(post);
         }
+        if (Conf['Replace PNG']) {
+          ReplacePng.node(post);
+        }
+        if (Conf['Replace JPG']) {
+          ReplaceJpg.node(post);
+        }
         if (Conf['Time Formatting']) {
           Time.node(post);
         }
@@ -5357,6 +5365,48 @@
     }
   };
 
+  ReplacePng = {
+    init: function() {
+      return Main.callbacks.push(this.node);
+    },
+    node: function(post) {
+      var png, img, src;
+      img = post.img;
+      if (post.el.hidden || !img) {
+        return;
+      }
+      src = img.parentNode.href;
+      if (/png$/.test(src) && !/spoiler/.test(img.src)) {
+        png = $.el('img');
+        $.on(png, 'load', function() {
+          return img.src = src;
+        });
+        return png.src = src;
+      }
+    }
+  };
+
+  ReplaceJpg = {
+    init: function() {
+      return Main.callbacks.push(this.node);
+    },
+    node: function(post) {
+      var jpg, img, src;
+      img = post.img;
+      if (post.el.hidden || !img) {
+        return;
+      }
+      src = img.parentNode.href;
+      if (/jpg$/.test(src) && !/spoiler/.test(img.src)) {
+        jpg = $.el('img');
+        $.on(jpg, 'load', function() {
+          return img.src = src;
+        });
+        return jpg.src = src;
+      }
+    }
+  };
+
   ImageExpand = {
     init: function() {
       Main.callbacks.push(this.node);
@@ -5767,6 +5817,12 @@
       }
       if (Conf['Image Auto-Gif']) {
         AutoGif.init();
+      }
+      if (Conf['Replace PNG']) {
+        ReplacePng.init();
+      }
+      if (Conf['Replace JPG']) {
+        ReplaceJpg.init();
       }
       if (Conf['Image Hover']) {
         ImageHover.init();
