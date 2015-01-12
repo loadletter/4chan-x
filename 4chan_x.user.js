@@ -2619,30 +2619,34 @@
       return $.ready(Options.initReady);
     },
     initReady: function() {
-      var a, notice, setting, settings, _i, _len, _ref;
-      _ref = ['navtopright', 'navbotright'];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        settings = _ref[_i];
-        a = $.el('a', {
-          href: 'javascript:;',
-          className: 'settingsWindowLink',
-          textContent: '4chan X Settings'
-        });
-        $.on(a, 'click', Options.dialog);
-        setting = $.id(settings);
-        if (Conf['Disable 4chan\'s extension']) {
-          $.replace(setting.firstElementChild, a);
-        } else {
-          $.prepend(setting, [$.tn('['), a, $.tn('] ')]);
-        }
-        notice = $.el('a', {
-          textContent: 'v2 is never outdated.',
-          href: 'https://github.com/loadletter/4chan-x',
-          target: '_blank'
-        });
-        notice.style.color = 'red';
-        $.prepend(setting, [$.tn('['), notice, $.tn('] ')]);
+      var a, notice, setting;
+      a = $.el('a', {
+        href: 'javascript:;',
+        className: 'settingsWindowLink',
+        textContent: '4chan X Settings'
+      });
+      $.on(a, 'click', Options.dialog);
+      setting = $.id('navtopright');
+      if (Conf['Disable 4chan\'s extension']) {
+        $.replace(setting.firstElementChild, a);
+      } else {
+        $.prepend(setting, [$.tn('['), a, $.tn('] ')]);
       }
+      notice = $.el('a', {
+        textContent: 'v2 is never outdated.',
+        href: 'https://github.com/loadletter/4chan-x',
+        target: '_blank'
+      });
+      notice.style.color = 'red';
+      $.prepend(setting, [$.tn('['), notice, $.tn('] ')]);
+      $.ready(function () {
+        setTimeout(function () {
+          var navbotLink = $('#navbotright > .settingsWindowLink');
+          if (navbotLink) {
+            $.on(navbotLink, 'click', Options.dialog);
+          }
+        }, 0);
+      });
       if (!$.get('firstrun')) {
         $.set('firstrun', true);
         if (!Favicon.el) {
@@ -5638,10 +5642,10 @@
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         nav = _ref[_i];
         clone = el.cloneNode(true);
-        $.on(clone.firstElementChild, 'click', this.toggle);
+        $.on(clone.firstElementChild, 'click', CatalogLinks.toggle);
         $.add($.id(nav), clone);
       }
-      return this.toggle(true);
+      return CatalogLinks.toggle(true);
     },
     toggle: function(onLoad) {
       var a, board, nav, root, useCatalog, _i, _j, _len, _len1, _ref, _ref1;
@@ -5742,7 +5746,7 @@
         $.ready(RemoveSlug.init);
       }
       if (Conf['Catalog Links']) {
-        CatalogLinks.init();
+        $.ready(CatalogLinks.init);
       }
       if (Conf['Thread Hiding']) {
         return ThreadHiding.init();
@@ -5867,7 +5871,7 @@
       return $.ready(Main.featuresReady);
     },
     featuresReady: function() {
-      var MutationObserver, a, board, nav, node, nodes, observer, _i, _j, _len, _len1, _ref, _ref1;
+      var MutationObserver, a, board, node, nodes, observer, _j, _len1, _ref1;
       if (/^4chan - 404/.test(d.title)) {
         if (Conf['404 Redirect'] && /^\d+$/.test(g.THREAD_ID)) {
           location.href = Redirect.to({
@@ -5883,13 +5887,14 @@
       }
       $.addClass(d.body, $.engine);
       $.addClass(d.body, 'fourchan_x');
-      _ref = ['boardNavDesktop', 'boardNavDesktopFoot'];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        nav = _ref[_i];
-        if (a = $("a[href$='/" + g.BOARD + "/']", $.id(nav))) {
+      if (a = $("a[href$='/" + g.BOARD + "/']", $.id('boardNavDesktop'))) {
+        $.addClass(a, 'current');
+      }
+      $.ready(function () {
+        if (a = $("a[href$='/" + g.BOARD + "/']", $.id('boardNavDesktopFoot'))) {
           $.addClass(a, 'current');
         }
-      }
+      });
       Favicon.init();
       if (Conf['Quick Reply']) {
         QR.init();
@@ -5898,7 +5903,7 @@
         ImageExpand.init();
       }
       if (Conf['Catalog Links']) {
-        CatalogLinks.init();
+        $.ready(CatalogLinks.init);
       }
       if (Conf['Thread Watcher']) {
         setTimeout(function() {
