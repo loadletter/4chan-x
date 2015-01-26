@@ -139,6 +139,7 @@
         'Post in Title': [true, 'Show the op\'s post in the tab title'],
         'Thread Stats': [true, 'Display reply, image and poster count'],
         'Current Page': [true, 'Display position of the thread in the page index'],
+        'Current Page Position': [false, 'Also display position of the thread in index'],
         'Thread Watcher': [true, 'Bookmark threads'],
         'Auto Watch': [true, 'Automatically watch threads that you start'],
         'Auto Watch Reply': [false, 'Automatically watch threads that you reply to']
@@ -4812,6 +4813,23 @@
         2 : '3300CC',
         1 : '1900E5'
       };
+      this.pageposGradients = {
+        15 : 'FF0011',
+        14 : 'EE0022',
+        13 : 'DD0033',
+        12 : 'CC0044',
+        11 : 'BB0055',
+        10 : 'AA0066',
+        9 : '990077',
+        8 : '880088',
+        7 : '770099',
+        6 : '6600AA',
+        5 : '5500BB',
+        4 : '4400CC',
+        3 : '3300DD',
+        2 : '2200EE',
+        1 : '1100FF'
+      };
       if (Conf['Current Page']) {
         this.pageInterval = setInterval(ThreadStats.fetchPages, 2 * $.MINUTE);
         setTimeout(ThreadStats.fetchPages, 2 * $.SECOND); /* Interval starts with the timeout, so execute it this way the first time */
@@ -4852,7 +4870,7 @@
       if (!(Conf['Current Page'] && this.status === 200)) {
         return delete ThreadStats.request;
       }
-      var page, page_color, thread, _i, _j, _len, _len1, _ref1;
+      var newcontent, page, page_color, pagepos, pagepos_color, thread, _i, _j, _len, _len1, _ref1;
       var parsed_threads = JSON.parse(this.response);
       for (_i = 0, _len = parsed_threads.length; _i < _len; _i++) {
         page = parsed_threads[_i];
@@ -4863,7 +4881,13 @@
             continue; /* == because g.THREAD_ID is a string */
           }
           page_color = page.page in ThreadStats.pageGradients ? ThreadStats.pageGradients[page.page] : '000000';
-          $.id('currentpage').innerHTML = ' / ' + '<span style="color:#' + page_color + ';">' + parseInt(page.page) + '</span>'; /* parseInt just to escape */
+          newcontent = ' / ' + '<span style="color:#' + page_color + ';">' + parseInt(page.page) + '</span>'; /* parseInt just to escape */
+          if (Conf['Current Page Position']) {
+            pagepos = _j + 1;
+            pagepos_color = pagepos in ThreadStats.pageposGradients ? ThreadStats.pageposGradients[pagepos] : '000000';
+            newcontent += ' (' + '<span style="color:#' + pagepos_color + ';">' + pagepos + '</span>' + '∕' + _ref1.length + ')';
+          }
+          $.id('currentpage').innerHTML = newcontent;
           return delete ThreadStats.request;
         }
       }
