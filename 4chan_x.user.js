@@ -5039,6 +5039,7 @@
         case 'm':
         case 'mlp':
         case 'po':
+        case 'qa':
         case 'sci':
         case 'tg':
         case 'u':
@@ -5113,6 +5114,7 @@
         case 'mlp':
         case 'out':
         case 'po':
+        case 'qa':
         case 'r9k':
         case 'sci':
         case 'tg':
@@ -5180,6 +5182,7 @@
         case 'mlp':
         case 'out':
         case 'po':
+        case 'qa':
         case 'r9k':
         case 'sci':
         case 'tg':
