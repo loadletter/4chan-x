@@ -23,6 +23,7 @@ Install tampermonkey or equivalent and then just click on the previuos link.
 6. Start dwb
 
 ##Changelog
+- 2.40.49: Fix sauce on boards cointaining a digit
 - 2.40.48: Added thread in page position to threads stats (not enabled by default), updated archives
 - 2.40.47: Fix after board list change
 - 2.40.46: Added Replace PNG/JPG, updated archives
