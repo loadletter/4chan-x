@@ -3420,7 +3420,7 @@
         a.href = href.replace(/(\$\d)/g, function(parameter) {
           switch (parameter) {
             case '$1':
-              return isArchived ? img.firstChild.src : 'http://t.4cdn.org' + img.pathname.replace(/(\d+).+$/, '$1s.jpg');
+              return isArchived ? img.firstChild.src : 'http://t.4cdn.org' + img.pathname.replace(/(\d+)\..+$/, '$1s.jpg');
             case '$2':
               return img.href;
             case '$3':
