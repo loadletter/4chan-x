@@ -3395,7 +3395,7 @@
       _ref = Conf['sauces'].split('\n');
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         link = _ref[_i];
-        if (link[0] === '#') {
+        if (link[0] === '#' || link.trim() === '') {
           continue;
         }
         this.links.push(this.createSauceLink(link.trim()));
