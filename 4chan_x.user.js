@@ -101,6 +101,7 @@
         'Relative Post Dates': [false, 'Display dates as "3 minutes ago" f.e., tooltip shows the timestamp'],
         'File Info Formatting': [true, 'Reformats the file information'],
         'Comment Expansion': [true, 'Expand too long comments'],
+        'Comment Auto-Expansion': [false, 'Autoexpand too long comments'],
         'Thread Expansion': [true, 'View all replies'],
         'Index Navigation': [true, 'Navigate to previous / next thread'],
         'Reply Navigation': [false, 'Navigate to top / bottom of thread'],
@@ -911,6 +912,9 @@
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         a = _ref[_i];
         $.on(a.firstElementChild, 'click', ExpandComment.expand);
+        if (Conf['Comment Auto-Expansion']) {
+          a.firstElementChild.click();
+        }
       }
     },
     expand: function(e) {
