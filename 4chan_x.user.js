@@ -4646,7 +4646,7 @@
         className: 'download_link',
         textContent: 'Download file'
       });
-      if($.engine === "gecko") {
+      if($.engine === "gecko" || $.engine === "webkit") {
         $.on(a, 'click', function(e) {
           if (this.protocol === 'blob:') {
             return true;
@@ -4670,8 +4670,7 @@
             return false;
           }
           a.href = post.img.parentNode.href;
-          fname = post.fileInfo.firstElementChild.childNodes[1] || post.fileInfo.firstElementChild.childNodes[0];
-          a.download = Conf['File Info Formatting'] ? fname.textContent : post.fileInfo.firstElementChild.title;
+          a.download = post.fileInfo.title || post.fileInfo.firstElementChild.textContent; /* spoiler || normal */
           return true;
         }
       });
