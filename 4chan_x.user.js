@@ -5037,7 +5037,6 @@
         case 'co':
         case 'diy':
         case 'gd':
-        case 'jp':
         case 'k':
         case 'm':
         case 'mlp':
@@ -5079,6 +5078,7 @@
         case 'ck':
         case 'fa':
         case 'ic':
+        case 'jp':
         case 'lit':
           return "https://warosu.org/" + board + "/full_image/" + filename;
         case 'asp':
@@ -5093,14 +5093,8 @@
         case 'soc':
         case 'y':
           return "//fgts.jp/" + board + "/full_image/" + filename;
-        case 'an':
-        case 'fit':
-        case 'gif':
-        case 'int':
-        case 'out':
-        case 'r9k':
-        case 'toy':
-          return "http://imcute.yt/" + board + "/full_image/" + filename;
+        case 'sp':
+          return "//totally.not4plebs.org/" + board + "/full_image/" + filename;
       }
     },
     post: function(board, postID) {
@@ -5112,7 +5106,6 @@
         case 'diy':
         case 'gd':
         case 'int':
-        case 'jp':
         case 'k':
         case 'm':
         case 'mlp':
@@ -5160,11 +5153,8 @@
         case 'soc':
         case 'y':
           return "//fgts.jp/_/api/chan/post/?board=" + board + "&num=" + postID;
-        case 'an':
-        case 'fit':
-        case 'gif':
-        case 'toy':
-          return "http://imcute.yt/_/api/chan/post/?board=" + board + "&num=" + postID;
+        case 'sp':
+          return "//totally.not4plebs.org/_/api/chan/post/?board=" + board + "&num=" + postID;
       }
     },
     to: function(data) {
@@ -5181,7 +5171,6 @@
         case 'diy':
         case 'gd':
         case 'int':
-        case 'jp':
         case 'k':
         case 'm':
         case 'mlp':
@@ -5230,6 +5219,7 @@
         case 'fa':
         case 'g':
         case 'ic':
+        case 'jp':
         case 'lit':
           url = Redirect.path('https://warosu.org', 'fuuka', data);
           break;
@@ -5246,11 +5236,8 @@
         case 'y':
           url = Redirect.path('//fgts.jp', 'foolfuuka', data);
           break;
-        case 'an':
-        case 'fit':
-        case 'gif':
-        case 'toy':
-          url = Redirect.path('http://imcute.yt', 'foolfuuka', data);
+        case 'sp':
+          url = Redirect.path('//totally.not4plebs.org', 'foolfuuka', data);
           break;
         default:
           if (threadID) {
