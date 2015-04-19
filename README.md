@@ -25,9 +25,9 @@ Install tampermonkey or equivalent and then just click on the previuos link.
 6. Start dwb
 
 ##Other scripts for additional features:
-- Linkify: ['http://userscripts.org/scripts/show/87750'](http://userscripts-mirror.org/scripts/show/87750)
+- Linkify: [http://userscripts.org/scripts/show/87750](http://userscripts-mirror.org/scripts/show/87750)
     - Mirror: https://gist.github.com/loadletter/d988bbdccc99f3e341c9
-- Youtube link title: ['http://userscripts.org/scripts/show/83584'](http://userscripts-mirror.org/scripts/show/83584)
+- Youtube link title: [http://userscripts.org/scripts/show/83584](http://userscripts-mirror.org/scripts/show/83584)
     - Mirror: https://gist.github.com/loadletter/d988bbdccc99f3e341c9
     - Newer version with more websites supported: https://greasyfork.org/scripts/413-youtube-link-title
 - Inverted /a/: https://github.com/loadletter/4chan-x/raw/master/utils/inverted_a.user.js
