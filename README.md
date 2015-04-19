@@ -3,24 +3,34 @@
 
 Fork of 4chan X 2.x (MayhemYDG) made to keep it working.
 
+To enable hyperlinks and other stuff checkout "Other scripts for additional features"
+
 ##Installation
 Link: ['4chan_x.user.js'](https://github.com/loadletter/4chan-x/raw/master/4chan_x.user.js)
 
-### Firefox:
+#### Firefox:
 
 Make sure you have greasemonkey installed and just click on the previous link.
 
-### Chrome/Chromium/Opera:
+#### Chrome/Chromium/Opera:
 
 Install tampermonkey or equivalent and then just click on the previuos link.
 
-### dwb:
+#### dwb:
 1. Install dwb with your package manager
 2. Install the dwb userscripts extension with `dwbem -N -i userscripts` in your terminal.
 3. Make a directory for dwb userscripts with `mkdir .config/dwb/greasemonkey`
 4. Change directory to your newly created userscripts folder with `cd .config/dwb/greasemonkey`
 5. Download 4chanX with `wget https://github.com/loadletter/4chan-x/raw/master/4chan_x.user.js`
 6. Start dwb
+
+##Other scripts for additional features:
+- Linkify: ~~http://userscripts.org/scripts/show/87750~~
+    - Mirror: https://gist.github.com/loadletter/d988bbdccc99f3e341c9
+- Youtube link title: ~~http://userscripts.org/scripts/show/83584~~
+    - Mirror: https://gist.github.com/loadletter/d988bbdccc99f3e341c9
+    - Newer version with more websites supported: https://greasyfork.org/scripts/413-youtube-link-title
+- Inverted /a/: https://github.com/loadletter/4chan-x/raw/master/utils/inverted_a.user.js
 
 ##Changelog
 - 2.40.50: Add option to run autoexpand automatically for long posts, updated some configuration defaults and archives
@@ -73,15 +83,3 @@ Install tampermonkey or equivalent and then just click on the previuos link.
 - 2.40.1: Fixed code tags
 - 2.40.0: Fixed a change in the html that caused errors with the file info and updated to support 4cdn
 - 2.39.7: Latest 2.x version from MayhemYDG
-
-
-### My setup:
-- Linkify: ~~http://userscripts.org/scripts/show/87750~~
-    - Mirror: https://gist.github.com/loadletter/d988bbdccc99f3e341c9
-- Youtube link title: ~~http://userscripts.org/scripts/show/83584~~
-    - Mirror: https://gist.github.com/loadletter/d988bbdccc99f3e341c9
-    - Newer version with more websites supported: https://greasyfork.org/scripts/413-youtube-link-title
-- Highlight sage: https://github.com/loadletter/resage-ext
-- Inverted /a/: https://github.com/loadletter/4chan-x/raw/master/utils/inverted_a.user.js
-
-Execution order Youtube Link Title -> 4chan x -> 4chan Linkify
