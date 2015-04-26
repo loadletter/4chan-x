@@ -28,7 +28,7 @@ def main(argument):
     if not os.path.exists(path):
         os.mkdir(path)
 
-    for image_url in set(re.findall(IMAGE_URL_REGEX, source)):
+    for image_url in filter(lambda x: not ' ' in x, set(re.findall(IMAGE_URL_REGEX, source))):
         url = urlparse.urljoin(argument, image_url).replace('https', 'http')
         filename = url.split('/')[-1]
         path_ = os.path.join(path, filename)
