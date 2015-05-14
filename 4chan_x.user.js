@@ -2594,7 +2594,9 @@
         isReply: threadID !== '0'
       });
       if (threadID === '0') {
-        location.pathname = "/" + g.BOARD + "/thread/" + postID;
+        setTimeout(function () {
+          location.pathname = "/" + g.BOARD + "/thread/" + postID;
+        }, 3000);
       } else {
         QR.cooldown.auto = QR.replies.length > 1;
         if (Conf['Open Reply in New Tab'] && !g.REPLY && !QR.cooldown.auto) {
