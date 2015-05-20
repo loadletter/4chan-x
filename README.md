@@ -31,6 +31,7 @@ Install tampermonkey or equivalent and then just click on the previuos link.
 - Inverted /a/: https://github.com/loadletter/4chan-x/raw/master/utils/inverted_a.user.js
 
 ##Changelog
+- 2.40.51: Various bugfixes, updated archives
 - 2.40.50: Add option to run autoexpand automatically for long posts, updated some configuration defaults and archives
 - 2.40.49: Fix sauce on boards cointaining a digit
 - 2.40.48: Added thread in page position to threads stats (not enabled by default), updated archives
