@@ -5038,12 +5038,15 @@
         case 'c':
         case 'co':
         case 'diy':
+        case 'fit':
         case 'gd':
+        case 'jp':
         case 'k':
         case 'm':
         case 'mlp':
         case 'po':
         case 'qa':
+        case 'r9k':
         case 'sci':
         case 'tg':
         case 'u':
@@ -5064,13 +5067,13 @@
         case 'x':
           return "//archive.4plebs.org/" + board + "/full_image/" + filename;
         case 'e':
+        case 'w':
         case 'wg':
           return "//archive.nyafuu.org/" + board + "/full_image/" + filename;
         case 'd':
         case 'i':
         case 'lgbt':
         case 't':
-        case 'w':
           return "//archive.loveisover.me/" + board + "/full_image/" + filename;
         case 'cgl':
         case 'g':
@@ -5080,7 +5083,6 @@
         case 'ck':
         case 'fa':
         case 'ic':
-        case 'jp':
         case 'lit':
           return "https://warosu.org/" + board + "/full_image/" + filename;
         case 'asp':
@@ -5093,6 +5095,7 @@
         case 'r':
         case 's':
         case 'soc':
+        case 'toy':
         case 'y':
           return "//fgts.jp/" + board + "/full_image/" + filename;
         case 'sp':
@@ -5102,12 +5105,16 @@
     post: function(board, postID) {
       switch (board) {
         case 'a':
+        case 'an':
         case 'biz':
         case 'c':
         case 'co':
         case 'diy':
+        case 'fit':
         case 'gd':
+        case 'gif':
         case 'int':
+        case 'jp':
         case 'k':
         case 'm':
         case 'mlp':
@@ -5135,15 +5142,16 @@
         case 'x':
           return "//archive.4plebs.org/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'e':
+        case 'w':
         case 'wg':
           return "//archive.nyafuu.org/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'd':
         case 'i':
         case 'lgbt':
         case 't':
-        case 'w':
           return "//archive.loveisover.me/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'asp':
+        case 'b':
         case 'cm':
         case 'h':
         case 'hc':
@@ -5153,6 +5161,7 @@
         case 'r':
         case 's':
         case 'soc':
+        case 'toy':
         case 'y':
           return "//fgts.jp/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'sp':
@@ -5167,12 +5176,16 @@
       board = data.board;
       switch (board) {
         case 'a':
+        case 'an':
         case 'biz':
         case 'c':
         case 'co':
         case 'diy':
+        case 'fit':
         case 'gd':
+        case 'gif':
         case 'int':
+        case 'jp':
         case 'k':
         case 'm':
         case 'mlp':
@@ -5202,6 +5215,7 @@
           url = Redirect.path('//archive.4plebs.org', 'foolfuuka', data);
           break;
         case 'e':
+        case 'w':
         case 'wg':
           url = Redirect.path('//archive.nyafuu.org', 'foolfuuka', data);
           break;
@@ -5209,7 +5223,6 @@
         case 'i':
         case 'lgbt':
         case 't':
-        case 'w':
           url = Redirect.path('//archive.loveisover.me', 'foolfuuka', data);
           break;
         case 'cgl':
@@ -5221,11 +5234,11 @@
         case 'fa':
         case 'g':
         case 'ic':
-        case 'jp':
         case 'lit':
           url = Redirect.path('https://warosu.org', 'fuuka', data);
           break;
         case 'asp':
+        case 'b':
         case 'cm':
         case 'h':
         case 'hc':
@@ -5235,6 +5248,7 @@
         case 'r':
         case 's':
         case 'soc':
+        case 'toy':
         case 'y':
           url = Redirect.path('//fgts.jp', 'foolfuuka', data);
           break;
