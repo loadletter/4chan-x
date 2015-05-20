@@ -4027,7 +4027,7 @@
           capcodeStart = '';
           capcode = '';
       }
-      flag = flagCode ? ' <img src="' + staticPath + '/image/country/' + (board === 'pol' ? 'troll/' : '') + flagCode.toLowerCase() + '.gif" alt="' + flagCode + '" title="' + flagName + '" class="flag">' : '';
+      flag = flagCode ? ' <span title="' + flagName + '" class="flag flag-' + flagCode.toLowerCase() + '">' : '';
       if (file != null ? file.isDeleted : void 0) {
         fileHTML = isOP ? '<div class="file" id="f' + postID + '"><div class="fileInfo"></div><span class="fileThumb"><img src="' + staticPath + '/image/filedeleted.gif" alt="File deleted." class="fileDeleted retina"></span></div>' : '<div id="f' + postID + '" class="file"><span class="fileThumb"><img src="' + staticPath + '/image/filedeleted-res.gif" alt="File deleted." class="fileDeletedRes retina"></span></div>';
       } else if (file) {
