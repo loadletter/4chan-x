@@ -790,7 +790,7 @@
     dimensions: function(post) {
       var fileInfo, match;
       fileInfo = post.fileInfo;
-      if (fileInfo && (match = fileInfo.childNodes[1].textContent.match(/\d+x\d+/))) {
+      if (fileInfo && (match = fileInfo.lastChild.textContent.match(/\d+x\d+/))) {
         return match[0];
       }
       return false;
