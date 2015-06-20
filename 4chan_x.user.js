@@ -148,6 +148,7 @@
       Posting: {
         'Quick Reply': [true, 'Reply without leaving the page'],
         'Cooldown': [true, 'Prevent "flood detected" errors'],
+        'Alternative captcha': [false, 'Use the text recaptcha'],
         'Auto Submit': [true, 'Submit automatically when captcha has been solved'],
         'Persistent QR': [false, 'The Quick reply won\'t disappear after posting'],
         'Auto Hide QR': [true, 'Automatically hide the quick reply when posting'],
@@ -2329,18 +2330,62 @@
       },
       ready: function() {
         if(!CaptchaIsSetup) {
-          $.addClass(QR.el, 'captcha');
-          $.globalEval('(function () {window.grecaptcha.render(document.getElementById("g-recaptcha"), {sitekey: "6Ldp2bsSAAAAAAJ5uyx_lx34lJeEpTLVkP5k04qc", theme: "light", callback: (' + (Conf['Auto Submit'] ? 'function (res) {var sb = document.getElementById("x_QR_Submit"); if(sb) sb.click(); }' : 'function (res) {}') + ') });})()');
-          $.after($('.textarea', QR.el), $.id('g-recaptcha'));
+          if(!Conf['Alternative captcha']) {
+            $.after($('.textarea', QR.el), $.el('input', {
+              type: 'hidden',
+              id: 'recaptcha_response_field',
+              value: ''
+            }));
+            $.addClass(QR.el, 'captcha');
+            $.globalEval('(function () {window.grecaptcha.render(document.getElementById("g-recaptcha"), {sitekey: "6Ldp2bsSAAAAAAJ5uyx_lx34lJeEpTLVkP5k04qc", theme: "light", callback: (' + (Conf['Auto Submit'] ? 'function (res) {var sb = document.getElementById("x_QR_Submit"); if(sb) sb.click(); }' : 'function (res) {}') + ') });})()');
+            $.after($('.textarea', QR.el), $.id('g-recaptcha'));
+          } else {
+            $.addClass(QR.el, 'captcha');
+            $.after($('.textarea', QR.el), $.el('div', {
+              id: 'recaptcha_widget',
+            }));
+            $.globalEval("Recaptcha.create('6Ldp2bsSAAAAAAJ5uyx_lx34lJeEpTLVkP5k04qc', 'recaptcha_widget', {theme: 'clean'});");
+            $.ready(function () {
+              QR.captcha.timeout.lifetime = 1800; /* window.RecaptchaState.timeout should be used */
+              QR.captcha.timeout.start();
+              var reloadbutton = $.id('recaptcha_reload');
+              if (reloadbutton) {
+                $.on(reloadbutton, 'click', QR.captcha.timeout.reset);
+              }
+              $.on($.id('recaptcha_challenge_image'), 'click', QR.captcha.reset);
+            });
+          }
           CaptchaIsSetup = true;
         }
       },
       getResponse: function() {
-        $.globalEval('document.getElementById("captcha_response_field").value = window.grecaptcha.getResponse();');
-        return $.id("captcha_response_field").value;
+        if(!Conf['Alternative captcha']) {
+          $.globalEval('document.getElementById("captcha_response_field").value = window.grecaptcha.getResponse();');
+        }
+        return $.id('recaptcha_response_field').value;
+      },
+      getChallenge: function() {
+        return $.id('recaptcha_challenge_field').value;
+      },
+      timeout: {
+        start: function() {
+          QR.captcha.timeout.interval = setInterval(QR.captcha.timeout.run, QR.captcha.timeout.lifetime * $.SECOND);
+        },
+        run: function() {
+          QR.captcha.reset();
+        },
+        reset: function() {
+          clearInterval(QR.captcha.timeout.interval);
+          QR.captcha.timeout.start();
+        }
       },
       reset: function() {
-        $.globalEval('window.grecaptcha.reset();');
+        if(!Conf['Alternative captcha']) {
+          $.globalEval('window.grecaptcha.reset();');
+        } else {
+          $.globalEval('window.Recaptcha.reload(); Recaptcha.should_focus = false;');
+          QR.captcha.timeout.reset();
+        }
       }
     },
     dialog: function() {
@@ -2357,7 +2402,6 @@
   <div><input type=file title="Shift+Click to remove the selected file." multiple size=16><input type=submit id="x_QR_Submit"></div>\
   <label id=spoilerLabel><input type=checkbox id=spoiler> Spoiler Image</label>\
   <div class=warning></div>\
-  <input type="hidden" name="captcha_response" id="captcha_response_field" value="">\
 </form>');
       if (Conf['Remember QR size'] && $.engine === 'gecko') {
         $.on(ta = $('textarea', QR.el), 'mouseup', function() {
@@ -2499,8 +2543,16 @@
         textonly: textOnly,
         mode: 'regist',
         pwd: (m = d.cookie.match(/4chan_pass=([^;]+)/)) ? decodeURIComponent(m[1]) : $('input[name=pwd]').value,
-        'g-recaptcha-response': response
       };
+      if (QR.captcha.isEnabled) {
+        if(!Conf['Alternative captcha']) {
+          post['g-recaptcha-response'] = response;
+        } else {
+          post['recaptcha_response_field'] = response;
+          post['recaptcha_challenge_field'] = QR.captcha.getChallenge();
+        }
+      }
+      
       callbacks = {
         onload: function() {
           return QR.response(this.response);
@@ -5805,6 +5857,11 @@
             src: 'https://loadletter.github.io/4chan-x/latest.js'
           }));
         });
+      }
+      if (Conf['Alternative captcha']) {
+        $.add(d.head, $.el('script', {
+          src: '//www.google.com/recaptcha/api/js/recaptcha_ajax.js'
+        }));
       }
       g.hiddenReplies = $.get("hiddenReplies/" + g.BOARD + "/", {});
       if ($.get('lastChecked', 0) < now - 1 * $.DAY) {
