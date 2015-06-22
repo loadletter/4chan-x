@@ -31,6 +31,7 @@ Install tampermonkey or equivalent and then just click on the previuos link.
 - Inverted /a/: https://github.com/loadletter/4chan-x/raw/master/utils/inverted_a.user.js
 
 ##Changelog
+- 2.40.53: Add 'Alternative captcha' setting to use the text captcha (enabled by default)
 - 2.40.52: Missed a closing tag
 - 2.40.51: Various bugfixes, updated archives
 - 2.40.50: Add option to run autoexpand automatically for long posts, updated some configuration defaults and archives
