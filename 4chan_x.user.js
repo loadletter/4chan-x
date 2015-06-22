@@ -2350,10 +2350,7 @@
                 setTimeout(asap, 200);
                 return;
               }
-              QR.captcha.timeout.lifetime = 1800; /* window.RecaptchaState.timeout should be used */
-              QR.captcha.timeout.start();
               $.on($.id('recaptcha_response_field'), 'keydown', QR.captcha.keydown);
-              $.on($.id('recaptcha_reload'), 'click', QR.captcha.timeout.reset);
               $.globalEval('(function () {window.onunload=function () {window.Recaptcha.destroy();};})();');
             };
             asap();
@@ -2370,24 +2367,11 @@
       getChallenge: function() {
         return $.id('recaptcha_challenge_field').value;
       },
-      timeout: {
-        start: function() {
-          QR.captcha.timeout.interval = setInterval(QR.captcha.timeout.run, QR.captcha.timeout.lifetime * $.SECOND);
-        },
-        run: function() {
-          QR.captcha.reset();
-        },
-        reset: function() {
-          clearInterval(QR.captcha.timeout.interval);
-          QR.captcha.timeout.start();
-        }
-      },
       reset: function() {
         if(!Conf['Alternative captcha']) {
           $.globalEval('window.grecaptcha.reset();');
         } else {
           $.globalEval('window.Recaptcha.reload(); Recaptcha.should_focus = false;');
-          QR.captcha.timeout.reset();
         }
       },
       keydown: function(e) {
