@@ -148,7 +148,7 @@
       Posting: {
         'Quick Reply': [true, 'Reply without leaving the page'],
         'Cooldown': [true, 'Prevent "flood detected" errors'],
-        'Alternative captcha': [false, 'Use the text recaptcha'],
+        'Alternative captcha': [true, 'Use the classic text recaptcha'],
         'Auto Submit': [true, 'Submit automatically when captcha has been solved'],
         'Persistent QR': [false, 'The Quick reply won\'t disappear after posting'],
         'Auto Hide QR': [true, 'Automatically hide the quick reply when posting'],
@@ -2354,6 +2354,7 @@
               QR.captcha.timeout.start();
               $.on($.id('recaptcha_response_field'), 'keydown', QR.captcha.keydown);
               $.on($.id('recaptcha_reload'), 'click', QR.captcha.timeout.reset);
+              $.globalEval('(function () {window.onunload=function () {window.Recaptcha.destroy();};})();');
             };
             asap();
           }
