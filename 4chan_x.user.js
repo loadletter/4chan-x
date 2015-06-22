@@ -2345,15 +2345,17 @@
               id: 'recaptcha_widget',
             }));
             $.globalEval("Recaptcha.create('6Ldp2bsSAAAAAAJ5uyx_lx34lJeEpTLVkP5k04qc', 'recaptcha_widget', {theme: 'clean'});");
-            $.ready(function () {
+            var asap = function () {
+              if (!($.id('recaptcha_response_field'))) {
+                setTimeout(asap, 200);
+                return;
+              }
               QR.captcha.timeout.lifetime = 1800; /* window.RecaptchaState.timeout should be used */
               QR.captcha.timeout.start();
-              var reloadbutton = $.id('recaptcha_reload');
-              if (reloadbutton) {
-                $.on(reloadbutton, 'click', QR.captcha.timeout.reset);
-              }
-              $.on($.id('recaptcha_challenge_image'), 'click', QR.captcha.reset);
-            });
+              $.on($.id('recaptcha_response_field'), 'keydown', QR.captcha.keydown);
+              $.on($.id('recaptcha_reload'), 'click', QR.captcha.timeout.reset);
+            };
+            asap();
           }
           CaptchaIsSetup = true;
         }
@@ -2386,6 +2388,15 @@
           $.globalEval('window.Recaptcha.reload(); Recaptcha.should_focus = false;');
           QR.captcha.timeout.reset();
         }
+      },
+      keydown: function(e) {
+        var respfield = $.id('recaptcha_response_field');
+        if (e.keyCode === 8 && !respfield.value) {
+          QR.captcha.reset();
+        } else {
+          return;
+        }
+        return e.preventDefault();
       }
     },
     dialog: function() {
