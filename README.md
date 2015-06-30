@@ -6,33 +6,30 @@ Fork of 4chan X 2.x (MayhemYDG) made to keep it working.
 To enable hyperlinks and other stuff checkout "Other scripts for additional features"
 
 ##Installation
-Link: ['4chan_x.user.js'](https://github.com/loadletter/4chan-x/raw/master/4chan_x.user.js)
 
-#### Firefox:
+Browser usually need an addon to run userscripts, like:
 
-Make sure you have greasemonkey installed and just click on the previous link.
+- Firefox -> Greasemonkey
+- Chrome/Chromium -> Tampermonkey
+- Opera -> Violent monkey
+- Safari -> Ninjakit (Safari download page [os0x/NinjaKit](https://github.com/os0x/NinjaKit))
+- dwb: scroll down
 
-#### Chrome/Chromium:
-
-Install tampermonkey or equivalent and then just click on the previuos link.
-
-#### Opera:
-
-Install violentmonkey or equivalent and then just click on the previuos link.
-
-#### dwb:
-1. Install dwb with your package manager
-2. Install the dwb userscripts extension with `dwbem -N -i userscripts` in your terminal.
-3. Make a directory for dwb userscripts with `mkdir .config/dwb/greasemonkey`
-4. Change directory to your newly created userscripts folder with `cd .config/dwb/greasemonkey`
-5. Download 4chanX with `wget https://github.com/loadletter/4chan-x/raw/master/4chan_x.user.js`
-6. Start dwb
+Once one of those or similar is installed, click on the following link: [4chan_x.user.js](https://github.com/loadletter/4chan-x/raw/master/4chan_x.user.js)
 
 ##Other scripts for additional features:
 - Linkify: [http://userscripts.org/scripts/show/87750](http://userscripts-mirror.org/scripts/show/87750)
     - Mirror: https://gist.github.com/loadletter/d988bbdccc99f3e341c9
 - Youtube link title (varios other websites supported): https://greasyfork.org/scripts/413-youtube-link-title
 - Inverted /a/: https://github.com/loadletter/4chan-x/raw/master/utils/inverted_a.user.js
+
+#####Installation on dwb:
+1. Install dwb with your package manager
+2. Install the dwb userscripts extension with `dwbem -N -i userscripts` in your terminal.
+3. Make a directory for dwb userscripts with `mkdir .config/dwb/greasemonkey`
+4. Change directory to your newly created userscripts folder with `cd .config/dwb/greasemonkey`
+5. Download 4chanX with `wget https://github.com/loadletter/4chan-x/raw/master/4chan_x.user.js`
+6. Start dwb
 
 ##Changelog
 - 2.40.53: Add 'Alternative captcha' setting to use the text captcha (enabled by default)
