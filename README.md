@@ -12,9 +12,13 @@ Link: ['4chan_x.user.js'](https://github.com/loadletter/4chan-x/raw/master/4chan
 
 Make sure you have greasemonkey installed and just click on the previous link.
 
-#### Chrome/Chromium/Opera:
+#### Chrome/Chromium:
 
 Install tampermonkey or equivalent and then just click on the previuos link.
+
+#### Opera:
+
+Install violentmonkey or equivalent and then just click on the previuos link.
 
 #### dwb:
 1. Install dwb with your package manager
