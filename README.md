@@ -9,10 +9,10 @@ To enable hyperlinks and other stuff checkout "Other scripts for additional feat
 
 Browser usually need an addon to run userscripts, like:
 
-- Firefox -> Greasemonkey
-- Chrome/Chromium -> Tampermonkey
-- Opera -> Violent monkey
-- Safari -> Ninjakit (Safari download page [os0x/NinjaKit](https://github.com/os0x/NinjaKit))
+- Firefox -> [Greasemonkey](https://addons.mozilla.org/en/firefox/addon/greasemonkey/)
+- Chrome/Chromium -> [Tampermonkey](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo)
+- Opera -> [Violent monkey](https://addons.opera.com/en/extensions/details/violent-monkey/)
+- Safari -> [NinjaKit](https://github.com/os0x/NinjaKit)
 - dwb: scroll down
 
 Once one of those or similar is installed, click on the following link: [4chan_x.user.js](https://github.com/loadletter/4chan-x/raw/master/4chan_x.user.js)
