@@ -7,7 +7,7 @@ To enable hyperlinks and other stuff checkout "Other scripts for additional feat
 
 ##Installation
 
-Browser usually need an addon to run userscripts, like:
+Browsers usually need an addon to run userscripts, like:
 
 - Firefox -> [Greasemonkey](https://addons.mozilla.org/en/firefox/addon/greasemonkey/)
 - Chrome/Chromium -> [Tampermonkey](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo)
