@@ -5082,16 +5082,20 @@
     image: function(board, filename) {
       switch (board) {
         case 'a':
+        case 'an':
         case 'biz':
         case 'c':
         case 'co':
         case 'diy':
         case 'fit':
         case 'gd':
+        case 'gif':
+        case 'int':
         case 'jp':
         case 'k':
         case 'm':
         case 'mlp':
+        case 'out':
         case 'po':
         case 'qa':
         case 'r9k':
