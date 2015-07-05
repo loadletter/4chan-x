@@ -32,6 +32,7 @@ Once one of those or similar is installed, click on the following link: [4chan_x
 6. Start dwb
 
 ##Changelog
+- 2.40.54: Updated archives
 - 2.40.53: Add 'Alternative captcha' setting to use the text captcha (enabled by default)
 - 2.40.52: Missed a closing tag
 - 2.40.51: Various bugfixes, updated archives
