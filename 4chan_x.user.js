@@ -4397,7 +4397,11 @@
       }
     },
     mouseout: function(e) {
-      var el;
+      var el, videoel;
+      if (videoel = $('.dialog .image_expanded video')) {
+        videoel.pause();
+        videoel.remove();
+      }
       UI.hoverend();
       if (el = $.id(this.hash.slice(1))) {
         $.rmClass(el, 'qphl');
