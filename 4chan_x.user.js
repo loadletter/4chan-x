@@ -5429,6 +5429,10 @@
       });
     },
     mouseout: function() {
+      var videoel;
+      if (videoel = $('video#ihover')) {
+        videoel.pause();
+      }
       UI.hoverend();
       $.off(this, 'mousemove', UI.hover);
       return $.off(this, 'mouseout', ImageHover.mouseout);
