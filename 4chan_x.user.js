@@ -3784,6 +3784,39 @@
   };
 
   Get = {
+    cloneWithoutVideo: function(node) {
+      var child, clone, k, len1, ref;
+      if (node.tagName === 'VIDEO' && !node.dataset.md5) {
+        return [];
+      } else if (node.nodeType === Node.ELEMENT_NODE && $('video', node)) {
+        clone = node.cloneNode(false);
+        ref = node.childNodes;
+        for (k = 0, len1 = ref.length; k < len1; k++) {
+          child = ref[k];
+          $.add(clone, this.cloneWithoutVideo(child));
+        }
+        return clone;
+      } else {
+        return node.cloneNode(true);
+      }
+    },
+    postWithoutVideo: function(board, threadID, postID, root, cb) {
+      var post, url;
+      if (board === g.BOARD && (post = $.id("pc" + postID))) {
+        $.add(root, Get.cleanPost(Get.cloneWithoutVideo(post)));
+        return;
+      }
+      root.textContent = "Loading post No." + postID + "...";
+      if (threadID) {
+        return $.cache("//a.4cdn.org/" + board + "/thread/" + threadID + ".json", function() {
+          return Get.parsePost(this, board, threadID, postID, root, cb);
+        });
+      } else if (url = Redirect.post(board, postID)) {
+        return $.cache(url, function() {
+          return Get.parseArchivedPost(this, board, postID, root, cb);
+        });
+      }
+    },
     post: function(board, threadID, postID, root, cb) {
       var post, url;
       if (board === g.BOARD && (post = $.id("pc" + postID))) {
@@ -4337,7 +4370,7 @@
       if (board === g.BOARD) {
         el = $.id("p" + postID);
       }
-      Get.post(board, threadID, postID, qp, function() {
+      Get.postWithoutVideo(board, threadID, postID, qp, function() {
         var bq, img, post;
         bq = $('blockquote', qp);
         Main.prettify(bq);
@@ -4397,11 +4430,7 @@
       }
     },
     mouseout: function(e) {
-      var el, videoel;
-      if (videoel = $('.dialog .image_expanded video')) {
-        videoel.pause();
-        videoel.remove();
-      }
+      var el;
       UI.hoverend();
       if (el = $.id(this.hash.slice(1))) {
         $.rmClass(el, 'qphl');
