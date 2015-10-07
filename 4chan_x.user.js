@@ -5114,43 +5114,18 @@
   Redirect = {
     image: function(board, filename) {
       switch (board) {
-        case 'a':
-        case 'an':
-        case 'biz':
-        case 'c':
-        case 'co':
-        case 'diy':
-        case 'fit':
-        case 'gd':
-        case 'gif':
-        case 'int':
-        case 'jp':
-        case 'k':
-        case 'm':
-        case 'mlp':
-        case 'out':
-        case 'po':
-        case 'qa':
-        case 'r9k':
-        case 'sci':
-        case 'tg':
-        case 'u':
-        case 'v':
-        case 'vg':
-        case 'vp':
-        case 'vr':
-        case 'wsg':
-          return "https://archive.moe/" + board + "/full_image/" + filename;
         case 'adv':
         case 'f':
         case 'hr':
         case 'o':
         case 'pol':
         case 's4s':
+        case 'sp':
         case 'trv':
         case 'tv':
         case 'x':
           return "//archive.4plebs.org/" + board + "/full_image/" + filename;
+        case 'c':
         case 'e':
         case 'w':
         case 'wg':
@@ -5159,16 +5134,24 @@
         case 'i':
         case 'lgbt':
         case 't':
+        case 'u':
           return "//archive.loveisover.me/" + board + "/full_image/" + filename;
         case 'cgl':
         case 'g':
         case 'mu':
+        case 'qa':
           return "https://archive.rebeccablacktech.com/" + board + "/full_image/" + filename;
         case '3':
+        case 'biz':
         case 'ck':
+        case 'diy':
         case 'fa':
         case 'ic':
+        case 'jp':
         case 'lit':
+        case 'sci':
+        case 'tg':
+        case 'vr':
           return "https://warosu.org/" + board + "/full_image/" + filename;
         case 'asp':
         case 'cm':
@@ -5181,51 +5164,38 @@
         case 's':
         case 'soc':
         case 'toy':
+        case 'vp':
         case 'y':
           return "//fgts.jp/" + board + "/full_image/" + filename;
-        case 'sp':
-          return "//totally.not4plebs.org/" + board + "/full_image/" + filename;
+        case 'a':
+        case 'aco':
+        case 'an':
+        case 'co':
+        case 'fit':
+        case 'int':
+        case 'k':
+        case 'mlp':
+        case 'r9k':
+        case 'wsg':
+          return "https://desustorage.org/" + board + "/full_image/" + filename;
+        case 'vg':
+          return "https://boards.fireden.net/" + board + "/full_image/" + filename;
       }
     },
     post: function(board, postID) {
       switch (board) {
-        case 'a':
-        case 'an':
-        case 'biz':
-        case 'c':
-        case 'co':
-        case 'diy':
-        case 'fit':
-        case 'gd':
-        case 'gif':
-        case 'int':
-        case 'jp':
-        case 'k':
-        case 'm':
-        case 'mlp':
-        case 'out':
-        case 'po':
-        case 'qa':
-        case 'r9k':
-        case 'sci':
-        case 'tg':
-        case 'tv':
-        case 'u':
-        case 'v':
-        case 'vg':
-        case 'vp':
-        case 'vr':
-        case 'wsg':
-          return "https://archive.moe/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'adv':
         case 'f':
         case 'hr':
         case 'o':
         case 'pol':
         case 's4s':
+        case 'sp':
         case 'trv':
+        case 'tv':
         case 'x':
           return "//archive.4plebs.org/_/api/chan/post/?board=" + board + "&num=" + postID;
+        case 'c':
         case 'e':
         case 'w':
         case 'wg':
@@ -5234,6 +5204,7 @@
         case 'i':
         case 'lgbt':
         case 't':
+        case 'u':
           return "//archive.loveisover.me/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'asp':
         case 'b':
@@ -5247,10 +5218,22 @@
         case 's':
         case 'soc':
         case 'toy':
+        case 'vp':
         case 'y':
           return "//fgts.jp/_/api/chan/post/?board=" + board + "&num=" + postID;
-        case 'sp':
-          return "//totally.not4plebs.org/_/api/chan/post/?board=" + board + "&num=" + postID;
+        case 'a':
+        case 'aco':
+        case 'an':
+        case 'co':
+        case 'fit':
+        case 'int':
+        case 'k':
+        case 'mlp':
+        case 'r9k':
+        case 'wsg':
+          return "https://desustorage.org/_/api/chan/post/?board=" + board + "&num=" + postID;
+        case 'vg':
+          return "https://boards.fireden.net/_/api/chan/post/?board=" + board + "&num=" + postID;
       }
     },
     to: function(data) {
@@ -5260,45 +5243,19 @@
       }
       board = data.board;
       switch (board) {
-        case 'a':
-        case 'an':
-        case 'biz':
-        case 'c':
-        case 'co':
-        case 'diy':
-        case 'fit':
-        case 'gd':
-        case 'gif':
-        case 'int':
-        case 'jp':
-        case 'k':
-        case 'm':
-        case 'mlp':
-        case 'out':
-        case 'po':
-        case 'qa':
-        case 'r9k':
-        case 'sci':
-        case 'tg':
-        case 'tv':
-        case 'u':
-        case 'v':
-        case 'vg':
-        case 'vp':
-        case 'vr':
-        case 'wsg':
-          url = Redirect.path('https://archive.moe', 'foolfuuka', data);
-          break;
         case 'adv':
         case 'f':
         case 'hr':
         case 'o':
         case 'pol':
         case 's4s':
+        case 'sp':
         case 'trv':
+        case 'tv':
         case 'x':
           url = Redirect.path('//archive.4plebs.org', 'foolfuuka', data);
           break;
+        case 'c':
         case 'e':
         case 'w':
         case 'wg':
@@ -5308,18 +5265,26 @@
         case 'i':
         case 'lgbt':
         case 't':
+        case 'u':
           url = Redirect.path('//archive.loveisover.me', 'foolfuuka', data);
           break;
         case 'cgl':
         case 'mu':
+        case 'qa':
           url = Redirect.path('https://archive.rebeccablacktech.com', 'fuuka', data);
           break;
         case '3':
+        case 'biz':
         case 'ck':
+        case 'diy':
         case 'fa':
         case 'g':
         case 'ic':
+        case 'jp':
         case 'lit':
+        case 'sci':
+        case 'tg':
+        case 'vr':
           url = Redirect.path('https://warosu.org', 'fuuka', data);
           break;
         case 'asp':
@@ -5334,11 +5299,24 @@
         case 's':
         case 'soc':
         case 'toy':
+        case 'vp':
         case 'y':
           url = Redirect.path('//fgts.jp', 'foolfuuka', data);
           break;
-        case 'sp':
-          url = Redirect.path('//totally.not4plebs.org', 'foolfuuka', data);
+        case 'a':
+        case 'aco':
+        case 'an':
+        case 'co':
+        case 'fit':
+        case 'int':
+        case 'k':
+        case 'mlp':
+        case 'r9k':
+        case 'wsg':
+          url = Redirect.path('https://desustorage.org', 'foolfuuka', data);
+          break;
+        case 'vg':
+          url = Redirect.path('https://boards.fireden.net', 'foolfuuka', data);
           break;
         default:
           if (threadID) {
