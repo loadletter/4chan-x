@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           4chan x
-// @version        2.40.56
+// @version        2.40.57
 // @namespace      aeosynth
 // @description    Adds various features.
 // @copyright      2009-2011 James Campos <james.r.campos@gmail.com>
@@ -6221,7 +6221,7 @@
       return $.globalEval(("(" + code + ")()").replace('_id_', bq.id));
     },
     namespace: '4chan_x.',
-    version: '2.40.56',
+    version: '2.40.57',
     callbacks: [],
     css: '\
 /* dialog styling */\
