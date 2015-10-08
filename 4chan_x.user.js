@@ -5174,10 +5174,11 @@
         case 'fit':
         case 'int':
         case 'k':
+        case 'm':
         case 'mlp':
         case 'r9k':
         case 'wsg':
-          return "https://desustorage.org/" + board + "/full_image/" + filename;
+          return "//desustorage.org/" + board + "/full_image/" + filename;
         case 'vg':
           return "https://boards.fireden.net/" + board + "/full_image/" + filename;
       }
@@ -5228,12 +5229,15 @@
         case 'fit':
         case 'int':
         case 'k':
+        case 'm':
         case 'mlp':
         case 'r9k':
         case 'wsg':
-          return "https://desustorage.org/_/api/chan/post/?board=" + board + "&num=" + postID;
+          return "//desustorage.org/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'vg':
           return "https://boards.fireden.net/_/api/chan/post/?board=" + board + "&num=" + postID;
+        case 'v':
+          return "//ff.b4k.co/_/api/chan/post/?board=" + board + "&num=" + postID;
       }
     },
     to: function(data) {
@@ -5310,13 +5314,17 @@
         case 'fit':
         case 'int':
         case 'k':
+        case 'm':
         case 'mlp':
         case 'r9k':
         case 'wsg':
-          url = Redirect.path('https://desustorage.org', 'foolfuuka', data);
+          url = Redirect.path('//desustorage.org', 'foolfuuka', data);
           break;
         case 'vg':
           url = Redirect.path('https://boards.fireden.net', 'foolfuuka', data);
+          break;
+        case 'v':
+          url = Redirect.path('//ff.b4k.co', 'foolfuuka', data);
           break;
         default:
           if (threadID) {
