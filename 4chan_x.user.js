@@ -199,6 +199,7 @@
       spoiler: ['ctrl+s', 'Quick spoiler tags'],
       sageru: ['alt+n', 'Sage keybind'],
       code: ['alt+c', 'Quick code tags'],
+      sjis: ['alt+a', 'SJIS tags'],
       submit: ['alt+s', 'Submit post'],
       watch: ['w', 'Watch thread'],
       update: ['u', 'Update now'],
@@ -1502,6 +1503,13 @@
             return;
           }
           Keybinds.tags('code', target);
+          break;
+        case Conf.sjis﻿:
+          if (target.nodeName !== 'TEXTAREA') {
+            return;
+          }
+          Keybinds.tags('sjis﻿', target);
+          $.addClass(QR.el, 'sjis-preview');
           break;
         case Conf.sageru:
           $("[name=email]", QR.el).value = "sage";
@@ -6477,6 +6485,11 @@ h1 {\
 }\
 #qr > form > div:first-child > .field:not(#dump) {\
   width: 30%;\
+}\
+#qr.sjis-preview textarea {\
+  font-family: "IPAMonaPGothic","Mona","MS PGothic",monospace;\
+  font-size: 16px;\
+  line-height: 17px;\
 }\
 #qr textarea.field {\
   display: -webkit-box;\
