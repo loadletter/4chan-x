@@ -2071,8 +2071,8 @@
       counter = QR.charaCounter;
       count = this.textLength;
       counter.textContent = count;
-      counter.hidden = count < 1000;
-      return (count > 1500 ? $.addClass : $.rmClass)(counter, 'warning');
+      counter.hidden = count < (QR.maxComment / 2);
+      return (count > QR.maxComment ? $.addClass : $.rmClass)(counter, 'warning');
     },
     drag: function(e) {
       var toggle;
@@ -2413,6 +2413,7 @@
       QR.spoiler = !!$('input[name=spoiler]');
       spoiler = $('#spoilerLabel', QR.el);
       spoiler.hidden = !QR.spoiler;
+      QR.maxComment = g.BOARD === 'jp' ? 5000 : 2000;
       QR.charaCounter = $('#charCount', QR.el);
       ta = $('textarea', QR.el);
       if (!g.REPLY) {
