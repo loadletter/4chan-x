@@ -5163,12 +5163,16 @@
         case 'vr':
           return "https://warosu.org/" + board + "/full_image/" + filename;
         case 'asp':
+        case 'b':
         case 'cm':
+        case 'gd':
         case 'h':
         case 'hc':
         case 'hm':
         case 'n':
+        case 'out':
         case 'p':
+        case 'po':
         case 'r':
         case 's':
         case 'soc':
@@ -5219,11 +5223,14 @@
         case 'asp':
         case 'b':
         case 'cm':
+        case 'gd':
         case 'h':
         case 'hc':
         case 'hm':
         case 'n':
+        case 'out':
         case 'p':
+        case 'po':
         case 'r':
         case 's':
         case 'soc':
@@ -5246,7 +5253,7 @@
         case 'vg':
           return "https://boards.fireden.net/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'v':
-          return "//ff.b4k.co/_/api/chan/post/?board=" + board + "&num=" + postID;
+          return "//arch.b4k.co/_/api/chan/post/?board=" + board + "&num=" + postID;
       }
     },
     to: function(data) {
@@ -5303,11 +5310,14 @@
         case 'asp':
         case 'b':
         case 'cm':
+        case 'gd':
         case 'h':
         case 'hc':
         case 'hm':
         case 'n':
+        case 'out':
         case 'p':
+        case 'po':
         case 'r':
         case 's':
         case 'soc':
@@ -5333,7 +5343,7 @@
           url = Redirect.path('https://boards.fireden.net', 'foolfuuka', data);
           break;
         case 'v':
-          url = Redirect.path('//ff.b4k.co', 'foolfuuka', data);
+          url = Redirect.path('//arch.b4k.co', 'foolfuuka', data);
           break;
         default:
           if (threadID) {
