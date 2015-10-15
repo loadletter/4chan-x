@@ -1744,9 +1744,13 @@
 
   Nav = {
     init: function() {
-      var next, prev, span;
+      var top, next, prev, span;
       span = $.el('span', {
         id: 'navlinks'
+      });
+      top = $.el('a', {
+        textContent: '➚',
+        href: 'javascript:;'
       });
       prev = $.el('a', {
         textContent: '▲',
@@ -1760,11 +1764,15 @@
         textContent: 'QR',
         href: 'javascript:;'
       });
+      $.on(top, 'click', this.top);
       $.on(prev, 'click', this.prev);
       $.on(next, 'click', this.next);
       $.on(openQR, 'click', this.openQR);
-      $.add(span, [openQR, $.tn(' '), prev, $.tn(' '), next]);
+      $.add(span, [top, $.tn(' '), openQR, $.tn(' '), prev, $.tn(' '), next]);
       return $.add(d.body, span);
+    },
+    top: function() {
+      return window.scrollTo(0, 0);
     },
     prev: function() {
       if (g.REPLY) {
@@ -6747,4 +6755,4 @@ div.opContainer {\
 
   Main.init();
 
-}).call(this);
+}).call(this)
