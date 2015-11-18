@@ -40,6 +40,7 @@ ARCHIVES_URL = "https://github.com/MayhemYDG/archives.json/raw/master/archives.j
 ARCHIVES_JSON = os.path.join(os.path.dirname(os.path.abspath(__file__)), "archives.json")
 PRIORITIES_JSON = os.path.join(os.path.dirname(os.path.abspath(__file__)), "priorities.json")
 
+ARCHIVE_HIDDEN = [27,]
 
 def jsonloadf(filename):
 	with open(filename) as f:
@@ -98,10 +99,24 @@ class Build:
 					b[e].append(n)
 				else:
 					b[e] = [n]
-		self.singleboards = {k: v[0] for k, v in b.iteritems() if len(v) == 1}
-		self.singlefiles = {k: v[0] for k, v in f.iteritems() if len(v) == 1}
-		self.redundantboards = {k: v for k, v in b.iteritems() if len(v) > 1}
-		self.redundantfiles = {k: v for k, v in f.iteritems() if len(v) > 1}
+		def filterhidden(value):
+			return filter(lambda x: not (self.data[x]['uid'] in ARCHIVE_HIDDEN and len(value) > 1), value)
+		self.singleboards = {}
+		self.redundantboards = {}
+		for k, v in b.iteritems():
+			v2 = filterhidden(v)
+			if len(v2) == 1:
+				self.singleboards[k] = v2[0]
+			if len(v2) > 1:
+				self.redundantboards[k] = v2
+		self.singlefiles = {}
+		self.redundantfiles = {}
+		for k, v in f.iteritems():
+			v2 = filterhidden(v)
+			if len(v2) == 1:
+				self.singlefiles[k] = v2[0]
+			if len(v2) > 1:
+				self.redundantfiles[k] = v2
 	
 	def pprint(self, t):
 		print >>self.msg, "%s:" % t
@@ -135,6 +150,8 @@ class Build:
 		self.separator()
 		print >>self.msg, "archives:"
 		for a in self.data:
+			if a['uid'] in ARCHIVE_HIDDEN:
+				print >>self.msg, "HIDDEN:",
 			print >>self.msg, a['uid'], a['name']
 		self.separator()
 		self.pprint('boards')
