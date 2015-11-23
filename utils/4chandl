@@ -1,42 +1,16 @@
-#!/usr/bin/env python
+#!/bin/sh
 
-import os
-import re
-import sys
-import urllib
-import urllib2
-import urlparse
-import multiprocessing
+set -e
 
-IMAGE_URL_REGEX = r'"(\/\/i\.4cdn\.org\/.+?\/\d+\..+?)"'
-PROCESSES = 8
+if [ "$#" -ne 1 ]
+then
+	echo "Usage: $0 url"
+	exit 1
+fi
 
-
-def download(url, path):
-    if os.path.exists(path):
-        return
-    urllib.urlretrieve(url, path)
-    print "Downloaded: ",url
-
-
-def main(argument):
-    pool = multiprocessing.Pool(PROCESSES)
-    source = urllib2.urlopen(argument).read()
-    tokens = argument.split('/')
-
-    path = '%s#%d' % (tokens[3], int(tokens[5]))
-    if not os.path.exists(path):
-        os.mkdir(path)
-
-    for image_url in filter(lambda x: not ' ' in x, set(re.findall(IMAGE_URL_REGEX, source))):
-        url = urlparse.urljoin(argument, image_url).replace('https', 'http')
-        filename = url.split('/')[-1]
-        path_ = os.path.join(path, filename)
-        pool.apply_async(download, [url, path_])
-    pool.close()
-    pool.join()
-
-
-if __name__ == '__main__':
-    map(main, sys.argv[1:])
-
+dirname=$(echo $1 | egrep -o '(/[a-zA-Z0-9]*/thread/[0-9]*)' | tr -d '/' | sed -e 's/thread/#/g')
+echo "Destination: $dirname"
+mkdir -p $dirname
+images=$(wget -O - $1 | egrep -o '(i.4cdn.org/[a-zA-Z0-9]*/[0-9]*\.[a-zA-Z]*)' | sed 's/^/http:\/\//g')
+echo "File count: $(echo "$images" | wc -l)"
+echo "$images" | wget -P $dirname -nc -nv -i -
