@@ -11,6 +11,6 @@ fi
 dirname=$(echo $1 | egrep -o '(/[a-zA-Z0-9]*/thread/[0-9]*)' | tr -d '/' | sed -e 's/thread/#/g')
 echo "Destination: $dirname"
 mkdir -p $dirname
-images=$(wget -O - $1 | egrep -o '(i.4cdn.org/[a-zA-Z0-9]*/[0-9]*\.[a-zA-Z]*)' | sed 's/^/http:\/\//g')
+images=$(wget -O - $1 | egrep -o '(i.4cdn.org/[a-zA-Z0-9]*/[0-9]*\.[a-zA-Z]*)' | sort | uniq | sed 's/^/http:\/\//g')
 echo "File count: $(echo "$images" | wc -l)"
-echo "$images" | wget -P $dirname -nc -nv -i -
+echo "$images" | wget -P $dirname -nc -i -
