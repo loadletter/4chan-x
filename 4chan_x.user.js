@@ -5148,7 +5148,6 @@
         case 'cgl':
         case 'g':
         case 'mu':
-        case 'qa':
           return "https://archive.rebeccablacktech.com/" + board + "/full_image/" + filename;
         case '3':
         case 'biz':
@@ -5190,6 +5189,7 @@
         case 'k':
         case 'm':
         case 'mlp':
+        case 'qa':
         case 'r9k':
         case 'trash':
         case 'wsg':
@@ -5251,6 +5251,7 @@
         case 'k':
         case 'm':
         case 'mlp':
+        case 'qa':
         case 'r9k':
         case 'trash':
         case 'wsg':
@@ -5297,7 +5298,6 @@
           break;
         case 'cgl':
         case 'mu':
-        case 'qa':
           url = Redirect.path('https://archive.rebeccablacktech.com', 'fuuka', data);
           break;
         case '3':
@@ -5343,6 +5343,7 @@
         case 'k':
         case 'm':
         case 'mlp':
+        case 'qa':
         case 'r9k':
         case 'trash':
         case 'wsg':
