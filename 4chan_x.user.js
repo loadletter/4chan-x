@@ -3483,7 +3483,7 @@
         a.href = href.replace(/(\$\d)/g, function(parameter) {
           switch (parameter) {
             case '$1':
-              return isArchived ? img.firstChild.src : 'http://t.4cdn.org' + img.pathname.replace(/(\d+)\..+$/, '$1s.jpg');
+              return isArchived ? img.firstChild.src : 'http://i.4cdn.org' + img.pathname.replace(/(\d+)\..+$/, '$1s.jpg');
             case '$2':
               return img.href;
             case '$3':
@@ -3526,7 +3526,7 @@
       s = img.style;
       s.maxHeight = s.maxWidth = /\bop\b/.test(post["class"]) ? '250px' : '125px';
       post.fileInfo.firstElementChild.textContent = post.el.getElementsByClassName('fileText')[0].title;
-      return img.src = "//t.4cdn.org" + (img.parentNode.pathname.replace(/(\d+).+$/, '$1s.jpg'));
+      return img.src = "//i.4cdn.org" + (img.parentNode.pathname.replace(/(\d+).+$/, '$1s.jpg'));
     }
   };
 
@@ -3960,7 +3960,7 @@
           width: Get.escape(data.media.media_w),
           MD5: Get.escape(data.media.media_hash),
           size: Get.escape(data.media.media_size),
-          turl: Get.escape(data.media.thumb_link || ("//t.4cdn.org/" + board + "/" + data.media.preview_orig)),
+          turl: Get.escape(data.media.thumb_link || ("//i.4cdn.org/" + board + "/" + data.media.preview_orig)),
           theight: Get.escape(data.media.preview_h),
           twidth: Get.escape(data.media.preview_w),
           isSpoiler: data.media.spoiler === '1'
@@ -4067,7 +4067,7 @@
           width: data.w,
           MD5: data.md5,
           size: data.fsize,
-          turl: "//t.4cdn.org/" + board + "/" + data.tim + "s.jpg",
+          turl: "//i.4cdn.org/" + board + "/" + data.tim + "s.jpg",
           theight: data.tn_h,
           twidth: data.tn_w,
           isSpoiler: !!data.spoiler,
