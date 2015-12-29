@@ -5138,13 +5138,8 @@
         case 'e':
         case 'w':
         case 'wg':
+        case 'wsr':
           return "//archive.nyafuu.org/" + board + "/full_image/" + filename;
-        case 'd':
-        case 'i':
-        case 'lgbt':
-        case 't':
-        case 'u':
-          return "//archive.loveisover.me/" + board + "/full_image/" + filename;
         case 'cgl':
         case 'g':
         case 'mu':
@@ -5183,6 +5178,7 @@
         case 'aco':
         case 'an':
         case 'co':
+        case 'd':
         case 'fit':
         case 'his':
         case 'int':
@@ -5216,13 +5212,8 @@
         case 'e':
         case 'w':
         case 'wg':
+        case 'wsr':
           return "//archive.nyafuu.org/_/api/chan/post/?board=" + board + "&num=" + postID;
-        case 'd':
-        case 'i':
-        case 'lgbt':
-        case 't':
-        case 'u':
-          return "//archive.loveisover.me/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'asp':
         case 'b':
         case 'cm':
@@ -5245,6 +5236,7 @@
         case 'aco':
         case 'an':
         case 'co':
+        case 'd':
         case 'fit':
         case 'his':
         case 'int':
@@ -5260,7 +5252,11 @@
         case 'vg':
           return "https://boards.fireden.net/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'gif':
+        case 'i':
+        case 'lgbt':
         case 'news':
+        case 't':
+        case 'u':
           return "https://4ch.be/_/api/chan/post/?board=" + board + "&num=" + postID;
       }
     },
@@ -5287,14 +5283,8 @@
         case 'e':
         case 'w':
         case 'wg':
+        case 'wsr':
           url = Redirect.path('//archive.nyafuu.org', 'foolfuuka', data);
-          break;
-        case 'd':
-        case 'i':
-        case 'lgbt':
-        case 't':
-        case 'u':
-          url = Redirect.path('//archive.loveisover.me', 'foolfuuka', data);
           break;
         case 'cgl':
         case 'mu':
@@ -5337,6 +5327,7 @@
         case 'aco':
         case 'an':
         case 'co':
+        case 'd':
         case 'fit':
         case 'his':
         case 'int':
@@ -5354,7 +5345,11 @@
           url = Redirect.path('https://boards.fireden.net', 'foolfuuka', data);
           break;
         case 'gif':
+        case 'i':
+        case 'lgbt':
         case 'news':
+        case 't':
+        case 'u':
           url = Redirect.path('https://4ch.be', 'foolfuuka', data);
           break;
         default:
