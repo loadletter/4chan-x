@@ -5841,7 +5841,7 @@
       }
       switch (location.hostname) {
         case 'sys.4chan.org':
-          if (/report/.test(location.search)) {
+          if (/report/.test(location.search) && Conf['Alternative captcha']) {
             asap = function() {
               var field, form;
               if (!(field = $.id('recaptcha_response_field'))) {
@@ -5851,15 +5851,16 @@
               form = $('form');
               $.on(field, 'keydown', function(e) {
                 if (e.keyCode === 8 && !e.target.value) {
-                  return window.location = 'javascript:Recaptcha.reload()';
+                  $.globalEval('Recaptcha.reload("t");');
                 }
               });
+              field.focus();
               return $.on(form, 'submit', function(e) {
                 e.preventDefault();
                 return form.submit();
               });
             };
-            //asap();
+            asap();
           }
           return;
         case 'i.4cdn.org':
