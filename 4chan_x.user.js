@@ -4723,7 +4723,13 @@
       a = $('a[title="Link to this post"]', $.id(this.parentNode.dataset.rootid));
       url = "//sys.4chan.org/" + (a.pathname.split('/')[1]) + "/imgboard.php?mode=report&no=" + this.parentNode.dataset.id;
       id = Date.now();
-      set = "toolbar=0,scrollbars=1,location=0,status=1,menubar=0,resizable=1,width=685,height=200";
+      set = "toolbar=0,scrollbars=1,location=0,status=1,menubar=0,resizable=1,";
+      if (Conf['Alternative captcha']) {
+          url += "&altc=1";
+          set += 'width=350,height=275';
+      } else {
+          set += 'width=400,height=550';
+      }
       return window.open(url, id, set);
     }
   };
