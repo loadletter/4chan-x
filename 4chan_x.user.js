@@ -5184,8 +5184,8 @@
         case 'aco':
         case 'an':
         case 'co':
-        case 'd':
         case 'fit':
+        case 'gif':
         case 'his':
         case 'int':
         case 'k':
@@ -5199,6 +5199,12 @@
         case 'v':
         case 'vg':
           return "https://boards.fireden.net/" + board + "/full_image/" + filename;
+        case 'd':
+        case 'i':
+        case 'lgbt':
+        case 't':
+        case 'u':
+          return "http://deploy.loveisover.me/" + board + "/full_image/" + filename;
       }
     },
     post: function(board, postID) {
@@ -5242,8 +5248,8 @@
         case 'aco':
         case 'an':
         case 'co':
-        case 'd':
         case 'fit':
+        case 'gif':
         case 'his':
         case 'int':
         case 'k':
@@ -5257,13 +5263,12 @@
         case 'v':
         case 'vg':
           return "https://boards.fireden.net/_/api/chan/post/?board=" + board + "&num=" + postID;
-        case 'gif':
+        case 'd':
         case 'i':
         case 'lgbt':
-        case 'news':
         case 't':
         case 'u':
-          return "https://4ch.be/_/api/chan/post/?board=" + board + "&num=" + postID;
+          return "http://deploy.loveisover.me/_/api/chan/post/?board=" + board + "&num=" + postID;
       }
     },
     to: function(data) {
@@ -5333,8 +5338,8 @@
         case 'aco':
         case 'an':
         case 'co':
-        case 'd':
         case 'fit':
+        case 'gif':
         case 'his':
         case 'int':
         case 'k':
@@ -5350,13 +5355,12 @@
         case 'vg':
           url = Redirect.path('https://boards.fireden.net', 'foolfuuka', data);
           break;
-        case 'gif':
+        case 'd':
         case 'i':
         case 'lgbt':
-        case 'news':
         case 't':
         case 'u':
-          url = Redirect.path('https://4ch.be', 'foolfuuka', data);
+          url = Redirect.path('http://deploy.loveisover.me', 'foolfuuka', data);
           break;
         default:
           if (threadID) {
