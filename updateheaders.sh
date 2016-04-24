@@ -7,4 +7,10 @@ vers=$(head -26 4chan_x.meta.js | grep "// @version" | awk '{print $3}')
 versline=$(grep -n "^    version: .$vers.," 4chan_x.user.js | cut -f1 -d':')
 echo -n "postMessage({version:'"$vers"'},'*')" | tee latest.js
 echo
-echo -e "\e[0;31mREMEMBER TO CHANGE version @ LINE $versline (before CSS) and TO TAG THE RELEASE and to have utils/config in .git/config\e[0m"
+
+if [[ -z $versline ]]; then
+	echo -e "\e[0;31mERROR: change version in Main (before CSS)\e[0m"
+	exit 1
+fi
+
+echo -e "\nRemember TO TAG THE RELEASE and to have utils/config in .git/config"
