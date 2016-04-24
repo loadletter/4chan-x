@@ -5942,9 +5942,11 @@
         });
       }
       if (Conf['Alternative captcha']) {
-        $.add(d.head, $.el('script', {
-          src: '//www.google.com/recaptcha/api/js/recaptcha_ajax.js'
-        }));
+        $.ready(function() {
+          $.add(d.head, $.el('script', {
+            src: '//www.google.com/recaptcha/api/js/recaptcha_ajax.js'
+          }));
+        });
       }
       g.hiddenReplies = $.get("hiddenReplies/" + g.BOARD + "/", {});
       if ($.get('lastChecked', 0) < now - 1 * $.DAY) {
