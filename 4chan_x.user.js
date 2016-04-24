@@ -3519,7 +3519,7 @@
     node: function(post) {
       var img, s;
       img = post.img;
-      if (!(img && /^Spoiler/.test(post.fileInfo.firstElementChild.textContent)) || post.isInlined && !post.isCrosspost || post.isArchived) {
+      if (!(img && post.fileInfo.firstElementChild && /^Spoiler/.test(post.fileInfo.firstElementChild.textContent)) || post.isInlined && !post.isCrosspost || post.isArchived) {
         return;
       }
       img.removeAttribute('style');
