@@ -5142,6 +5142,7 @@
           return "//archive.4plebs.org/" + board + "/full_image/" + filename;
         case 'c':
         case 'e':
+        case 'news':
         case 'w':
         case 'wg':
         case 'wsr':
@@ -5222,6 +5223,7 @@
           return "//archive.4plebs.org/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'c':
         case 'e':
+        case 'news':
         case 'w':
         case 'wg':
         case 'wsr':
@@ -5292,6 +5294,7 @@
           break;
         case 'c':
         case 'e':
+        case 'news':
         case 'w':
         case 'wg':
         case 'wsr':
