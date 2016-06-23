@@ -5140,9 +5140,15 @@
         case 'tv':
         case 'x':
           return "//archive.4plebs.org/" + board + "/full_image/" + filename;
+        case 'asp':
         case 'c':
         case 'e':
+        case 'n':
         case 'news':
+        case 'out':
+        case 'p':
+        case 'toy':
+        case 'vp':
         case 'w':
         case 'wg':
         case 'wsr':
@@ -5163,24 +5169,6 @@
         case 'tg':
         case 'vr':
           return "https://warosu.org/" + board + "/full_image/" + filename;
-        case 'asp':
-        case 'b':
-        case 'cm':
-        case 'gd':
-        case 'h':
-        case 'hc':
-        case 'hm':
-        case 'n':
-        case 'out':
-        case 'p':
-        case 'po':
-        case 'r':
-        case 's':
-        case 'soc':
-        case 'toy':
-        case 'vp':
-        case 'y':
-          return "//fgts.jp/" + board + "/full_image/" + filename;
         case 'a':
         case 'aco':
         case 'an':
@@ -5196,16 +5184,31 @@
         case 'r9k':
         case 'trash':
         case 'wsg':
-          return "//desustorage.org/" + board + "/full_image/" + filename;
+          return "//cuckchan.org/" + board + "/full_image/" + filename;
+        case 'cm':
         case 'v':
         case 'vg':
+        case 'y':
           return "https://boards.fireden.net/" + board + "/full_image/" + filename;
         case 'd':
         case 'i':
         case 'lgbt':
         case 't':
         case 'u':
-          return "http://deploy.loveisover.me/" + board + "/full_image/" + filename;
+          return "http://archive.loveisover.me/" + board + "/full_image/" + filename;
+        case 'gd':
+        case 'po':
+        case 'qst':
+          return "http://archived.moe/" + board + "/full_image/" + filename;
+        case 'b':
+          return "http://thebarchive.com/" + board + "/full_image/" + filename;
+        case 'h':
+        case 'hc':
+        case 'hm':
+        case 'r':
+        case 's':
+        case 'soc':
+          return "http://archiveofsins.com/" + board + "/full_image/" + filename;
       }
     },
     post: function(board, postID) {
@@ -5221,31 +5224,19 @@
         case 'tv':
         case 'x':
           return "//archive.4plebs.org/_/api/chan/post/?board=" + board + "&num=" + postID;
+        case 'asp':
         case 'c':
         case 'e':
+        case 'n':
         case 'news':
+        case 'out':
+        case 'p':
+        case 'toy':
+        case 'vp':
         case 'w':
         case 'wg':
         case 'wsr':
           return "//archive.nyafuu.org/_/api/chan/post/?board=" + board + "&num=" + postID;
-        case 'asp':
-        case 'b':
-        case 'cm':
-        case 'gd':
-        case 'h':
-        case 'hc':
-        case 'hm':
-        case 'n':
-        case 'out':
-        case 'p':
-        case 'po':
-        case 'r':
-        case 's':
-        case 'soc':
-        case 'toy':
-        case 'vp':
-        case 'y':
-          return "//fgts.jp/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'a':
         case 'aco':
         case 'an':
@@ -5261,16 +5252,32 @@
         case 'r9k':
         case 'trash':
         case 'wsg':
-          return "//desustorage.org/_/api/chan/post/?board=" + board + "&num=" + postID;
+          return "//cuckchan.org/_/api/chan/post/?board=" + board + "&num=" + postID;
+        case 'cm':
         case 'v':
         case 'vg':
+        case 'y':
           return "https://boards.fireden.net/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'd':
         case 'i':
         case 'lgbt':
         case 't':
         case 'u':
-          return "http://deploy.loveisover.me/_/api/chan/post/?board=" + board + "&num=" + postID;
+          return "http://archive.loveisover.me/_/api/chan/post/?board=" + board + "&num=" + postID;
+        case 'hm':
+        case 'qst':
+          return "//archive.b-stats.org/_/api/chan/post/?board=" + board + "&num=" + postID;
+        case 'gd':
+        case 'po':
+          return "http://archived.moe/_/api/chan/post/?board=" + board + "&num=" + postID;
+        case 'b':
+          return "http://thebarchive.com/_/api/chan/post/?board=" + board + "&num=" + postID;
+        case 'h':
+        case 'hc':
+        case 'r':
+        case 's':
+        case 'soc':
+          return "http://archiveofsins.com/_/api/chan/post/?board=" + board + "&num=" + postID;
       }
     },
     to: function(data) {
@@ -5292,9 +5299,15 @@
         case 'x':
           url = Redirect.path('//archive.4plebs.org', 'foolfuuka', data);
           break;
+        case 'asp':
         case 'c':
         case 'e':
+        case 'n':
         case 'news':
+        case 'out':
+        case 'p':
+        case 'toy':
+        case 'vp':
         case 'w':
         case 'wg':
         case 'wsr':
@@ -5318,25 +5331,6 @@
         case 'vr':
           url = Redirect.path('https://warosu.org', 'fuuka', data);
           break;
-        case 'asp':
-        case 'b':
-        case 'cm':
-        case 'gd':
-        case 'h':
-        case 'hc':
-        case 'hm':
-        case 'n':
-        case 'out':
-        case 'p':
-        case 'po':
-        case 'r':
-        case 's':
-        case 'soc':
-        case 'toy':
-        case 'vp':
-        case 'y':
-          url = Redirect.path('//fgts.jp', 'foolfuuka', data);
-          break;
         case 'a':
         case 'aco':
         case 'an':
@@ -5352,10 +5346,12 @@
         case 'r9k':
         case 'trash':
         case 'wsg':
-          url = Redirect.path('//desustorage.org', 'foolfuuka', data);
+          url = Redirect.path('//cuckchan.org', 'foolfuuka', data);
           break;
+        case 'cm':
         case 'v':
         case 'vg':
+        case 'y':
           url = Redirect.path('https://boards.fireden.net', 'foolfuuka', data);
           break;
         case 'd':
@@ -5363,7 +5359,25 @@
         case 'lgbt':
         case 't':
         case 'u':
-          url = Redirect.path('http://deploy.loveisover.me', 'foolfuuka', data);
+          url = Redirect.path('http://archive.loveisover.me', 'foolfuuka', data);
+          break;
+        case 'hm':
+        case 'qst':
+          url = Redirect.path('//archive.b-stats.org', 'foolfuuka', data);
+          break;
+        case 'gd':
+        case 'po':
+          url = Redirect.path('http://archived.moe', 'foolfuuka', data);
+          break;
+        case 'b':
+          url = Redirect.path('http://thebarchive.com', 'foolfuuka', data);
+          break;
+        case 'h':
+        case 'hc':
+        case 'r':
+        case 's':
+        case 'soc':
+          url = Redirect.path('http://archiveofsins.com', 'foolfuuka', data);
           break;
         default:
           if (threadID) {

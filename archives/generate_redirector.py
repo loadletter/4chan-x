@@ -36,11 +36,11 @@ RETURN_REDIRECT = """          url = Redirect.path('%s', '%s', data);
           break;
 """
 
-ARCHIVES_URL = "https://github.com/MayhemYDG/archives.json/raw/master/archives.json"
+ARCHIVES_URL = "https://mayhemydg.github.io/archives.json/archives.json"
 ARCHIVES_JSON = os.path.join(os.path.dirname(os.path.abspath(__file__)), "archives.json")
 PRIORITIES_JSON = os.path.join(os.path.dirname(os.path.abspath(__file__)), "priorities.json")
 
-ARCHIVE_HIDDEN = [27,]
+ARCHIVE_HIDDEN = [29]
 
 def jsonloadf(filename):
 	with open(filename) as f:
