@@ -5184,7 +5184,7 @@
         case 'r9k':
         case 'trash':
         case 'wsg':
-          return "//cuckchan.org/" + board + "/full_image/" + filename;
+          return "//desuarchive.org/" + board + "/full_image/" + filename;
         case 'cm':
         case 'v':
         case 'vg':
@@ -5252,7 +5252,7 @@
         case 'r9k':
         case 'trash':
         case 'wsg':
-          return "//cuckchan.org/_/api/chan/post/?board=" + board + "&num=" + postID;
+          return "//desuarchive.org/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'cm':
         case 'v':
         case 'vg':
@@ -5346,7 +5346,7 @@
         case 'r9k':
         case 'trash':
         case 'wsg':
-          url = Redirect.path('//cuckchan.org', 'foolfuuka', data);
+          url = Redirect.path('//desuarchive.org', 'foolfuuka', data);
           break;
         case 'cm':
         case 'v':
