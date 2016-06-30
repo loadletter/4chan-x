@@ -32,7 +32,7 @@ Once one of those or similar is installed, click on the following link: [4chan_x
 6. Start dwb
 
 ##Changelog
-- 2.40.65: Updated archives
+- 2.40.65/66: Updated archives
 - 2.40.64: Some bugfixes, updated archives
 - 2.40.63: Updated archives
 - 2.40.62: Updated report window, legacy captcha with some enhancements
