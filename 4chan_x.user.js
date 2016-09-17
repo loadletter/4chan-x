@@ -84,7 +84,7 @@
  */
 
 (function() {
-  var $, $$, Anonymize, ArchiveLink, AutoGif, Build, CatalogLinks, Conf, Config, DeleteLink, DownloadLink, ExpandComment, ExpandThread, Favicon, FileInfo, Filter, Get, ImageExpand, ImageHover, Keybinds, Main, Menu, Nav, Options, QR, QuoteBacklink, QuoteCT, QuoteInline, QuoteOP, QuoteYou, QuotePreview, Quotify, Redirect, RelativeDates, RemoveSlug, ReplaceJpg, ReplacePng, ReplyHiding, ReportLink, RevealSpoilers, Sauce, StrikethroughQuotes, ThreadHiding, ThreadStats, Time, TitlePost, UI, Unread, Updater, Watcher, d, g, _base, CaptchaIsSetup;
+  var $, $$, AlwaysHTTPS, Anonymize, ArchiveLink, AutoGif, Build, CatalogLinks, Conf, Config, DeleteLink, DownloadLink, ExpandComment, ExpandThread, Favicon, FileInfo, Filter, Get, ImageExpand, ImageHover, Keybinds, Main, Menu, Nav, Options, QR, QuoteBacklink, QuoteCT, QuoteInline, QuoteOP, QuoteYou, QuotePreview, Quotify, Redirect, RelativeDates, RemoveSlug, ReplaceJpg, ReplacePng, ReplyHiding, ReportLink, RevealSpoilers, Sauce, StrikethroughQuotes, ThreadHiding, ThreadStats, Time, TitlePost, UI, Unread, Updater, Watcher, d, g, _base, CaptchaIsSetup;
   CaptchaIsSetup = false;
   
   /* Your posts to add (You) backlinks to */
@@ -106,6 +106,7 @@
         'Index Navigation': [true, 'Navigate to previous / next thread'],
         'Reply Navigation': [false, 'Navigate to top / bottom of thread'],
         'Remove Slug': [false, 'Cut useless comment/post from the URL'],
+        'Always HTTPS': [false, 'Redirect pages to HTTPS'],
         'Check for Updates': [true, 'Check for updated versions of 4chan X']
       },
       Filtering: {
@@ -5781,6 +5782,32 @@
     }
   };
 
+  AlwaysHTTPS = {
+    init: function() {
+      var catalogdiv;
+      var threads = [];
+      if (g.CATALOG) {
+        catalogdiv = document.getElementsByClassName('thread');
+        for (var i = 0; i < catalogdiv.length; i++) {
+          threads.push(catalogdiv[i].firstElementChild);
+        }
+      } else {
+        threads = document.getElementsByClassName('replylink');
+      }
+      return AlwaysHTTPS.upgrade(threads);
+    },
+    upgrade: function(els) {
+      var el;
+      for (var i = 0; i < els.length; i++) {
+        el = els[i];
+        if (el.protocol == 'http:') {
+          el.protocol = 'https:';
+        }
+      }
+      return;
+    }
+  };
+
   CatalogLinks = {
     init: function() {
       var clone, el, nav, _i, _len, _ref;
@@ -5918,6 +5945,9 @@
     catalog: function() {
       if (Conf['Remove Slug']) {
         $.ready(RemoveSlug.init);
+      }
+      if (Conf['Always HTTPS']) {
+        $.ready(AlwaysHTTPS.init);
       }
       if (Conf['Catalog Links']) {
         $.ready(CatalogLinks.init);
@@ -6117,6 +6147,9 @@
       } else {
         if (Conf['Remove Slug']) {
           RemoveSlug.init();
+        }
+        if (Conf['Always HTTPS']) {
+          AlwaysHTTPS.init();
         }
         if (Conf['Thread Hiding']) {
           ThreadHiding.init();
