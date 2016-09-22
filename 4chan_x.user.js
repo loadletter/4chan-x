@@ -5913,6 +5913,10 @@
         window.location.pathname = path.substring(0, path.lastIndexOf('/')) + location.hash;
         return;
       }
+      if (location.protocol == 'http:' && Conf['Always HTTPS']) {
+        window.location.replace(location.href.replace(/^http:\/\//, 'https://'));
+        return;
+      }
       if (Conf['Disable 4chan\'s extension']) {
         settings = JSON.parse(localStorage.getItem('4chan-settings')) || {};
         settings.disableAll = true;
