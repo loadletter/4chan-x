@@ -5155,7 +5155,7 @@
         case 'w':
         case 'wg':
         case 'wsr':
-          return "//archive.nyafuu.org/" + board + "/full_image/" + filename;
+          return "https://archive.nyafuu.org/" + board + "/full_image/" + filename;
         case 'cgl':
         case 'g':
         case 'mu':
@@ -5173,6 +5173,21 @@
         case 'vr':
           return "https://warosu.org/" + board + "/full_image/" + filename;
         case 'a':
+        case 'aco':
+        case 'an':
+        case 'co':
+        case 'fit':
+        case 'gif':
+        case 'his':
+        case 'int':
+        case 'k':
+        case 'm':
+        case 'mlp':
+        case 'qa':
+        case 'r9k':
+        case 'trash':
+        case 'wsg':
+          return "//desuarchive.org/" + board + "/full_image/" + filename;
         case 'cm':
         case 'v':
         case 'vg':
@@ -5187,6 +5202,7 @@
         case 'gd':
         case 'po':
         case 'qst':
+        case 'vip':
           return "http://archived.moe/" + board + "/full_image/" + filename;
         case 'b':
           return "http://thebarchive.com/" + board + "/full_image/" + filename;
@@ -5224,15 +5240,28 @@
         case 'w':
         case 'wg':
         case 'wsr':
-          return "//archive.nyafuu.org/_/api/chan/post/?board=" + board + "&num=" + postID;
+          return "https://archive.nyafuu.org/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'a':
+        case 'aco':
+        case 'an':
+        case 'co':
+        case 'fit':
+        case 'gif':
+        case 'his':
+        case 'int':
+        case 'k':
+        case 'm':
+        case 'mlp':
+        case 'qa':
+        case 'r9k':
+        case 'trash':
+        case 'wsg':
+          return "//desuarchive.org/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'cm':
         case 'v':
         case 'vg':
         case 'y':
           return "https://boards.fireden.net/_/api/chan/post/?board=" + board + "&num=" + postID;
-        case 'mlp':
-          return "//arch.b4k.co/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'd':
         case 'i':
         case 'lgbt':
@@ -5241,22 +5270,10 @@
           return "http://archive.loveisover.me/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'hm':
         case 'qst':
-        case 'trash':
-          return "//archive.b-stats.org/_/api/chan/post/?board=" + board + "&num=" + postID;
-        case 'aco':
-        case 'an':
-        case 'co':
-        case 'fit':
+          return "https://archive.b-stats.org/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'gd':
-        case 'gif':
-        case 'his':
-        case 'int':
-        case 'k':
-        case 'm':
         case 'po':
-        case 'qa':
-        case 'r9k':
-        case 'wsg':
+        case 'vip':
           return "http://archived.moe/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'b':
           return "http://thebarchive.com/_/api/chan/post/?board=" + board + "&num=" + postID;
@@ -5299,7 +5316,7 @@
         case 'w':
         case 'wg':
         case 'wsr':
-          url = Redirect.path('//archive.nyafuu.org', 'foolfuuka', data);
+          url = Redirect.path('https://archive.nyafuu.org', 'foolfuuka', data);
           break;
         case 'cgl':
         case 'mu':
@@ -5320,14 +5337,27 @@
           url = Redirect.path('https://warosu.org', 'fuuka', data);
           break;
         case 'a':
+        case 'aco':
+        case 'an':
+        case 'co':
+        case 'fit':
+        case 'gif':
+        case 'his':
+        case 'int':
+        case 'k':
+        case 'm':
+        case 'mlp':
+        case 'qa':
+        case 'r9k':
+        case 'trash':
+        case 'wsg':
+          url = Redirect.path('//desuarchive.org', 'foolfuuka', data);
+          break;
         case 'cm':
         case 'v':
         case 'vg':
         case 'y':
           url = Redirect.path('https://boards.fireden.net', 'foolfuuka', data);
-          break;
-        case 'mlp':
-          url = Redirect.path('//arch.b4k.co', 'foolfuuka', data);
           break;
         case 'd':
         case 'i':
@@ -5338,23 +5368,11 @@
           break;
         case 'hm':
         case 'qst':
-        case 'trash':
-          url = Redirect.path('//archive.b-stats.org', 'foolfuuka', data);
+          url = Redirect.path('https://archive.b-stats.org', 'foolfuuka', data);
           break;
-        case 'aco':
-        case 'an':
-        case 'co':
-        case 'fit':
         case 'gd':
-        case 'gif':
-        case 'his':
-        case 'int':
-        case 'k':
-        case 'm':
         case 'po':
-        case 'qa':
-        case 'r9k':
-        case 'wsg':
+        case 'vip':
           url = Redirect.path('http://archived.moe', 'foolfuuka', data);
           break;
         case 'b':
