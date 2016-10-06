@@ -175,6 +175,7 @@
     },
     filter: {
       name: ['# Filter any namefags:', '#/^(?!Anonymous$)/'].join('\n'),
+      pass: [''].join('\n'),
       uniqueid: ['# Filter a specific ID:', '#/Txhvk1Tl/'].join('\n'),
       tripcode: ['# Filter any tripfags', '#/^!/'].join('\n'),
       mod: ['# Set a custom class for mods:', '#/Mod$/;highlight:mod;op:yes', '# Set a custom class for moot:', '#/Admin$/;highlight:moot;op:yes'].join('\n'),
@@ -733,6 +734,13 @@
     name: function(post) {
       return $('.name', post.el).textContent;
     },
+    pass: function(post) {
+      var since4pass;
+      if (since4pass = $('.n-pu', post.el)) {
+        return since4pass.title;
+      }
+      return false;
+    },
     uniqueid: function(post) {
       var uid;
       if (uid = $('.posteruid', post.el)) {
@@ -826,7 +834,7 @@
         },
         children: []
       };
-      _ref = [['Name', 'name'], ['Unique ID', 'uniqueid'], ['Tripcode', 'tripcode'], ['Admin/Mod', 'mod'], ['Subject', 'subject'], ['Comment', 'comment'], ['Country', 'country'], ['Filename', 'filename'], ['Image dimensions', 'dimensions'], ['Filesize', 'filesize'], ['Image MD5', 'md5']];
+      _ref = [['Name', 'name'], ['Pass user', 'pass'], ['Unique ID', 'uniqueid'], ['Tripcode', 'tripcode'], ['Admin/Mod', 'mod'], ['Subject', 'subject'], ['Comment', 'comment'], ['Country', 'country'], ['Filename', 'filename'], ['Image dimensions', 'dimensions'], ['Filesize', 'filesize'], ['Image MD5', 'md5']];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         type = _ref[_i];
         entry.children.push(Filter.createSubEntry(type[0], type[1]));
@@ -2769,6 +2777,7 @@
     <select name=filter>\
       <option value=guide>Guide</option>\
       <option value=name>Name</option>\
+      <option value=pass>Pass User</option>\
       <option value=uniqueid>Unique ID</option>\
       <option value=tripcode>Tripcode</option>\
       <option value=mod>Admin/Mod</option>\
