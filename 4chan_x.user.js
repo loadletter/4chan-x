@@ -4048,6 +4048,7 @@
         name: data.name,
         capcode: data.capcode,
         tripcode: data.trip,
+        since4pass: data.since4pass,
         uniqueID: data.id,
         email: data.email ? encodeURI(data.email.replace(/&quot;/g, '"')) : '',
         subject: data.sub,
@@ -4083,8 +4084,8 @@
       @license: https://github.com/4chan/4chan-JS/blob/master/LICENSE
       */
 
-      var a, board, capcode, capcodeClass, capcodeStart, closed, comment, container, date, dateUTC, email, emailEnd, emailStart, ext, file, fileDims, fileHTML, fileInfo, fileSize, fileThumb, filename, flag, flagCode, flagName, href, imgSrc, isClosed, isOP, isSticky, name, postID, quote, shortFilename, spoilerRange, staticPath, sticky, subject, threadID, tripcode, uniqueID, userID, _i, _len, _ref;
-      postID = o.postID, threadID = o.threadID, board = o.board, name = o.name, capcode = o.capcode, tripcode = o.tripcode, uniqueID = o.uniqueID, email = o.email, subject = o.subject, flagCode = o.flagCode, flagName = o.flagName, date = o.date, dateUTC = o.dateUTC, isSticky = o.isSticky, isClosed = o.isClosed, comment = o.comment, file = o.file;
+      var a, board, capcode, capcodeClass, capcodeStart, closed, comment, container, date, dateUTC, email, emailEnd, emailStart, ext, file, fileDims, fileHTML, fileInfo, fileSize, fileThumb, filename, flag, flagCode, flagName, href, imgSrc, isClosed, isOP, isSticky, name, postID, quote, shortFilename, spoilerRange, staticPath, sticky, since4pass, subject, threadID, tripcode, uniqueID, userID, _i, _len, _ref;
+      postID = o.postID, threadID = o.threadID, board = o.board, name = o.name, capcode = o.capcode, tripcode = o.tripcode, since4pass = o.since4pass, uniqueID = o.uniqueID, email = o.email, subject = o.subject, flagCode = o.flagCode, flagName = o.flagName, date = o.date, dateUTC = o.dateUTC, isSticky = o.isSticky, isClosed = o.isClosed, comment = o.comment, file = o.file;
       isOP = postID === threadID;
       staticPath = '//s.4cdn.org';
       if (email) {
@@ -4152,13 +4153,14 @@
       } else {
         fileHTML = '';
       }
+      since4pass = since4pass ? ' <span title="Pass user since ' + since4pass + '" class="n-pu"></span>' : '';
       tripcode = tripcode ? ' <span class="postertrip">' + tripcode + '</span>' : '';
       sticky = isSticky ? ' <img src="//s.4cdn.org/image/sticky.gif" alt="Sticky" title="Sticky" style="height:16px;width:16px">' : '';
       closed = isClosed ? ' <img src="//s.4cdn.org/image/closed.gif" alt="Closed" title="Closed" style="height:16px;width:16px">' : '';
       container = $.el('div', {
         id: 'pc' + postID,
         className: 'postContainer ' + (isOP ? 'op' : 'reply') + 'Container',
-        innerHTML: (isOP ? '' : '<div class="sideArrows" id="sa' + postID + '">&gt;&gt;</div>') + '<div id="p' + postID + '" class="post ' + (isOP ? 'op' : 'reply') + (capcode === 'admin_highlight' ? ' highlightPost' : '') + '"><div class="postInfoM mobile" id="pim' + postID + '"><span class="nameBlock' + capcodeClass + '"><span class="name">' + (name || '') + '</span>' + tripcode + capcodeStart + capcode + userID + flag + sticky + closed + '<br>' + subject + '</span><span class="dateTime postNum" data-utc="' + dateUTC + '">' + date + '<br><em><a href="/' + board + '/thread/' + threadID + '#p' + postID + '">No.</a><a href="' + (g.REPLY && g.THREAD_ID === threadID ? 'javascript:quote(' + postID + ')' : '/' + board + '/thread/' + threadID + '#q' + postID) + '">' + postID + '</a></em></span></div>' + (isOP ? fileHTML : '') + '<div class="postInfo desktop" id="pi' + postID + '"><input type="checkbox" name="' + postID + '" value="delete"> ' + subject + ' <span class="nameBlock' + capcodeClass + '">' + emailStart + '<span class="name">' + (name || '') + '</span>' + tripcode + capcodeStart + emailEnd + capcode + userID + flag + sticky + closed + ' </span> <span class="dateTime" data-utc="' + dateUTC + '">' + date + '</span> <span class="postNum desktop"><a href="/' + board + '/thread/' + threadID + '#p' + postID + '" title="Link to this post">No.</a><a href="' + (g.REPLY && +g.THREAD_ID === threadID ? 'javascript:quote(' + postID + ')' : '/' + board + '/thread/' + threadID + '#q' + postID) + '" title="Reply to this post">' + postID + '</a></span></div>' + (isOP ? '' : fileHTML) + '<blockquote class="postMessage" id="m' + postID + '">' + (comment || '') + '</blockquote> </div>'
+        innerHTML: (isOP ? '' : '<div class="sideArrows" id="sa' + postID + '">&gt;&gt;</div>') + '<div id="p' + postID + '" class="post ' + (isOP ? 'op' : 'reply') + (capcode === 'admin_highlight' ? ' highlightPost' : '') + '"><div class="postInfoM mobile" id="pim' + postID + '"><span class="nameBlock' + capcodeClass + '"><span class="name">' + (name || '') + '</span>' + tripcode + capcodeStart + capcode + since4pass + userID + flag + sticky + closed + '<br>' + subject + '</span><span class="dateTime postNum" data-utc="' + dateUTC + '">' + date + '<br><em><a href="/' + board + '/thread/' + threadID + '#p' + postID + '">No.</a><a href="' + (g.REPLY && g.THREAD_ID === threadID ? 'javascript:quote(' + postID + ')' : '/' + board + '/thread/' + threadID + '#q' + postID) + '">' + postID + '</a></em></span></div>' + (isOP ? fileHTML : '') + '<div class="postInfo desktop" id="pi' + postID + '"><input type="checkbox" name="' + postID + '" value="delete"> ' + subject + ' <span class="nameBlock' + capcodeClass + '">' + emailStart + '<span class="name">' + (name || '') + '</span>' + tripcode + capcodeStart + emailEnd + capcode + since4pass + userID + flag + sticky + closed + ' </span> <span class="dateTime" data-utc="' + dateUTC + '">' + date + '</span> <span class="postNum desktop"><a href="/' + board + '/thread/' + threadID + '#p' + postID + '" title="Link to this post">No.</a><a href="' + (g.REPLY && +g.THREAD_ID === threadID ? 'javascript:quote(' + postID + ')' : '/' + board + '/thread/' + threadID + '#q' + postID) + '" title="Reply to this post">' + postID + '</a></span></div>' + (isOP ? '' : fileHTML) + '<blockquote class="postMessage" id="m' + postID + '">' + (comment || '') + '</blockquote> </div>'
       });
       _ref = $$('.quotelink', container);
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
