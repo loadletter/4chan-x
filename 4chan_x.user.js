@@ -4775,12 +4775,15 @@
       return Menu.addEntry({
         el: a,
         open: function(post) {
-          var fileText;
+          var fileText, fullname;
           if (!post.img) {
             return false;
           }
           a.href = post.img.parentNode.href;
-          a.download = post.fileInfo.title || post.fileInfo.firstElementChild.textContent; /* spoiler || normal */
+          if (fullname = $('.fnfull', post.fileInfo)) {
+            fullname = fullname.textContent;
+          }
+          a.download = post.fileInfo.title || fullname || post.fileInfo.firstElementChild; /* spoiler || truncated || normal */
           return true;
         }
       });
