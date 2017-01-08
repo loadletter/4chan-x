@@ -791,10 +791,11 @@
       if (fileInfo) {
         if (file = $('.fileText > span', fileInfo)) {
           return file.title;
-        } else {
+        } else if (fileInfo.firstElementChild) {
           fname = fileInfo.firstElementChild.childNodes[1] || fileInfo.firstElementChild.childNodes[0];
           return fname.textContent;
         }
+        return false;
       }
       return false;
     },
@@ -3529,13 +3530,17 @@
     node: function(post) {
       var img, s;
       img = post.img;
-      if (!(img && post.fileInfo.firstElementChild && /^Spoiler/.test(post.fileInfo.firstElementChild.textContent)) || post.isInlined && !post.isCrosspost || post.isArchived) {
+      if (!(img && $('.imgspoiler', post.el)) || post.isInlined && !post.isCrosspost || post.isArchived) {
         return;
       }
       img.removeAttribute('style');
       s = img.style;
       s.maxHeight = s.maxWidth = /\bop\b/.test(post["class"]) ? '250px' : '125px';
-      post.fileInfo.firstElementChild.textContent = post.el.getElementsByClassName('fileText')[0].title;
+      if (post.fileInfo.firstElementChild) {
+        post.fileInfo.firstElementChild.textContent = post.el.getElementsByClassName('fileText')[0].title;
+      } else {
+        post.fileInfo.textContent = post.fileInfo.textContent.replace('Spoiler Image', post.el.getElementsByClassName('fileText')[0].title);
+      }
       return img.src = "//i.4cdn.org" + (img.parentNode.pathname.replace(/(\d+).+$/, '$1s.jpg'));
     }
   };
