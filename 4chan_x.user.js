@@ -786,16 +786,10 @@
       return false;
     },
     filename: function(post) {
-      var file, fileInfo, fname;
+      var fileInfo, fname;
       fileInfo = post.fileInfo;
-      if (fileInfo) {
-        if (file = $('.fileText > span', fileInfo)) {
-          return file.title;
-        } else if (fileInfo.firstElementChild) {
-          fname = fileInfo.firstElementChild.childNodes[1] || fileInfo.firstElementChild.childNodes[0];
-          return fname.textContent;
-        }
-        return false;
+      if (fileInfo && (fname = fileInfo.getAttribute('data-filename'))) {
+        return fname;
       }
       return false;
     },
@@ -3536,11 +3530,11 @@
       img.removeAttribute('style');
       s = img.style;
       s.maxHeight = s.maxWidth = /\bop\b/.test(post["class"]) ? '250px' : '125px';
-      if (post.fileInfo.firstElementChild) {
+      /*if (post.fileInfo.firstElementChild) {
         post.fileInfo.firstElementChild.textContent = post.el.getElementsByClassName('fileText')[0].title;
       } else {
         post.fileInfo.textContent = post.fileInfo.textContent.replace('Spoiler Image', post.el.getElementsByClassName('fileText')[0].title);
-      }
+      }*/
       return img.src = "//i.4cdn.org" + (img.parentNode.pathname.replace(/(\d+).+$/, '$1s.jpg'));
     }
   };
@@ -3706,23 +3700,23 @@
       return Main.callbacks.push(this.node);
     },
     node: function(post) {
-      var alt, filename, node, _ref, nameNode;
+      var alt, filename, _ref, nameNode;
       if (post.isInlined && !post.isCrosspost || !post.fileInfo) {
         return;
       }
-      node = post.fileInfo.firstElementChild;
       alt = post.img.alt;
-      filename = (nameNode = $('a', post.fileInfo)) ? nameNode.title || nameNode.textContent : post.fileInfo.title;
+      nameNode = $('a', post.fileInfo);
+      filename = nameNode.title || post.fileInfo.title || nameNode.textContent;
       FileInfo.data = {
         link: post.img.parentNode.href,
-        spoiler: /^Spoiler/.test(alt),
+        spoiler: /^Spoiler/.test(nameNode.textContent),
         size: alt.match(/\d+\.?\d*/)[0],
         unit: alt.match(/\w+$/)[0],
         resolution: post.fileInfo.childNodes[2].textContent.match(/\d+x\d+|PDF/)[0],
         fullname: filename,
         shortname: Build.shortFilename(filename, post.ID === post.threadID)
       };
-      node.setAttribute('data-filename', filename);
+      post.fileInfo.setAttribute('data-filename', filename);
       return post.fileInfo.innerHTML = FileInfo.funk();
     },
     funk: function() {
@@ -4780,15 +4774,11 @@
       return Menu.addEntry({
         el: a,
         open: function(post) {
-          var fileText, fullname;
           if (!post.img) {
             return false;
           }
           a.href = post.img.parentNode.href;
-          if (fullname = $('.fnfull', post.fileInfo)) {
-            fullname = fullname.textContent;
-          }
-          a.download = post.fileInfo.title || fullname || post.fileInfo.firstElementChild; /* spoiler || truncated || normal */
+          a.download = (post.fileInfo && post.fileInfo.getAttribute('data-filename'));
           return true;
         }
       });
