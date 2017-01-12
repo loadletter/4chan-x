@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "======meta.js======="
-head -26 4chan_x.user.js | tee 4chan_x.meta.js
+head -30 4chan_x.user.js | tee 4chan_x.meta.js
 
 echo "=====latest.js======"
 vers=$(head -26 4chan_x.meta.js | grep "// @version" | awk '{print $3}')
