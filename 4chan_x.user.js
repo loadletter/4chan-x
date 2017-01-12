@@ -14,6 +14,10 @@
 // @include        https://a.4cdn.org/*
 // @include        http://i.4cdn.org/*
 // @include        https://i.4cdn.org/*
+// @include        http://is.4chan.org/*
+// @include        https://is.4chan.org/*
+// @include        http://is2.4chan.org/*
+// @include        https://is2.4chan.org/*
 // @grant          GM_getValue
 // @grant          GM_setValue
 // @grant          GM_deleteValue
@@ -5923,6 +5927,8 @@
             asap();
           }
           return;
+        case 'is.4chan.org':
+        case 'is2.4chan.org':
         case 'i.4cdn.org':
           $.ready(function() {
             var url;
