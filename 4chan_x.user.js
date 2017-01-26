@@ -5162,6 +5162,7 @@
         case 'out':
         case 'p':
         case 'toy':
+        case 'vip':
         case 'vp':
         case 'w':
         case 'wg':
@@ -5183,7 +5184,6 @@
         case 'tg':
         case 'vr':
           return "https://warosu.org/" + board + "/full_image/" + filename;
-        case 'a':
         case 'aco':
         case 'an':
         case 'co':
@@ -5199,6 +5199,7 @@
         case 'trash':
         case 'wsg':
           return "//desuarchive.org/" + board + "/full_image/" + filename;
+        case 'a':
         case 'cm':
         case 'v':
         case 'vg':
@@ -5213,7 +5214,6 @@
         case 'gd':
         case 'po':
         case 'qst':
-        case 'vip':
           return "http://archived.moe/" + board + "/full_image/" + filename;
         case 'b':
           return "http://thebarchive.com/" + board + "/full_image/" + filename;
@@ -5247,12 +5247,12 @@
         case 'out':
         case 'p':
         case 'toy':
+        case 'vip':
         case 'vp':
         case 'w':
         case 'wg':
         case 'wsr':
           return "https://archive.nyafuu.org/_/api/chan/post/?board=" + board + "&num=" + postID;
-        case 'a':
         case 'aco':
         case 'an':
         case 'co':
@@ -5268,6 +5268,7 @@
         case 'trash':
         case 'wsg':
           return "//desuarchive.org/_/api/chan/post/?board=" + board + "&num=" + postID;
+        case 'a':
         case 'cm':
         case 'v':
         case 'vg':
@@ -5282,10 +5283,6 @@
         case 'hm':
         case 'qst':
           return "https://archive.b-stats.org/_/api/chan/post/?board=" + board + "&num=" + postID;
-        case 'gd':
-        case 'po':
-        case 'vip':
-          return "http://archived.moe/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'b':
           return "http://thebarchive.com/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'h':
@@ -5323,6 +5320,7 @@
         case 'out':
         case 'p':
         case 'toy':
+        case 'vip':
         case 'vp':
         case 'w':
         case 'wg':
@@ -5347,7 +5345,6 @@
         case 'vr':
           url = Redirect.path('https://warosu.org', 'fuuka', data);
           break;
-        case 'a':
         case 'aco':
         case 'an':
         case 'co':
@@ -5364,6 +5361,7 @@
         case 'wsg':
           url = Redirect.path('//desuarchive.org', 'foolfuuka', data);
           break;
+        case 'a':
         case 'cm':
         case 'v':
         case 'vg':
@@ -5380,11 +5378,6 @@
         case 'hm':
         case 'qst':
           url = Redirect.path('https://archive.b-stats.org', 'foolfuuka', data);
-          break;
-        case 'gd':
-        case 'po':
-        case 'vip':
-          url = Redirect.path('http://archived.moe', 'foolfuuka', data);
           break;
         case 'b':
           url = Redirect.path('http://thebarchive.com', 'foolfuuka', data);
