@@ -5206,25 +5206,25 @@
         case 'vg':
         case 'y':
           return "https://boards.fireden.net/" + board + "/full_image/" + filename;
-        case 'd':
-        case 'i':
-        case 'lgbt':
-        case 't':
-        case 'u':
-          return "http://archive.loveisover.me/" + board + "/full_image/" + filename;
         case 'gd':
         case 'po':
         case 'qst':
-          return "http://archived.moe/" + board + "/full_image/" + filename;
+          return "//archived.moe/" + board + "/full_image/" + filename;
         case 'b':
-          return "http://thebarchive.com/" + board + "/full_image/" + filename;
+          return "//thebarchive.com/" + board + "/full_image/" + filename;
         case 'h':
         case 'hc':
         case 'hm':
         case 'r':
         case 's':
         case 'soc':
-          return "http://archiveofsins.com/" + board + "/full_image/" + filename;
+          return "//archiveofsins.com/" + board + "/full_image/" + filename;
+        case 'd':
+        case 'i':
+        case 'lgbt':
+        case 't':
+        case 'u':
+          return "http://archive.loveisover.me/" + board + "/full_image/" + filename;
       }
     },
     post: function(board, postID) {
@@ -5275,23 +5275,23 @@
         case 'vg':
         case 'y':
           return "https://boards.fireden.net/_/api/chan/post/?board=" + board + "&num=" + postID;
+        case 'hm':
+        case 'qst':
+          return "https://archive.b-stats.org/_/api/chan/post/?board=" + board + "&num=" + postID;
+        case 'b':
+          return "//thebarchive.com/_/api/chan/post/?board=" + board + "&num=" + postID;
+        case 'h':
+        case 'hc':
+        case 'r':
+        case 's':
+        case 'soc':
+          return "//archiveofsins.com/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'd':
         case 'i':
         case 'lgbt':
         case 't':
         case 'u':
           return "http://archive.loveisover.me/_/api/chan/post/?board=" + board + "&num=" + postID;
-        case 'hm':
-        case 'qst':
-          return "https://archive.b-stats.org/_/api/chan/post/?board=" + board + "&num=" + postID;
-        case 'b':
-          return "http://thebarchive.com/_/api/chan/post/?board=" + board + "&num=" + postID;
-        case 'h':
-        case 'hc':
-        case 'r':
-        case 's':
-        case 'soc':
-          return "http://archiveofsins.com/_/api/chan/post/?board=" + board + "&num=" + postID;
       }
     },
     to: function(data) {
@@ -5369,26 +5369,26 @@
         case 'y':
           url = Redirect.path('https://boards.fireden.net', 'foolfuuka', data);
           break;
-        case 'd':
-        case 'i':
-        case 'lgbt':
-        case 't':
-        case 'u':
-          url = Redirect.path('http://archive.loveisover.me', 'foolfuuka', data);
-          break;
         case 'hm':
         case 'qst':
           url = Redirect.path('https://archive.b-stats.org', 'foolfuuka', data);
           break;
         case 'b':
-          url = Redirect.path('http://thebarchive.com', 'foolfuuka', data);
+          url = Redirect.path('//thebarchive.com', 'foolfuuka', data);
           break;
         case 'h':
         case 'hc':
         case 'r':
         case 's':
         case 'soc':
-          url = Redirect.path('http://archiveofsins.com', 'foolfuuka', data);
+          url = Redirect.path('//archiveofsins.com', 'foolfuuka', data);
+          break;
+        case 'd':
+        case 'i':
+        case 'lgbt':
+        case 't':
+        case 'u':
+          url = Redirect.path('http://archive.loveisover.me', 'foolfuuka', data);
           break;
         default:
           if (threadID) {
