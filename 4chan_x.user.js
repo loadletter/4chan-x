@@ -153,7 +153,8 @@
       Posting: {
         'Quick Reply': [true, 'Reply without leaving the page'],
         'Cooldown': [true, 'Prevent "flood detected" errors'],
-        'Alternative captcha': [true, 'Use the classic text recaptcha'],
+        'Alternative captcha': [true, 'Use the classic text recaptcha in replies and report window'],
+        'Alt index captcha': [false, 'Also use text captcha in board index (might not allow creating new threads)'],
         'Auto Submit': [true, 'Submit automatically when captcha has been solved'],
         'Persistent QR': [false, 'The Quick reply won\'t disappear after posting'],
         'Auto Hide QR': [true, 'Automatically hide the quick reply when posting'],
@@ -2346,7 +2347,7 @@
       },
       ready: function() {
         if(!CaptchaIsSetup) {
-          if(!Conf['Alternative captcha']) {
+          if(!Conf['Alternative captcha'] || (!g.REPLY && !Conf['Alt index captcha'])) {
             $.after($('.textarea', QR.el), $.el('input', {
               type: 'hidden',
               id: 'recaptcha_response_field',
@@ -2375,7 +2376,7 @@
         }
       },
       getResponse: function() {
-        if(!Conf['Alternative captcha']) {
+        if(!Conf['Alternative captcha'] || (!g.REPLY && !Conf['Alt index captcha'])) {
           $.globalEval('document.getElementById("captcha_response_field").value = window.grecaptcha.getResponse();');
         }
         return $.id('recaptcha_response_field').value;
@@ -2384,7 +2385,7 @@
         return $.id('recaptcha_challenge_field').value;
       },
       reset: function() {
-        if(!Conf['Alternative captcha']) {
+        if(!Conf['Alternative captcha'] || (!g.REPLY && !Conf['Alt index captcha'])) {
           $.globalEval('window.grecaptcha.reset();');
         } else {
           $.globalEval('window.Recaptcha.reload(); Recaptcha.should_focus = false;');
@@ -2558,7 +2559,7 @@
         pwd: (m = d.cookie.match(/4chan_pass=([^;]+)/)) ? decodeURIComponent(m[1]) : $('input[name=pwd]').value,
       };
       if (QR.captcha.isEnabled) {
-        if(!Conf['Alternative captcha']) {
+        if(!Conf['Alternative captcha'] || (!g.REPLY && !Conf['Alt index captcha'])) {
           post['g-recaptcha-response'] = response;
         } else {
           post['recaptcha_response_field'] = response;
@@ -6003,7 +6004,7 @@
           }));
         });
       }
-      if (Conf['Alternative captcha']) {
+      if (Conf['Alternative captcha'] && (g.REPLY || Conf['Alt index captcha'])) {
         $.ready(function() {
           $.add(d.head, $.el('script', {
             src: '//www.google.com/recaptcha/api/js/recaptcha_ajax.js'
