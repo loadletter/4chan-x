@@ -33,6 +33,7 @@ Once one of those or similar is installed, click on the following link: [4chan_x
 6. Start dwb
 
 ##Changelog
+- 2.40.70: Disable legacy captcha on index page, because 4chan disabled thread creation with text captcha, updated archives
 - 2.40.69: Bugfix
 - 2.40.68: Add support and filtering of since4pass users, updated archives
 - 2.40.65/67: Updated archives
