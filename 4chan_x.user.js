@@ -2377,7 +2377,7 @@
       },
       getResponse: function() {
         if(!Conf['Alternative captcha'] || (!g.REPLY && !Conf['Alt index captcha'])) {
-          $.globalEval('document.getElementById("captcha_response_field").value = window.grecaptcha.getResponse();');
+          $.globalEval('document.getElementById("recaptcha_response_field").value = window.grecaptcha.getResponse();');
         }
         return $.id('recaptcha_response_field').value;
       },
