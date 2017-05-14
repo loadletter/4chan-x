@@ -5147,6 +5147,8 @@
         case 'adv':
         case 'f':
         case 'hr':
+        case 'mlpol':
+        case 'mo':
         case 'o':
         case 'pol':
         case 's4s':
@@ -5155,7 +5157,7 @@
         case 'tv':
         case 'x':
           return "//archive.4plebs.org/" + board + "/full_image/" + filename;
-        case 'asp':
+        case 'bant':
         case 'c':
         case 'e':
         case 'n':
@@ -5185,6 +5187,7 @@
         case 'tg':
         case 'vr':
           return "https://warosu.org/" + board + "/full_image/" + filename;
+        case 'a':
         case 'aco':
         case 'an':
         case 'co':
@@ -5200,15 +5203,22 @@
         case 'trash':
         case 'wsg':
           return "//desuarchive.org/" + board + "/full_image/" + filename;
-        case 'a':
         case 'cm':
         case 'v':
         case 'vg':
         case 'y':
           return "https://boards.fireden.net/" + board + "/full_image/" + filename;
+        case 'can':
+        case 'cock':
+        case 'fap':
+        case 'fitlit':
         case 'gd':
+        case 'mtv':
+        case 'outsoc':
         case 'po':
         case 'qst':
+        case 'spa':
+        case 'vint':
           return "//archived.moe/" + board + "/full_image/" + filename;
         case 'b':
           return "//thebarchive.com/" + board + "/full_image/" + filename;
@@ -5232,6 +5242,8 @@
         case 'adv':
         case 'f':
         case 'hr':
+        case 'mlpol':
+        case 'mo':
         case 'o':
         case 'pol':
         case 's4s':
@@ -5240,7 +5252,7 @@
         case 'tv':
         case 'x':
           return "//archive.4plebs.org/_/api/chan/post/?board=" + board + "&num=" + postID;
-        case 'asp':
+        case 'bant':
         case 'c':
         case 'e':
         case 'n':
@@ -5254,6 +5266,10 @@
         case 'wg':
         case 'wsr':
           return "https://archive.nyafuu.org/_/api/chan/post/?board=" + board + "&num=" + postID;
+        case 'cgl':
+        case 'mu':
+          return "https://archive.rebeccablacktech.com/_/api/chan/post/?board=" + board + "&num=" + postID;
+        case 'a':
         case 'aco':
         case 'an':
         case 'co':
@@ -5269,7 +5285,6 @@
         case 'trash':
         case 'wsg':
           return "//desuarchive.org/_/api/chan/post/?board=" + board + "&num=" + postID;
-        case 'a':
         case 'cm':
         case 'v':
         case 'vg':
@@ -5304,6 +5319,8 @@
         case 'adv':
         case 'f':
         case 'hr':
+        case 'mlpol':
+        case 'mo':
         case 'o':
         case 'pol':
         case 's4s':
@@ -5313,7 +5330,7 @@
         case 'x':
           url = Redirect.path('//archive.4plebs.org', 'foolfuuka', data);
           break;
-        case 'asp':
+        case 'bant':
         case 'c':
         case 'e':
         case 'n':
@@ -5330,7 +5347,7 @@
           break;
         case 'cgl':
         case 'mu':
-          url = Redirect.path('https://archive.rebeccablacktech.com', 'fuuka', data);
+          url = Redirect.path('https://archive.rebeccablacktech.com', 'foolfuuka', data);
           break;
         case '3':
         case 'biz':
@@ -5346,6 +5363,7 @@
         case 'vr':
           url = Redirect.path('https://warosu.org', 'fuuka', data);
           break;
+        case 'a':
         case 'aco':
         case 'an':
         case 'co':
@@ -5362,7 +5380,6 @@
         case 'wsg':
           url = Redirect.path('//desuarchive.org', 'foolfuuka', data);
           break;
-        case 'a':
         case 'cm':
         case 'v':
         case 'vg':
