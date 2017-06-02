@@ -193,7 +193,7 @@
       filesize: [''].join('\n'),
       md5: [''].join('\n')
     },
-    sauces: ['http://iqdb.org/?url=$1', 'http://www.google.com/searchbyimage?image_url=$1', '#http://tineye.com/search?url=$1', '#http://saucenao.com/search.php?db=999&url=$1', '#http://3d.iqdb.org/?url=$1', '#http://regex.info/exif.cgi?imgurl=$2', '# uploaders:', '#http://imgur.com/upload?url=$2;text:Upload to imgur', '#http://omploader.org/upload?url1=$2;text:Upload to omploader', '# "View Same" in archives:', '#https://archive.moe/_/search/image/$3/;text:View same on moe', '#https://archive.moe/$4/search/image/$3/;text:View same on moe /$4/', '#https://rbt.asia/$4/image/$3;text:View same on rbt /$4/'].join('\n'),
+    sauces: ['http://iqdb.org/?url=$1', 'https://www.google.com/searchbyimage?image_url=$1', 'https://www.yandex.com/images/search?rpt=imageview&img_url=$1', '#http://tineye.com/search?url=$1', '#http://saucenao.com/search.php?db=999&url=$1', '#http://3d.iqdb.org/?url=$1', '#http://regex.info/exif.cgi?imgurl=$2', '# uploaders:', '#http://imgur.com/upload?url=$2;text:Upload to imgur', '#http://omploader.org/upload?url1=$2;text:Upload to omploader', '# "View Same" in archives:', '#https://archive.moe/_/search/image/$3/;text:View same on moe', '#https://archive.moe/$4/search/image/$3/;text:View same on moe /$4/', '#https://rbt.asia/$4/image/$3;text:View same on rbt /$4/'].join('\n'),
     time: '20%y-%m-%d(%a)%H:%M',
     backlink: '>>%id',
     fileInfo: '%l (%p%s, %r)',
