@@ -33,6 +33,7 @@ Once one of those or similar is installed, click on the following link: [4chan_x
 6. Start dwb
 
 ##Changelog
+- 2.40.74: Add option to exclude webms from expand all, updated archives
 - 2.40.73: Updated archives
 - 2.40.72: ???
 - 2.40.71: Bugfix
