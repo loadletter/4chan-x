@@ -170,6 +170,11 @@ class Build:
 	def build(self):
 		if not self.data:
 			self.page_dl()
+		#add empty "files" if missing
+		for d in self.data:
+			if not "files" in d:
+				d.update({"files" : []})
+		#do stuff
 		self.boards_list()
 		self.find_redundant()
 		self.prioprint()

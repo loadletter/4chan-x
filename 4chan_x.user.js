@@ -5148,8 +5148,6 @@
         case 'adv':
         case 'f':
         case 'hr':
-        case 'mlpol':
-        case 'mo':
         case 'o':
         case 'pol':
         case 's4s':
@@ -5209,17 +5207,9 @@
         case 'vg':
         case 'y':
           return "https://boards.fireden.net/" + board + "/full_image/" + filename;
-        case 'can':
-        case 'cock':
-        case 'fap':
-        case 'fitlit':
         case 'gd':
-        case 'mtv':
-        case 'outsoc':
         case 'po':
         case 'qst':
-        case 'spa':
-        case 'vint':
           return "//archived.moe/" + board + "/full_image/" + filename;
         case 'b':
           return "//thebarchive.com/" + board + "/full_image/" + filename;
@@ -5243,8 +5233,6 @@
         case 'adv':
         case 'f':
         case 'hr':
-        case 'mlpol':
-        case 'mo':
         case 'o':
         case 'pol':
         case 's4s':
@@ -5320,8 +5308,6 @@
         case 'adv':
         case 'f':
         case 'hr':
-        case 'mlpol':
-        case 'mo':
         case 'o':
         case 'pol':
         case 's4s':
