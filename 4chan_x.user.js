@@ -126,6 +126,7 @@
         'Replace PNG': [false, 'Replace thumbnail with original PNG image'],
         'Replace JPG': [false, 'Replace thumbnail with original JPG image'],
         'Image Expansion': [true, 'Expand images'],
+        'Expand All WebM': [true, 'Expand all WebMs too, can cause high resource usage!'],
         'Image Hover': [false, 'Show full image on mouseover'],
         'Sauce': [true, 'Add sauce to images'],
         'Reveal Spoilers': [false, 'Replace spoiler thumbnails by the original thumbnail'],
@@ -5642,6 +5643,8 @@
           }
           for (_j = 0, _len1 = thumbs.length; _j < _len1; _j++) {
             thumb = thumbs[_j];
+            if (!Conf['Expand All WebM'] && /\.webm$/.test(thumb.parentNode.href))
+              continue;
             ImageExpand.expand(thumb);
           }
         } else {
