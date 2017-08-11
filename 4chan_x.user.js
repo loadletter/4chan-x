@@ -5169,6 +5169,12 @@
         case 'wg':
         case 'wsr':
           return "https://archive.nyafuu.org/" + board + "/full_image/" + filename;
+        case 'd':
+        case 'i':
+        case 'lgbt':
+        case 't':
+        case 'u':
+          return "//archive.loveisover.me/" + board + "/full_image/" + filename;
         case 'cgl':
         case 'g':
         case 'mu':
@@ -5219,12 +5225,6 @@
         case 's':
         case 'soc':
           return "//archiveofsins.com/" + board + "/full_image/" + filename;
-        case 'd':
-        case 'i':
-        case 'lgbt':
-        case 't':
-        case 'u':
-          return "http://archive.loveisover.me/" + board + "/full_image/" + filename;
       }
     },
     post: function(board, postID) {
@@ -5254,6 +5254,12 @@
         case 'wg':
         case 'wsr':
           return "https://archive.nyafuu.org/_/api/chan/post/?board=" + board + "&num=" + postID;
+        case 'd':
+        case 'i':
+        case 'lgbt':
+        case 't':
+        case 'u':
+          return "//archive.loveisover.me/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'cgl':
         case 'mu':
           return "https://archive.rebeccablacktech.com/_/api/chan/post/?board=" + board + "&num=" + postID;
@@ -5289,12 +5295,6 @@
         case 's':
         case 'soc':
           return "//archiveofsins.com/_/api/chan/post/?board=" + board + "&num=" + postID;
-        case 'd':
-        case 'i':
-        case 'lgbt':
-        case 't':
-        case 'u':
-          return "http://archive.loveisover.me/_/api/chan/post/?board=" + board + "&num=" + postID;
       }
     },
     to: function(data) {
@@ -5330,6 +5330,13 @@
         case 'wg':
         case 'wsr':
           url = Redirect.path('https://archive.nyafuu.org', 'foolfuuka', data);
+          break;
+        case 'd':
+        case 'i':
+        case 'lgbt':
+        case 't':
+        case 'u':
+          url = Redirect.path('//archive.loveisover.me', 'foolfuuka', data);
           break;
         case 'cgl':
         case 'mu':
@@ -5385,13 +5392,6 @@
         case 's':
         case 'soc':
           url = Redirect.path('//archiveofsins.com', 'foolfuuka', data);
-          break;
-        case 'd':
-        case 'i':
-        case 'lgbt':
-        case 't':
-        case 'u':
-          url = Redirect.path('http://archive.loveisover.me', 'foolfuuka', data);
           break;
         default:
           if (threadID) {
