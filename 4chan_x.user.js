@@ -792,9 +792,8 @@
       return false;
     },
     filename: function(post) {
-      var fileInfo, fname;
-      fileInfo = post.fileInfo;
-      if (fileInfo && (fname = fileInfo.getAttribute('data-filename'))) {
+      var fileInfo, nameNode, fname;
+      if (post.fileInfo && (nameNode = $('a', post.fileInfo)) && (fname = nameNode.title || post.fileInfo.title || nameNode.textContent)) {
         return fname;
       }
       return false;
