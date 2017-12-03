@@ -5,26 +5,30 @@ Fork of 4chan X 2.x (MayhemYDG) made to keep it working.
 
 To enable hyperlinks and other stuff checkout "Other scripts for additional features"
 
-##Installation
+## Installation
 
 Browsers usually need an addon to run userscripts, like:
 
-- Firefox -> [Greasemonkey](https://addons.mozilla.org/en/firefox/addon/greasemonkey/)
+- Firefox -> [~~Greasemonkey~~](https://addons.mozilla.org/en/firefox/addon/greasemonkey/) or [Violent monkey](https://addons.mozilla.org/en-US/firefox/addon/violentmonkey/) or [Tampermonkey](https://addons.mozilla.org/en-US/firefox/addon/tampermonkey/)
 - Chrome/Chromium -> [Tampermonkey](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo)
+- Firefox -> [Violent monkey](https://addons.mozilla.org/en-US/firefox/addon/violentmonkey/) or [Tampermonkey](https://addons.mozilla.org/en-US/firefox/addon/tampermonkey/) (swtich to those if you're having problems with Greasemonkey)
+- Chrome/Chromium -> [Violent monkey](https://chrome.google.com/webstore/detail/violentmonkey/jinjaccalgkegednnccohejagnlnfdag) or [Tampermonkey](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo)
 - Opera -> [Violent monkey](https://addons.opera.com/en/extensions/details/violent-monkey/)
 - Safari -> [NinjaKit](https://github.com/os0x/NinjaKit)
 - dwb: scroll down
 
+
+
 Once one of those or similar is installed, click on the following link: [4chan_x.user.js](https://github.com/loadletter/4chan-x/raw/master/4chan_x.user.js)
 
-##Other scripts for additional features:
+## Other scripts for additional features:
 - Linkify: [http://userscripts.org/scripts/show/87750](http://userscripts-mirror.org/scripts/show/87750)
     - Mirror: https://gist.github.com/loadletter/d988bbdccc99f3e341c9
 - Youtube link title (varios other websites supported): https://greasyfork.org/scripts/413-youtube-link-title
 - Inverted /a/: https://github.com/loadletter/4chan-x/raw/master/utils/inverted_a.user.js
 - Never use the slow is2 image server https://gist.github.com/loadletter/ddf1c8672edb6df03b559005170046b9
 
-#####Installation on dwb:
+##### Installation on dwb:
 1. Install dwb with your package manager
 2. Install the dwb userscripts extension with `dwbem -N -i userscripts` in your terminal.
 3. Make a directory for dwb userscripts with `mkdir .config/dwb/greasemonkey`
@@ -32,7 +36,7 @@ Once one of those or similar is installed, click on the following link: [4chan_x
 5. Download 4chanX with `wget https://github.com/loadletter/4chan-x/raw/master/4chan_x.user.js`
 6. Start dwb
 
-##Changelog
+## Changelog
 - 2.40.75: Fix filename filter, updated archives
 - 2.40.74: Add option to exclude webms from expand all, updated archives
 - 2.40.73: Updated archives
