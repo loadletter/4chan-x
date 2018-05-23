@@ -88,7 +88,7 @@
  */
 
 (function() {
-  var $, $$, AlwaysHTTPS, Anonymize, ArchiveLink, AutoGif, Build, CatalogLinks, Conf, Config, DeleteLink, DownloadLink, ExpandComment, ExpandThread, Favicon, FileInfo, Filter, Get, ImageExpand, ImageHover, Keybinds, Main, Menu, Nav, Options, QR, QuoteBacklink, QuoteCT, QuoteInline, QuoteOP, QuoteYou, QuotePreview, Quotify, Redirect, RelativeDates, RemoveSlug, ReplaceJpg, ReplacePng, ReplyHiding, ReportLink, RevealSpoilers, Sauce, StrikethroughQuotes, ThreadHiding, ThreadStats, Time, TitlePost, UI, Unread, Updater, Watcher, d, g, _base, CaptchaIsSetup;
+  var $, $$, AlwaysCdn, AlwaysHTTPS, Anonymize, ArchiveLink, AutoGif, Build, CatalogLinks, Conf, Config, DeleteLink, DownloadLink, ExpandComment, ExpandThread, Favicon, FileInfo, Filter, Get, ImageExpand, ImageHover, Keybinds, Main, Menu, Nav, Options, QR, QuoteBacklink, QuoteCT, QuoteInline, QuoteOP, QuoteYou, QuotePreview, Quotify, Redirect, RelativeDates, RemoveSlug, ReplaceJpg, ReplacePng, ReplyHiding, ReportLink, RevealSpoilers, Sauce, StrikethroughQuotes, ThreadHiding, ThreadStats, Time, TitlePost, UI, Unread, Updater, Watcher, d, g, _base, CaptchaIsSetup;
   CaptchaIsSetup = false;
   
   /* Your posts to add (You) backlinks to */
@@ -122,6 +122,7 @@
         'Show Stubs': [true, 'Of hidden threads / replies']
       },
       Imaging: {
+        'Always CDN': [false, 'Always use images from Cloudflare servers'],
         'Image Auto-Gif': [false, 'Animate gif thumbnails'],
         'Replace PNG': [false, 'Replace thumbnail with original PNG image'],
         'Replace JPG': [false, 'Replace thumbnail with original JPG image'],
@@ -4408,6 +4409,9 @@
           post.fileInfo = img.parentNode.previousElementSibling;
           post.img = img;
         }
+        if (Conf['Always CDN']) {
+          AlwaysCdn.node(post);
+        }
         if (Conf['Reveal Spoilers']) {
           RevealSpoilers.node(post);
         }
@@ -5587,6 +5591,23 @@
       }
     }
   };
+  
+  AlwaysCdn = {
+    init: function() {
+      return Main.callbacks.push(this.node);
+    },
+    node: function(post) {
+      var img, src;
+      img = post.img;
+      if (post.el.hidden || !img) {
+        return;
+      }
+      src = img.parentNode.href;
+      if (!/4cdn$/.test(src) && !/spoiler/.test(img.src)) {
+        return img.parentNode.href = src.replace(/is.?\.4chan.org/, "i.4cdn.org");
+      }
+    }
+  };
 
   ImageExpand = {
     init: function() {
@@ -6057,6 +6078,9 @@
       }
       if (Conf['File Info Formatting']) {
         FileInfo.init();
+      }
+      if (Conf['Always CDN']) {
+        AlwaysCdn.init();
       }
       if (Conf['Sauce']) {
         Sauce.init();
