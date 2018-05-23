@@ -5603,7 +5603,7 @@
         return;
       }
       src = img.parentNode.href;
-      if (!/4cdn$/.test(src) && !/spoiler/.test(img.src)) {
+      if (!/4cdn$/.test(src)) {
         return img.parentNode.href = src.replace(/is.?\.4chan.org/, "i.4cdn.org");
       }
     }
