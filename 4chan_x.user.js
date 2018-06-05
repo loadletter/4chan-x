@@ -5167,18 +5167,11 @@
         case 'out':
         case 'p':
         case 'toy':
-        case 'vip':
         case 'vp':
         case 'w':
         case 'wg':
         case 'wsr':
           return "https://archive.nyafuu.org/" + board + "/full_image/" + filename;
-        case 'd':
-        case 'i':
-        case 'lgbt':
-        case 't':
-        case 'u':
-          return "//archive.loveisover.me/" + board + "/full_image/" + filename;
         case 'cgl':
         case 'g':
         case 'mu':
@@ -5199,6 +5192,7 @@
         case 'aco':
         case 'an':
         case 'co':
+        case 'd':
         case 'fit':
         case 'gif':
         case 'his':
@@ -5214,20 +5208,35 @@
         case 'cm':
         case 'v':
         case 'vg':
+        case 'vip':
         case 'y':
           return "https://boards.fireden.net/" + board + "/full_image/" + filename;
+        case 'can':
+        case 'cock':
+        case 'fap':
+        case 'fitlit':
         case 'gd':
+        case 'mlpol':
+        case 'mo':
+        case 'mtv':
+        case 'outsoc':
         case 'po':
         case 'qst':
+        case 'spa':
+        case 'vint':
           return "//archived.moe/" + board + "/full_image/" + filename;
         case 'b':
           return "//thebarchive.com/" + board + "/full_image/" + filename;
         case 'h':
         case 'hc':
         case 'hm':
+        case 'i':
+        case 'lgbt':
         case 'r':
         case 's':
         case 'soc':
+        case 't':
+        case 'u':
           return "//archiveofsins.com/" + board + "/full_image/" + filename;
       }
     },
@@ -5252,18 +5261,11 @@
         case 'out':
         case 'p':
         case 'toy':
-        case 'vip':
         case 'vp':
         case 'w':
         case 'wg':
         case 'wsr':
           return "https://archive.nyafuu.org/_/api/chan/post/?board=" + board + "&num=" + postID;
-        case 'd':
-        case 'i':
-        case 'lgbt':
-        case 't':
-        case 'u':
-          return "//archive.loveisover.me/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'cgl':
         case 'mu':
           return "https://archive.rebeccablacktech.com/_/api/chan/post/?board=" + board + "&num=" + postID;
@@ -5271,6 +5273,7 @@
         case 'aco':
         case 'an':
         case 'co':
+        case 'd':
         case 'fit':
         case 'gif':
         case 'his':
@@ -5286,18 +5289,37 @@
         case 'cm':
         case 'v':
         case 'vg':
+        case 'vip':
         case 'y':
           return "https://boards.fireden.net/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'hm':
         case 'qst':
           return "https://archive.b-stats.org/_/api/chan/post/?board=" + board + "&num=" + postID;
+        case 'asp':
+        case 'can':
+        case 'cock':
+        case 'fap':
+        case 'fitlit':
+        case 'gd':
+        case 'mlpol':
+        case 'mo':
+        case 'mtv':
+        case 'outsoc':
+        case 'po':
+        case 'spa':
+        case 'vint':
+          return "//archived.moe/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'b':
           return "//thebarchive.com/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'h':
         case 'hc':
+        case 'i':
+        case 'lgbt':
         case 'r':
         case 's':
         case 'soc':
+        case 't':
+        case 'u':
           return "//archiveofsins.com/_/api/chan/post/?board=" + board + "&num=" + postID;
       }
     },
@@ -5328,19 +5350,11 @@
         case 'out':
         case 'p':
         case 'toy':
-        case 'vip':
         case 'vp':
         case 'w':
         case 'wg':
         case 'wsr':
           url = Redirect.path('https://archive.nyafuu.org', 'foolfuuka', data);
-          break;
-        case 'd':
-        case 'i':
-        case 'lgbt':
-        case 't':
-        case 'u':
-          url = Redirect.path('//archive.loveisover.me', 'foolfuuka', data);
           break;
         case 'cgl':
         case 'mu':
@@ -5364,6 +5378,7 @@
         case 'aco':
         case 'an':
         case 'co':
+        case 'd':
         case 'fit':
         case 'gif':
         case 'his':
@@ -5380,6 +5395,7 @@
         case 'cm':
         case 'v':
         case 'vg':
+        case 'vip':
         case 'y':
           url = Redirect.path('https://boards.fireden.net', 'foolfuuka', data);
           break;
@@ -5387,14 +5403,33 @@
         case 'qst':
           url = Redirect.path('https://archive.b-stats.org', 'foolfuuka', data);
           break;
+        case 'asp':
+        case 'can':
+        case 'cock':
+        case 'fap':
+        case 'fitlit':
+        case 'gd':
+        case 'mlpol':
+        case 'mo':
+        case 'mtv':
+        case 'outsoc':
+        case 'po':
+        case 'spa':
+        case 'vint':
+          url = Redirect.path('//archived.moe', 'foolfuuka', data);
+          break;
         case 'b':
           url = Redirect.path('//thebarchive.com', 'foolfuuka', data);
           break;
         case 'h':
         case 'hc':
+        case 'i':
+        case 'lgbt':
         case 'r':
         case 's':
         case 'soc':
+        case 't':
+        case 'u':
           url = Redirect.path('//archiveofsins.com', 'foolfuuka', data);
           break;
         default:
