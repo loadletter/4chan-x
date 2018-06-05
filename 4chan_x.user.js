@@ -5597,13 +5597,18 @@
       return Main.callbacks.push(this.node);
     },
     node: function(post) {
-      var img, src;
+      var img, src, fInfo;
       img = post.img;
       if (post.el.hidden || !img) {
         return;
       }
+      if (post.fileInfo && (fInfo = $('a', post.fileInfo)))
+      
       src = img.parentNode.href;
       if (!/4cdn$/.test(src)) {
+        if (post.fileInfo && (fInfo = $('a', post.fileInfo))) {
+          fInfo.href = fInfo.href.replace(/is.?\.4chan.org/, "i.4cdn.org");
+        }
         return img.parentNode.href = src.replace(/is.?\.4chan.org/, "i.4cdn.org");
       }
     }
