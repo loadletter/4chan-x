@@ -8,6 +8,8 @@
 // @license        MIT; http://en.wikipedia.org/wiki/Mit_license
 // @include        http://boards.4chan.org/*
 // @include        https://boards.4chan.org/*
+// @include        http://boards.4channel.org/*
+// @include        https://boards.4channel.org/*
 // @include        http://sys.4chan.org/*
 // @include        https://sys.4chan.org/*
 // @include        http://a.4cdn.org/*
@@ -905,7 +907,7 @@
       _ref = post.quotes;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         quote = _ref[_i];
-        if (!((el = $.id(quote.hash.slice(1))) && quote.hostname === 'boards.4chan.org' && !/catalog$/.test(quote.pathname) && el.hidden)) {
+        if (!((el = $.id(quote.hash.slice(1))) && (quote.hostname === 'boards.4chan.org' || quote.hostname === 'boards.4channel.org') && !/catalog$/.test(quote.pathname) && el.hidden)) {
           continue;
         }
         $.addClass(quote, 'filtered');
@@ -4218,7 +4220,7 @@
         if (quote.parentNode.parentNode.className === 'capcodeReplies') {
           break;
         }
-        if (quote.hostname === 'boards.4chan.org' && !/catalog$/.test(quote.pathname) && (qid = quote.hash.slice(2))) {
+        if ((quote.hostname === 'boards.4chan.org' || quote.hostname === 'boards.4channel.org') && !/catalog$/.test(quote.pathname) && (qid = quote.hash.slice(2))) {
           quotes[qid] = true;
         }
       }
@@ -4259,7 +4261,7 @@
       _ref = post.quotes;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         quote = _ref[_i];
-        if (!(quote.hash && quote.hostname === 'boards.4chan.org' && !/catalog$/.test(quote.pathname) || /\bdeadlink\b/.test(quote.className))) {
+        if (!(quote.hash && (quote.hostname === 'boards.4chan.org' || quote.hostname === 'boards.4channel.org') && !/catalog$/.test(quote.pathname) || /\bdeadlink\b/.test(quote.className))) {
           continue;
         }
         $.on(quote, 'click', QuoteInline.toggle);
@@ -4289,7 +4291,7 @@
     },
     add: function(q, id) {
       var board, el, i, inline, isBacklink, path, postID, root, threadID;
-      if (q.host === 'boards.4chan.org') {
+      if (q.host === 'boards.4chan.org' || q.host === 'boards.4channel.org') {
         path = q.pathname.split('/');
         board = path[1];
         threadID = path[3];
@@ -4352,7 +4354,7 @@
       _ref = post.quotes;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         quote = _ref[_i];
-        if (!(quote.hash && quote.hostname === 'boards.4chan.org' && !/catalog$/.test(quote.pathname) || /\bdeadlink\b/.test(quote.className))) {
+        if (!(quote.hash && (quote.hostname === 'boards.4chan.org' || quote.hostname === 'boards.4channel.org') && !/catalog$/.test(quote.pathname) || /\bdeadlink\b/.test(quote.className))) {
           continue;
         }
         $.on(quote, 'mouseover', QuotePreview.mouseover);
@@ -4377,7 +4379,7 @@
       if (UI.el) {
         return;
       }
-      if (this.host === 'boards.4chan.org') {
+      if (this.host === 'boards.4chan.org' || this.host === 'boards.4channel.org') {
         path = this.pathname.split('/');
         board = path[1];
         threadID = path[3];
@@ -4527,7 +4529,7 @@
       _ref = post.quotes;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         quote = _ref[_i];
-        if (!(quote.hash && quote.hostname === 'boards.4chan.org' && !/catalog$/.test(quote.pathname))) {
+        if (!(quote.hash && (quote.hostname === 'boards.4chan.org' || quote.hostname === 'boards.4channel.org') && !/catalog$/.test(quote.pathname))) {
           continue;
         }
         path = quote.pathname.split('/');
