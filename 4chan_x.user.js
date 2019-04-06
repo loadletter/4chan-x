@@ -157,7 +157,7 @@
       Posting: {
         'Quick Reply': [true, 'Reply without leaving the page'],
         'Cooldown': [true, 'Prevent "flood detected" errors'],
-        'Alternative captcha': [true, 'Use the classic text recaptcha in replies and report window'],
+        'Alternative captcha': [false, 'Use the classic text recaptcha in replies and report window'],
         'Alt index captcha': [false, 'Also use text captcha in board index (might not allow creating new threads)'],
         'Auto Submit': [true, 'Submit automatically when captcha has been solved'],
         'Persistent QR': [false, 'The Quick reply won\'t disappear after posting'],
