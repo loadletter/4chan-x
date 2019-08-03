@@ -22,8 +22,7 @@ Browsers usually need an addon to run userscripts, like:
 Once one of those or similar is installed, click on the following link: [4chan_x.user.js](https://github.com/loadletter/4chan-x/raw/master/4chan_x.user.js)
 
 ## Other scripts for additional features:
-- Linkify: [http://userscripts.org/scripts/show/87750](http://userscripts-mirror.org/scripts/show/87750)
-    - Mirror: https://gist.github.com/loadletter/d988bbdccc99f3e341c9
+- Linkify: https://gist.github.com/loadletter/d988bbdccc99f3e341c9
 - Youtube link title (varios other websites supported): https://greasyfork.org/scripts/413-youtube-link-title
 - Inverted /a/: https://github.com/loadletter/4chan-x/raw/master/utils/inverted_a.user.js
 - Never use the slow is2 image server https://gist.github.com/loadletter/ddf1c8672edb6df03b559005170046b9
