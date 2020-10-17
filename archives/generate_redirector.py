@@ -36,7 +36,7 @@ RETURN_REDIRECT = """          url = Redirect.path('%s', '%s', data);
           break;
 """
 
-ARCHIVES_URL = "https://mayhemydg.github.io/archives.json/archives.json"
+ARCHIVES_URL = "https://4chenz.github.io/archives.json/archives.json"
 ARCHIVES_JSON = os.path.join(os.path.dirname(os.path.abspath(__file__)), "archives.json")
 PRIORITIES_JSON = os.path.join(os.path.dirname(os.path.abspath(__file__)), "priorities.json")
 

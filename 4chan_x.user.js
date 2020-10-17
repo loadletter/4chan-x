@@ -5153,6 +5153,8 @@
         case 'adv':
         case 'f':
         case 'hr':
+        case 'mlpol':
+        case 'mo':
         case 'o':
         case 'pol':
         case 's4s':
@@ -5163,13 +5165,16 @@
           return "//archive.4plebs.org/" + board + "/full_image/" + filename;
         case 'bant':
         case 'c':
+        case 'con':
         case 'e':
         case 'n':
         case 'news':
         case 'out':
         case 'p':
         case 'toy':
+        case 'vmg':
         case 'vp':
+        case 'vst':
         case 'w':
         case 'wg':
         case 'wsr':
@@ -5202,14 +5207,13 @@
         case 'k':
         case 'm':
         case 'mlp':
+        case 'q':
         case 'qa':
         case 'r9k':
         case 'trash':
         case 'wsg':
           return "//desuarchive.org/" + board + "/full_image/" + filename;
         case 'cm':
-        case 'v':
-        case 'vg':
         case 'vip':
         case 'y':
           return "https://boards.fireden.net/" + board + "/full_image/" + filename;
@@ -5218,8 +5222,6 @@
         case 'fap':
         case 'fitlit':
         case 'gd':
-        case 'mlpol':
-        case 'mo':
         case 'mtv':
         case 'outsoc':
         case 'po':
@@ -5240,6 +5242,8 @@
         case 't':
         case 'u':
           return "//archiveofsins.com/" + board + "/full_image/" + filename;
+        case 'vrpg':
+          return "https://www.tokyochronos.net/" + board + "/full_image/" + filename;
       }
     },
     post: function(board, postID) {
@@ -5247,6 +5251,8 @@
         case 'adv':
         case 'f':
         case 'hr':
+        case 'mlpol':
+        case 'mo':
         case 'o':
         case 'pol':
         case 's4s':
@@ -5257,18 +5263,22 @@
           return "//archive.4plebs.org/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'bant':
         case 'c':
+        case 'con':
         case 'e':
         case 'n':
         case 'news':
         case 'out':
         case 'p':
         case 'toy':
+        case 'vmg':
         case 'vp':
+        case 'vst':
         case 'w':
         case 'wg':
         case 'wsr':
           return "https://archive.nyafuu.org/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'cgl':
+        case 'g':
         case 'mu':
           return "https://archive.rebeccablacktech.com/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'a':
@@ -5283,17 +5293,21 @@
         case 'k':
         case 'm':
         case 'mlp':
+        case 'q':
         case 'qa':
         case 'r9k':
         case 'trash':
         case 'wsg':
           return "//desuarchive.org/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'cm':
-        case 'v':
-        case 'vg':
         case 'vip':
         case 'y':
           return "https://boards.fireden.net/_/api/chan/post/?board=" + board + "&num=" + postID;
+        case 'v':
+        case 'vg':
+        case 'vm':
+        case 'vrpg':
+          return "//arch.b4k.co/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'hm':
         case 'qst':
           return "https://archive.b-stats.org/_/api/chan/post/?board=" + board + "&num=" + postID;
@@ -5303,8 +5317,6 @@
         case 'fap':
         case 'fitlit':
         case 'gd':
-        case 'mlpol':
-        case 'mo':
         case 'mtv':
         case 'outsoc':
         case 'po':
@@ -5335,6 +5347,8 @@
         case 'adv':
         case 'f':
         case 'hr':
+        case 'mlpol':
+        case 'mo':
         case 'o':
         case 'pol':
         case 's4s':
@@ -5346,19 +5360,23 @@
           break;
         case 'bant':
         case 'c':
+        case 'con':
         case 'e':
         case 'n':
         case 'news':
         case 'out':
         case 'p':
         case 'toy':
+        case 'vmg':
         case 'vp':
+        case 'vst':
         case 'w':
         case 'wg':
         case 'wsr':
           url = Redirect.path('https://archive.nyafuu.org', 'foolfuuka', data);
           break;
         case 'cgl':
+        case 'g':
         case 'mu':
           url = Redirect.path('https://archive.rebeccablacktech.com', 'foolfuuka', data);
           break;
@@ -5367,7 +5385,6 @@
         case 'ck':
         case 'diy':
         case 'fa':
-        case 'g':
         case 'ic':
         case 'jp':
         case 'lit':
@@ -5388,6 +5405,7 @@
         case 'k':
         case 'm':
         case 'mlp':
+        case 'q':
         case 'qa':
         case 'r9k':
         case 'trash':
@@ -5395,11 +5413,15 @@
           url = Redirect.path('//desuarchive.org', 'foolfuuka', data);
           break;
         case 'cm':
-        case 'v':
-        case 'vg':
         case 'vip':
         case 'y':
           url = Redirect.path('https://boards.fireden.net', 'foolfuuka', data);
+          break;
+        case 'v':
+        case 'vg':
+        case 'vm':
+        case 'vrpg':
+          url = Redirect.path('//arch.b4k.co', 'foolfuuka', data);
           break;
         case 'hm':
         case 'qst':
@@ -5411,8 +5433,6 @@
         case 'fap':
         case 'fitlit':
         case 'gd':
-        case 'mlpol':
-        case 'mo':
         case 'mtv':
         case 'outsoc':
         case 'po':
