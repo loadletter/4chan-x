@@ -5193,7 +5193,6 @@
         case 'lit':
         case 'sci':
         case 'tg':
-        case 'vr':
           return "https://warosu.org/" + board + "/full_image/" + filename;
         case 'a':
         case 'aco':
@@ -5212,6 +5211,7 @@
         case 'r9k':
         case 'trash':
         case 'wsg':
+        case 'vr':
           return "//desuarchive.org/" + board + "/full_image/" + filename;
         case 'cm':
         case 'vip':
@@ -5390,7 +5390,6 @@
         case 'lit':
         case 'sci':
         case 'tg':
-        case 'vr':
           url = Redirect.path('https://warosu.org', 'fuuka', data);
           break;
         case 'a':
@@ -5410,6 +5409,7 @@
         case 'r9k':
         case 'trash':
         case 'wsg':
+        case 'vr':
           url = Redirect.path('//desuarchive.org', 'foolfuuka', data);
           break;
         case 'cm':
