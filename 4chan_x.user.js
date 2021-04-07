@@ -2357,7 +2357,7 @@
               value: ''
             }));
             $.addClass(QR.el, 'captcha');
-            $.globalEval('(window.setTimeout(function () {window.grecaptcha.render(document.getElementById("g-recaptcha"), {sitekey: "6Ldp2bsSAAAAAAJ5uyx_lx34lJeEpTLVkP5k04qc", theme: "light", callback: (' + (Conf['Auto Submit'] ? 'function (res) {var sb = document.getElementById("x_QR_Submit"); if(sb) sb.click(); }' : 'function (res) {}') + ') });}),500)()');
+            $.globalEval('(window.setTimeout(function () {window.grecaptcha.render(document.getElementById("g-recaptcha"), {sitekey: "6Ldp2bsSAAAAAAJ5uyx_lx34lJeEpTLVkP5k04qc", theme: "light", callback: (' + (Conf['Auto Submit'] ? 'function (res) {var sb = document.getElementById("x_QR_Submit"); if(sb) sb.click(); }' : 'function (res) {}') + ') });}),1000)()');
             $.after($('.textarea', QR.el), $.id('g-recaptcha'));
           } else {
             $.addClass(QR.el, 'captcha');
