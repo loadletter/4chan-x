@@ -36,6 +36,7 @@ Once one of those or similar is installed, click on the following link: [4chan_x
 6. Start dwb
 
 ## Changelog
+- 2.40.78: Some fixes by hurda, updated archives
 - 2.40.77: Updated archives
 - 2.40.76: Add option to always use images from Cloudflare's CDN (i.4cdn.org), updated archives
 - 2.40.75: Fix filename filter, updated archives
