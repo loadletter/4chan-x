@@ -40,7 +40,7 @@ ARCHIVES_URL = "https://4chenz.github.io/archives.json/archives.json"
 ARCHIVES_JSON = os.path.join(os.path.dirname(os.path.abspath(__file__)), "archives.json")
 PRIORITIES_JSON = os.path.join(os.path.dirname(os.path.abspath(__file__)), "priorities.json")
 
-ARCHIVE_HIDDEN = [29,32]
+ARCHIVE_HIDDEN = [29,32,35]
 
 def jsonloadf(filename):
 	with open(filename) as f:
