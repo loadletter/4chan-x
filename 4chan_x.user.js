@@ -197,7 +197,7 @@
       filesize: [''].join('\n'),
       md5: [''].join('\n')
     },
-    sauces: ['http://iqdb.org/?url=$1', 'https://www.google.com/searchbyimage?image_url=$1', 'https://yandex.com/images/search?rpt=imageview&url=$1', '#http://tineye.com/search?url=$1', '#http://saucenao.com/search.php?db=999&url=$1', '#http://3d.iqdb.org/?url=$1', '#http://regex.info/exif.cgi?imgurl=$2', '# uploaders:', '#http://imgur.com/upload?url=$2;text:Upload to imgur', '#http://omploader.org/upload?url1=$2;text:Upload to omploader', '# "View Same" in archives:', '#https://archive.moe/_/search/image/$3/;text:View same on moe', '#https://archive.moe/$4/search/image/$3/;text:View same on moe /$4/', '#https://rbt.asia/$4/image/$3;text:View same on rbt /$4/'].join('\n'),
+    sauces: ['http://iqdb.org/?url=$1', 'https://www.google.com/searchbyimage?image_url=$1', 'https://yandex.com/images/search?rpt=imageview&url=$1', '#http://tineye.com/search?url=$1', '#http://saucenao.com/search.php?db=999&url=$1', '#http://3d.iqdb.org/?url=$1', '#http://regex.info/exif.cgi?imgurl=$2', '# uploaders:', '#http://imgur.com/upload?url=$2;text:Upload to imgur', '#http://omploader.org/upload?url1=$2;text:Upload to omploader', '# "View Same" in archives:', '#https://archive.moe/_/search/image/$3/;text:View same on moe', '#https://archive.moe/$4/search/image/$3/;text:View same on moe /$4/', '#https://rbt.asia/$4/image/$3;text:View same on rbt /$4/', '#https://pbs.twimg.com/media/$5'].join('\n'),
     time: '20%y-%m-%d(%a)%H:%M',
     backlink: '>>%id',
     fileInfo: '%l (%p%s, %r)',
@@ -2771,6 +2771,7 @@
       <li>$2: Full image url.</li>\
       <li>$3: MD5 hash.</li>\
       <li>$4: Current board.</li>\
+      <li>$5: Original filename.</li>\
     </ul>\
     <textarea name=sauces id=sauces class=field></textarea>\
   </div>\
@@ -3490,7 +3491,7 @@
         target: '_blank',
         textContent: domain
       });
-      return function(img, isArchived) {
+      return function(img, post, isArchived) {
         var a;
         a = el.cloneNode(true);
         a.href = href.replace(/(\$\d)/g, function(parameter) {
@@ -3501,6 +3502,11 @@
               return img.href;
             case '$3':
               return encodeURIComponent(img.firstChild.dataset.md5);
+            case '$5':
+              //return post.el.getElementsByClassName('fileText')[0].getElementsByTagName("a")[0].innerHTML;
+              var nameNode = $('a', post.fileInfo);
+              var fn = nameNode.title || post.fileInfo.title || nameNode.textContent;
+              return fn;
             default:
               return parameter;
           }
@@ -3519,7 +3525,7 @@
       _ref = Sauce.links;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         link = _ref[_i];
-        nodes.push($.tn('\u00A0'), link(img, post.isArchived));
+        nodes.push($.tn('\u00A0'), link(img, post, post.isArchived));
       }
       return $.add(post.fileInfo, nodes);
     }
