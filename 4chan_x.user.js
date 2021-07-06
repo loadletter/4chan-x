@@ -92,10 +92,10 @@
 (function() {
   var $, $$, AlwaysCdn, AlwaysHTTPS, Anonymize, ArchiveLink, AutoGif, Build, CatalogLinks, Conf, Config, DeleteLink, DownloadLink, ExpandComment, ExpandThread, Favicon, FileInfo, Filter, Get, ImageExpand, ImageHover, Keybinds, Main, Menu, Nav, Options, QR, QuoteBacklink, QuoteCT, QuoteInline, QuoteOP, QuoteYou, QuotePreview, Quotify, Redirect, RelativeDates, RemoveSlug, ReplaceJpg, ReplacePng, ReplyHiding, ReportLink, RevealSpoilers, Sauce, StrikethroughQuotes, ThreadHiding, ThreadStats, Time, TitlePost, UI, Unread, Updater, Watcher, d, g, _base, CaptchaIsSetup;
   CaptchaIsSetup = false;
-  
+
   /* Your posts to add (You) backlinks to */
   var yourPosts = new Array();
-  
+
   Config = {
     main: {
       Enhancing: {
@@ -609,6 +609,26 @@
       return localStorage.setItem(Main.namespace + name, JSON.stringify(value));
     }
   });
+
+  $.global = function(fn, data) {
+    var script;
+    if (document.documentElement) {
+      script = $.el('script', {
+        textContent: "(" + fn + ").call(document.currentScript.dataset);"
+      });
+      if (data) {
+        $.extend(script.dataset, data);
+      }
+      $.add(document.head || document.documentElement, script);
+      $.rm(script);
+      return script.dataset;
+    } else {
+      try {
+        fn.call(data);
+      } catch (error) {}
+      return data;
+    }
+  };
 
   $$ = function(selector, root) {
     if (root == null) {
@@ -2343,65 +2363,85 @@
         if (-1 !== d.cookie.indexOf('pass_enabled=')) {
           return;
         }
-        if (!(this.isEnabled = !!$.id('g-recaptcha'))) {
+        if (!(this.isEnabled = !!$('#t-root') || !$.id('postForm'))) {
           return;
         }
-        return this.ready();
+        var root = $.el('div', {
+          className: 'captcha-root'
+        });
+        this.nodes = {
+          root: root
+        };
+        $.addClass(QR.el, 'has-captcha', 'captcha-t');
+        return $.after(QR.com, root);
       },
-      ready: function() {
-        if(!CaptchaIsSetup) {
-          if(!Conf['Alternative captcha'] || (!g.REPLY && !Conf['Alt index captcha'])) {
-            $.after($('.textarea', QR.el), $.el('input', {
-              type: 'hidden',
-              id: 'recaptcha_response_field',
-              value: ''
-            }));
-            $.addClass(QR.el, 'captcha');
-            $.globalEval('(window.setTimeout(function () {window.grecaptcha.render(document.getElementById("g-recaptcha"), {sitekey: "6Ldp2bsSAAAAAAJ5uyx_lx34lJeEpTLVkP5k04qc", theme: "light", callback: (' + (Conf['Auto Submit'] ? 'function (res) {var sb = document.getElementById("x_QR_Submit"); if(sb) sb.click(); }' : 'function (res) {}') + ') });}),1000)()');
-            $.after($('.textarea', QR.el), $.id('g-recaptcha'));
-          } else {
-            $.addClass(QR.el, 'captcha');
-            $.after($('.textarea', QR.el), $.el('div', {
-              id: 'recaptcha_widget',
-            }));
-            $.globalEval("Recaptcha.create('6Ldp2bsSAAAAAAJ5uyx_lx34lJeEpTLVkP5k04qc', 'recaptcha_widget', {theme: 'clean'});");
-            var asap = function () {
-              if (!($.id('recaptcha_response_field'))) {
-                setTimeout(asap, 200);
-                return;
-              }
-              $.on($.id('recaptcha_response_field'), 'keydown', QR.captcha.keydown);
-              $.globalEval('(function () {window.onunload=function () {window.Recaptcha.destroy();};})();');
-            };
-            asap();
+      setup: function(focus) {
+        var boardID, threadID;
+        if (!this.isEnabled) {
+          return;
+        }
+        if (!this.nodes.container) {
+          this.nodes.container = $.el('div', {
+            className: 'captcha-container'
+          });
+          $.prepend(this.nodes.root, this.nodes.container);
+          boardID = g.BOARD;
+          threadID = '' + g.THREAD_ID;
+          $.global(function() {
+            var el;
+            el = document.querySelector('#qr .captcha-container');
+            window.TCaptcha.init(el, this.boardID, +this.threadID);
+            return window.TCaptcha.setErrorCb(function(err) {
+              return window.dispatchEvent(new CustomEvent('CreateNotification', {
+                detail: {
+                  type: 'warning',
+                  content: '' + err
+                }
+              }));
+            });
+          }, {
+            boardID: boardID,
+            threadID: threadID
+          });
+        }
+        if (focus) {
+          return $('#t-resp').focus();
+        }
+      },
+      destroy: function() {
+        if (!(this.isEnabled && this.nodes.container)) {
+          return;
+        }
+        $.global(function() {
+          return window.TCaptcha.destroy();
+        });
+        $.rm(this.nodes.container);
+        return delete this.nodes.container;
+      },
+      getOne: function() {
+        var i, key, len, ref, response;
+        response = {};
+        if (this.nodes.container) {
+          ref = ['t-response', 't-challenge'];
+          for (i = 0, len = ref.length; i < len; i++) {
+            key = ref[i];
+            response[key] = $("[name='" + key + "']", this.nodes.container).value;
           }
-          CaptchaIsSetup = true;
+        }
+        if (!response['t-response']) {
+          response = null;
+        }
+        return response;
+      },
+      setUsed: function() {
+        if (this.nodes.container) {
+          return $.global(function() {
+            return window.TCaptcha.clearChallenge();
+          });
         }
       },
-      getResponse: function() {
-        if(!Conf['Alternative captcha'] || (!g.REPLY && !Conf['Alt index captcha'])) {
-          $.globalEval('document.getElementById("recaptcha_response_field").value = window.grecaptcha.getResponse();');
-        }
-        return $.id('recaptcha_response_field').value;
-      },
-      getChallenge: function() {
-        return $.id('recaptcha_challenge_field').value;
-      },
-      reset: function() {
-        if(!Conf['Alternative captcha'] || (!g.REPLY && !Conf['Alt index captcha'])) {
-          $.globalEval('window.grecaptcha.reset();');
-        } else {
-          $.globalEval('window.Recaptcha.reload(); Recaptcha.should_focus = false;');
-        }
-      },
-      keydown: function(e) {
-        var respfield = $.id('recaptcha_response_field');
-        if (e.keyCode === 8 && !respfield.value) {
-          QR.captcha.reset();
-        } else {
-          return;
-        }
-        return e.preventDefault();
+      occupied: function() {
+        return !!this.nodes.container;
       }
     },
     dialog: function() {
@@ -2436,6 +2476,7 @@
       QR.maxComment = g.BOARD === 'jp' ? 5000 : 2000;
       QR.charaCounter = $('#charCount', QR.el);
       ta = $('textarea', QR.el);
+      QR.com = ta;
       if (!g.REPLY) {
         threads = '<option value=new>New thread</option>';
         _ref = $$('.thread');
@@ -2493,10 +2534,11 @@
       QR.cooldown.init();
       QR.captcha.init();
       $.add(d.body, QR.el);
+      QR.captcha.setup();
       return $.event('QRDialogCreation', null, QR.el);
     },
     submit: function(e) {
-      var callbacks, err, filetag, m, opts, post, reply, response, textOnly, threadID;
+      var callbacks, err, filetag, m, opts, post, reply, response, textOnly, threadID, key, val;
       if (e != null) {
         e.preventDefault();
       }
@@ -2526,7 +2568,7 @@
         err = 'No file selected.';
       }
       if (QR.captcha.isEnabled && !err) {
-        response = QR.captcha.getResponse();
+        response = QR.captcha.getOne();
         if (!response) {
           err = 'No valid captcha.';
         }
@@ -2561,22 +2603,19 @@
         mode: 'regist',
         pwd: (m = d.cookie.match(/4chan_pass=([^;]+)/)) ? decodeURIComponent(m[1]) : $('input[name=pwd]').value,
       };
-      if (QR.captcha.isEnabled) {
-        if(!Conf['Alternative captcha'] || (!g.REPLY && !Conf['Alt index captcha'])) {
-          post['g-recaptcha-response'] = response;
-        } else {
-          post['recaptcha_response_field'] = response;
-          post['recaptcha_challenge_field'] = QR.captcha.getChallenge();
-        }
+
+      for (key in response) {
+              val = response[key];
+              post[key] = val;
       }
-      
+
       callbacks = {
         onload: function() {
           return QR.response(this.response);
         },
         onerror: function() {
           if (QR.captcha.isEnabled) {
-            QR.captcha.reset();
+            //QR.captcha.reset();
           }
           QR.cooldown.auto = false;
           QR.status();
@@ -2607,7 +2646,7 @@
     response: function(html) {
       var ban, board, clone, doc, err, obj, persona, postID, reply, threadID, _, _ref, _ref1;
       if (QR.captcha.isEnabled) {
-        QR.captcha.reset();
+        //QR.captcha.reset();
       }
       doc = d.implementation.createHTMLDocument('');
       doc.documentElement.innerHTML = html;
@@ -2651,13 +2690,13 @@
       obj = {boardID: g.BOARD, threadID: threadID, postID: postID};
       clone = (typeof(cloneInto) === 'function' && cloneInto(obj, document.defaultView)) || obj;
       $.event('QRPostSuccessful', clone, QR.el);
-      
+
       /* Add your own replies to yourPosts and storage to watch for replies */
       if (Conf['Indicate You quote']) {
         yourPosts.push(postID);
         sessionStorage.setItem('yourPosts', JSON.stringify(yourPosts));
       }
-      
+
       QR.cooldown.set({
         post: reply,
         isReply: threadID !== '0'
@@ -3267,7 +3306,7 @@
           Updater.set('count', "+" + count);
           Updater.count.className = count ? 'new' : null;
         }
-        
+
         if (count && Conf['Beep'] && d.hidden && (Unread.replies.length === 0)) {
           Updater.audio.play();
           //return;
@@ -4477,7 +4516,7 @@
       return $.off(this, 'mouseout click', QuotePreview.mouseout);
     }
   };
-  
+
   /* Add (You) to posts function */
   QuoteYou = {
     init: function() {
@@ -5655,7 +5694,7 @@
       }
     }
   };
-  
+
   AlwaysCdn = {
     init: function() {
       return Main.callbacks.push(this.node);
@@ -5667,7 +5706,7 @@
         return;
       }
       if (post.fileInfo && (fInfo = $('a', post.fileInfo)))
-      
+
       src = img.parentNode.href;
       if (!/4cdn$/.test(src)) {
         if (post.fileInfo && (fInfo = $('a', post.fileInfo))) {
@@ -5809,7 +5848,7 @@
         img.hidden = false;
         return;
       }
-      
+
       /* a video in your img? it's more likely than you think */
       if (/\.webm$/.test(src)) {
         img = $.el('video', {
