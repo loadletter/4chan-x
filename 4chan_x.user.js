@@ -5207,9 +5207,7 @@
         case 'out':
         case 'p':
         case 'toy':
-        case 'vmg':
         case 'vp':
-        case 'vst':
         case 'vt':
         case 'w':
         case 'wg':
@@ -5252,13 +5250,18 @@
         case 'vip':
         case 'y':
           return "https://boards.fireden.net/" + board + "/full_image/" + filename;
+        case 'qb':
+        case 'v':
+        case 'vg':
+        case 'vm':
+        case 'vrpg':
+          return "//arch.b4k.co/" + board + "/full_image/" + filename;
         case 'can':
         case 'cock':
         case 'fap':
         case 'fitlit':
         case 'mtv':
         case 'outsoc':
-        case 'qb':
         case 'spa':
         case 'vint':
           return "//archived.moe/" + board + "/full_image/" + filename;
@@ -5275,13 +5278,8 @@
         case 't':
         case 'u':
           return "//archiveofsins.com/" + board + "/full_image/" + filename;
-        case 'vrpg':
-          return "https://www.tokyochronos.net/" + board + "/full_image/" + filename;
         case 'asp':
         case 'pw':
-        case 'v':
-        case 'vg':
-        case 'vm':
         case 'xs':
           return "//archive.wakarimasen.moe/" + board + "/full_image/" + filename;
       }
