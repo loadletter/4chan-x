@@ -90,8 +90,7 @@
  */
 
 (function() {
-  var $, $$, AlwaysCdn, AlwaysHTTPS, Anonymize, ArchiveLink, AutoGif, Build, CatalogLinks, Conf, Config, DeleteLink, DownloadLink, ExpandComment, ExpandThread, Favicon, FileInfo, Filter, Get, ImageExpand, ImageHover, Keybinds, Main, Menu, Nav, Options, QR, QuoteBacklink, QuoteCT, QuoteInline, QuoteOP, QuoteYou, QuotePreview, Quotify, Redirect, RelativeDates, RemoveSlug, ReplaceJpg, ReplacePng, ReplyHiding, ReportLink, RevealSpoilers, Sauce, StrikethroughQuotes, ThreadHiding, ThreadStats, Time, TitlePost, UI, Unread, Updater, Watcher, d, g, _base, CaptchaIsSetup;
-  CaptchaIsSetup = false;
+  var $, $$, AlwaysCdn, AlwaysHTTPS, Anonymize, ArchiveLink, AutoGif, Build, CatalogLinks, Conf, Config, DeleteLink, DownloadLink, ExpandComment, ExpandThread, Favicon, FileInfo, Filter, Get, ImageExpand, ImageHover, Keybinds, Main, Menu, Nav, Options, QR, QuoteBacklink, QuoteCT, QuoteInline, QuoteOP, QuoteYou, QuotePreview, Quotify, Redirect, RelativeDates, RemoveSlug, ReplaceJpg, ReplacePng, ReplyHiding, ReportLink, RevealSpoilers, Sauce, StrikethroughQuotes, ThreadHiding, ThreadStats, Time, TitlePost, UI, Unread, Updater, Watcher, d, g, _base;
 
   /* Your posts to add (You) backlinks to */
   var yourPosts = new Array();
@@ -157,9 +156,6 @@
       Posting: {
         'Quick Reply': [true, 'Reply without leaving the page'],
         'Cooldown': [true, 'Prevent "flood detected" errors'],
-        'Alternative captcha': [false, 'Use the classic text recaptcha in replies and report window'],
-        'Alt index captcha': [false, 'Also use text captcha in board index (might not allow creating new threads)'],
-        'Auto Submit': [true, 'Submit automatically when captcha has been solved'],
         'Persistent QR': [false, 'The Quick reply won\'t disappear after posting'],
         'Auto Hide QR': [true, 'Automatically hide the quick reply when posting'],
         'Open Reply in New Tab': [false, 'Open replies in a new tab that are made from the main board'],
@@ -2615,7 +2611,7 @@
         },
         onerror: function() {
           if (QR.captcha.isEnabled) {
-            //QR.captcha.reset();
+            QR.captcha.setUsed();
           }
           QR.cooldown.auto = false;
           QR.status();
@@ -2646,7 +2642,7 @@
     response: function(html) {
       var ban, board, clone, doc, err, obj, persona, postID, reply, threadID, _, _ref, _ref1;
       if (QR.captcha.isEnabled) {
-        //QR.captcha.reset();
+         QR.captcha.setUsed();
       }
       doc = d.implementation.createHTMLDocument('');
       doc.documentElement.innerHTML = html;
@@ -4790,13 +4786,7 @@
       a = $('a[title="Link to this post"]', $.id(this.parentNode.dataset.rootid));
       url = "//sys.4chan.org/" + (a.pathname.split('/')[1]) + "/imgboard.php?mode=report&no=" + this.parentNode.dataset.id;
       id = Date.now();
-      set = "toolbar=0,scrollbars=1,location=0,status=1,menubar=0,resizable=1,";
-      if (Conf['Alternative captcha']) {
-          url += "&altc=1";
-          set += 'width=350,height=275';
-      } else {
-          set += 'width=400,height=550';
-      }
+      set = "toolbar=0,scrollbars=1,location=0,status=1,menubar=0,resizable=1,width=400,height=550";
       return window.open(url, id, set);
     }
   };
@@ -6032,29 +6022,6 @@
         Conf[key] = $.get(key, val);
       }
       switch (location.hostname) {
-        case 'sys.4chan.org':
-          if (/report/.test(location.search) && Conf['Alternative captcha']) {
-            asap = function() {
-              var field, form;
-              if (!(field = $.id('recaptcha_response_field'))) {
-                setTimeout(asap, 200);
-                return;
-              }
-              form = $('form');
-              $.on(field, 'keydown', function(e) {
-                if (e.keyCode === 8 && !e.target.value) {
-                  $.globalEval('Recaptcha.reload("t");');
-                }
-              });
-              field.focus();
-              return $.on(form, 'submit', function(e) {
-                e.preventDefault();
-                return form.submit();
-              });
-            };
-            asap();
-          }
-          return;
         case 'is.4chan.org':
         case 'is2.4chan.org':
         case 'i.4cdn.org':
@@ -6135,13 +6102,6 @@
           $.set('lastUpdate', now);
           return $.add(d.head, $.el('script', {
             src: 'https://loadletter.github.io/4chan-x/latest.js'
-          }));
-        });
-      }
-      if (Conf['Alternative captcha'] && (g.REPLY || Conf['Alt index captcha'])) {
-        $.ready(function() {
-          $.add(d.head, $.el('script', {
-            src: '//www.google.com/recaptcha/api/js/recaptcha_ajax.js'
           }));
         });
       }
