@@ -2439,6 +2439,13 @@
           });
         }
       },
+      loadNew: function() {
+        var el;
+        el = $('#t-load');
+        if (!!el && !!el.click) {
+          el.click();
+        }
+      },
       occupied: function() {
         return !!this.nodes.container;
       }
@@ -2665,6 +2672,7 @@
         if (/captcha|verification/i.test(err.textContent) || err === 'Connection error with sys.4chan.org.') {
           if (/mistyped/i.test(err.textContent)) {
             err = 'Error: You seem to have mistyped the CAPTCHA.';
+            setTimeout(QR.captcha.loadNew, 250);
           }
           QR.cooldown.auto = false;
           QR.cooldown.set({
