@@ -2415,7 +2415,7 @@
         return delete this.nodes.container;
       },
       getOne: function() {
-        var i, key, len, ref, response;
+        var el, i, key, len, ref, response;
         response = {};
         if (this.nodes.container) {
           ref = ['t-response', 't-challenge'];
@@ -2424,12 +2424,15 @@
             response[key] = $("[name='" + key + "']", this.nodes.container).value;
           }
         }
-        if (!response['t-response']) {
+        if (!response['t-response'] && !((el = $('#t-msg')) && /Verification not required/i.test(el.textContent))) {
           response = null;
         }
         return response;
       },
       setUsed: function() {
+        if (!this.isEnabled) {
+          return;
+        }
         if (this.nodes.container) {
           return $.global(function() {
             return window.TCaptcha.clearChallenge();
