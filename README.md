@@ -36,6 +36,7 @@ Once one of those or similar is installed, click on the following link: [4chan_x
 6. Start dwb
 
 ## Changelog
+- 2.40.81: Add mp4 video support
 - 2.40.80: Support no verification required mode and automatically load new after mistyped
 - 2.40.79: Support the new self hosted captcha (thanks ccd0), updated archives
 - 2.40.78: Some fixes by hurda, updated archives
