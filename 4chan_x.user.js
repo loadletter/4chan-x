@@ -1845,7 +1845,7 @@
   };
 
   QR = {
-    mimeTypes: ['image/jpeg', 'image/png', 'image/gif', 'application/pdf', 'application/x-shockwave-flash', 'video/webm', ''],
+    mimeTypes: ['image/jpeg', 'image/png', 'image/gif', 'application/pdf', 'application/x-shockwave-flash', 'video/webm', 'video/mp4',  ''],
     init: function() {
       if (!$.id('postForm')) {
         return;
@@ -5564,6 +5564,14 @@
           autoplay: true,
           loop: true
         });
+      } else if (/\.mp4$/.test(this.parentNode.href)) {
+        el = UI.el = $.el('video', {
+          id: 'ihover',
+          src: this.parentNode.href,
+          type: 'video/mp4',
+          autoplay: true,
+          loop: true
+        });
       } else {
         el = UI.el = $.el('img', {
           id: 'ihover',
@@ -5756,7 +5764,7 @@
           }
           for (_j = 0, _len1 = thumbs.length; _j < _len1; _j++) {
             thumb = thumbs[_j];
-            if (!Conf['Expand All WebM'] && /\.webm$/.test(thumb.parentNode.href))
+            if (!Conf['Expand All WebM'] && (/\.webm$/.test(thumb.parentNode.href) || /\.mp4$/.test(thumb.parentNode.href)))
               continue;
             ImageExpand.expand(thumb);
           }
@@ -5853,6 +5861,13 @@
         img = $.el('video', {
           src: src,
           type: 'video/webm',
+          autoplay: true,
+          loop: true
+        });
+      } else if (/\.mp4$/.test(src)) {
+        img = $.el('video', {
+          src: src,
+          type: 'video/mp4',
           autoplay: true,
           loop: true
         });
