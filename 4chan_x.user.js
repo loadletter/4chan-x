@@ -5209,22 +5209,6 @@
         case 'tv':
         case 'x':
           return "//archive.4plebs.org/" + board + "/full_image/" + filename;
-        case 'bant':
-        case 'c':
-        case 'con':
-        case 'e':
-        case 'n':
-        case 'news':
-        case 'out':
-        case 'p':
-        case 'toy':
-        case 'vp':
-        case 'vt':
-        case 'w':
-        case 'wg':
-        case 'wsr':
-          return "https://archive.nyafuu.org/" + board + "/full_image/" + filename;
-        case '3':
         case 'biz':
         case 'ck':
         case 'diy':
@@ -5233,17 +5217,16 @@
         case 'jp':
         case 'lit':
         case 'sci':
-        case 'tg':
           return "https://warosu.org/" + board + "/full_image/" + filename;
         case 'a':
         case 'aco':
         case 'an':
+        case 'c':
         case 'cgl':
         case 'co':
         case 'd':
         case 'fit':
         case 'g':
-        case 'gif':
         case 'his':
         case 'int':
         case 'k':
@@ -5253,9 +5236,9 @@
         case 'q':
         case 'qa':
         case 'r9k':
+        case 'tg':
         case 'trash':
         case 'vr':
-        case 'wsg':
           return "//desuarchive.org/" + board + "/full_image/" + filename;
         case 'cm':
         case 'vip':
@@ -5265,14 +5248,19 @@
         case 'v':
         case 'vg':
         case 'vm':
+        case 'vmg':
         case 'vrpg':
+        case 'vst':
           return "//arch.b4k.co/" + board + "/full_image/" + filename;
         case 'can':
         case 'cock':
+        case 'con':
         case 'fap':
         case 'fitlit':
+        case 'gd':
         case 'mtv':
         case 'outsoc':
+        case 'po':
         case 'spa':
         case 'vint':
           return "//archived.moe/" + board + "/full_image/" + filename;
@@ -5281,7 +5269,6 @@
         case 'h':
         case 'hc':
         case 'hm':
-        case 'i':
         case 'lgbt':
         case 'r':
         case 's':
@@ -5289,10 +5276,25 @@
         case 't':
         case 'u':
           return "//archiveofsins.com/" + board + "/full_image/" + filename;
-        case 'asp':
+        case 'bant':
+        case 'e':
+        case 'n':
+        case 'news':
+        case 'out':
+        case 'p':
         case 'pw':
+        case 'qst':
+        case 'toy':
+        case 'vp':
+        case 'vt':
+        case 'w':
+        case 'wg':
+        case 'wsr':
+          return "https://archive.palanq.win/" + board + "/full_image/" + filename;
+        case '3':
+        case 'i':
         case 'xs':
-          return "//archive.wakarimasen.moe/" + board + "/full_image/" + filename;
+          return "https://eientei.xyz/" + board + "/full_image/" + filename;
       }
     },
     post: function(board, postID) {
@@ -5310,32 +5312,15 @@
         case 'tv':
         case 'x':
           return "//archive.4plebs.org/_/api/chan/post/?board=" + board + "&num=" + postID;
-        case 'bant':
-        case 'c':
-        case 'con':
-        case 'e':
-        case 'n':
-        case 'news':
-        case 'out':
-        case 'p':
-        case 'toy':
-        case 'vmg':
-        case 'vp':
-        case 'vst':
-        case 'vt':
-        case 'w':
-        case 'wg':
-        case 'wsr':
-          return "https://archive.nyafuu.org/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'a':
         case 'aco':
         case 'an':
+        case 'c':
         case 'cgl':
         case 'co':
         case 'd':
         case 'fit':
         case 'g':
-        case 'gif':
         case 'his':
         case 'int':
         case 'k':
@@ -5345,6 +5330,7 @@
         case 'q':
         case 'qa':
         case 'r9k':
+        case 'tg':
         case 'trash':
         case 'vr':
         case 'wsg':
@@ -5357,17 +5343,20 @@
         case 'v':
         case 'vg':
         case 'vm':
+        case 'vmg':
         case 'vrpg':
+        case 'vst':
           return "//arch.b4k.co/_/api/chan/post/?board=" + board + "&num=" + postID;
-        case 'hm':
-        case 'qst':
-          return "https://archive.b-stats.org/_/api/chan/post/?board=" + board + "&num=" + postID;
+        case 'asp':
         case 'can':
         case 'cock':
         case 'fap':
         case 'fitlit':
+        case 'gd':
+        case 'gif':
         case 'mtv':
         case 'outsoc':
+        case 'po':
         case 'spa':
         case 'vint':
           return "//archived.moe/_/api/chan/post/?board=" + board + "&num=" + postID;
@@ -5375,7 +5364,7 @@
           return "//thebarchive.com/_/api/chan/post/?board=" + board + "&num=" + postID;
         case 'h':
         case 'hc':
-        case 'i':
+        case 'hm':
         case 'lgbt':
         case 'r':
         case 's':
@@ -5383,6 +5372,22 @@
         case 't':
         case 'u':
           return "//archiveofsins.com/_/api/chan/post/?board=" + board + "&num=" + postID;
+        case 'bant':
+        case 'con':
+        case 'e':
+        case 'n':
+        case 'news':
+        case 'out':
+        case 'p':
+        case 'pw':
+        case 'qst':
+        case 'toy':
+        case 'vp':
+        case 'vt':
+        case 'w':
+        case 'wg':
+        case 'wsr':
+          return "https://archive.palanq.win/_/api/chan/post/?board=" + board + "&num=" + postID;
       }
     },
     to: function(data) {
@@ -5406,25 +5411,6 @@
         case 'x':
           url = Redirect.path('//archive.4plebs.org', 'foolfuuka', data);
           break;
-        case 'bant':
-        case 'c':
-        case 'con':
-        case 'e':
-        case 'n':
-        case 'news':
-        case 'out':
-        case 'p':
-        case 'toy':
-        case 'vmg':
-        case 'vp':
-        case 'vst':
-        case 'vt':
-        case 'w':
-        case 'wg':
-        case 'wsr':
-          url = Redirect.path('https://archive.nyafuu.org', 'foolfuuka', data);
-          break;
-        case '3':
         case 'biz':
         case 'ck':
         case 'diy':
@@ -5433,18 +5419,17 @@
         case 'jp':
         case 'lit':
         case 'sci':
-        case 'tg':
           url = Redirect.path('https://warosu.org', 'fuuka', data);
           break;
         case 'a':
         case 'aco':
         case 'an':
+        case 'c':
         case 'cgl':
         case 'co':
         case 'd':
         case 'fit':
         case 'g':
-        case 'gif':
         case 'his':
         case 'int':
         case 'k':
@@ -5454,6 +5439,7 @@
         case 'q':
         case 'qa':
         case 'r9k':
+        case 'tg':
         case 'trash':
         case 'vr':
         case 'wsg':
@@ -5468,19 +5454,21 @@
         case 'v':
         case 'vg':
         case 'vm':
+        case 'vmg':
         case 'vrpg':
+        case 'vst':
           url = Redirect.path('//arch.b4k.co', 'foolfuuka', data);
           break;
-        case 'hm':
-        case 'qst':
-          url = Redirect.path('https://archive.b-stats.org', 'foolfuuka', data);
-          break;
+        case 'asp':
         case 'can':
         case 'cock':
         case 'fap':
         case 'fitlit':
+        case 'gd':
+        case 'gif':
         case 'mtv':
         case 'outsoc':
+        case 'po':
         case 'spa':
         case 'vint':
           url = Redirect.path('//archived.moe', 'foolfuuka', data);
@@ -5490,7 +5478,7 @@
           break;
         case 'h':
         case 'hc':
-        case 'i':
+        case 'hm':
         case 'lgbt':
         case 'r':
         case 's':
@@ -5498,6 +5486,28 @@
         case 't':
         case 'u':
           url = Redirect.path('//archiveofsins.com', 'foolfuuka', data);
+          break;
+        case 'bant':
+        case 'con':
+        case 'e':
+        case 'n':
+        case 'news':
+        case 'out':
+        case 'p':
+        case 'pw':
+        case 'qst':
+        case 'toy':
+        case 'vp':
+        case 'vt':
+        case 'w':
+        case 'wg':
+        case 'wsr':
+          url = Redirect.path('https://archive.palanq.win', 'foolfuuka', data);
+          break;
+        case '3':
+        case 'i':
+        case 'xs':
+          url = Redirect.path('https://eientei.xyz', 'Eientei', data);
           break;
         default:
           if (threadID) {

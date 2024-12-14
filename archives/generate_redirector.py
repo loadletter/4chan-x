@@ -1,5 +1,5 @@
 #!/usr/bin/env python2
-import urllib2, json, os, sys
+import requests, json, os, sys
 
 HEADER = '''  Redirect = {
     image: function(board, filename) {
@@ -36,7 +36,8 @@ RETURN_REDIRECT = """          url = Redirect.path('%s', '%s', data);
           break;
 """
 
-ARCHIVES_URL = "https://4chenz.github.io/archives.json/archives.json"
+#ARCHIVES_URL = "https://4chenz.github.io/archives.json/archives.json"
+ARCHIVES_URL = "https://github.com/ccd0/4chan-x/raw/refs/heads/master/src/Archive/archives.json"
 ARCHIVES_JSON = os.path.join(os.path.dirname(os.path.abspath(__file__)), "archives.json")
 PRIORITIES_JSON = os.path.join(os.path.dirname(os.path.abspath(__file__)), "priorities.json")
 
@@ -44,7 +45,7 @@ ARCHIVE_HIDDEN = [29,32,35]
 
 def jsonloadf(filename):
 	with open(filename) as f:
-		data = json.load(f, 'utf-8')
+		data = json.load(f)
 	return data
 
 def jsonsavef(filename, data):
@@ -70,11 +71,8 @@ class Build:
 		self.priorities = jsonloadf(PRIORITIES_JSON)
 	
 	def page_dl(self):
-		request = urllib2.Request(ARCHIVES_URL)
-		response = urllib2.urlopen(request)
-		data = response.read()
-		response.close()
-		self.data = json.loads(data)
+		request = requests.get(ARCHIVES_URL)
+		self.data = request.json()
 	
 	def boards_list(self):
 		f = []
@@ -103,29 +101,29 @@ class Build:
 			return filter(lambda x: not (self.data[x]['uid'] in ARCHIVE_HIDDEN and len(value) > 1), value)
 		self.singleboards = {}
 		self.redundantboards = {}
-		for k, v in b.iteritems():
-			v2 = filterhidden(v)
+		for k, v in b.items():
+			v2 = list(filterhidden(v))
 			if len(v2) == 1:
 				self.singleboards[k] = v2[0]
 			if len(v2) > 1:
 				self.redundantboards[k] = v2
 		self.singlefiles = {}
 		self.redundantfiles = {}
-		for k, v in f.iteritems():
-			v2 = filterhidden(v)
+		for k, v in f.items():
+			v2 = list(filterhidden(v))
 			if len(v2) == 1:
 				self.singlefiles[k] = v2[0]
 			if len(v2) > 1:
 				self.redundantfiles[k] = v2
 	
 	def pprint(self, t):
-		print >>self.msg, "%s:" % t
+		print("%s:" % t, file=self.msg)
 		if t == 'files':
-			it = self.redundantfiles.iteritems()
+			it = self.redundantfiles.items()
 		else:
-			it = self.redundantboards.iteritems()
+			it = self.redundantboards.items()
 		for k, v in it:
-			print >>self.msg, "%s --> " % k,
+			print("%s --> " % k, file=self.msg, end='')
 			sel = None
 			selfound = None
 			if k in self.priorities[t]:
@@ -136,11 +134,11 @@ class Build:
 					selfound = x
 				else:
 					forstr = '"%s"'
-				print >>self.msg, forstr % self.data[x]['name'],
+				print(forstr % self.data[x]['name'],file=self.msg, end='')
 			if sel == None or selfound == None:
-				print >>self.msg, "NOT SELECTED!"
+				print(" NOT SELECTED!",file=self.msg)
 			else:
-				print >>self.msg
+				print('', file=self.msg)
 				if t == 'files':
 					self.files[k] = selfound
 				else:
@@ -148,11 +146,11 @@ class Build:
 	
 	def prioprint(self):
 		self.separator()
-		print >>self.msg, "archives:"
+		print("archives:", file=self.msg)
 		for a in self.data:
 			if a['uid'] in ARCHIVE_HIDDEN:
-				print >>self.msg, "HIDDEN:",
-			print >>self.msg, a['uid'], a['name']
+				print("HIDDEN:", file=self.msg, end='')
+			print(a['uid'], a['name'], file=self.msg)
 		self.separator()
 		self.pprint('boards')
 		self.separator()
@@ -165,7 +163,7 @@ class Build:
 					
 	def separator(self):
 		if self.msg == sys.stderr:
-			print >>self.msg, "-" * 80
+			print("-" * 80, file=self.msg)
 		
 	def build(self):
 		if not self.data:
